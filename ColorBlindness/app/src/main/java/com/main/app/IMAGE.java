@@ -46,7 +46,6 @@ public class IMAGE extends Activity {
 
             GestureImageView imageView = (GestureImageView)findViewById(R.id.image_imageView);
             imageView.setImageBitmap(yourSelectedImage);
-
         }
         catch(IOException e){
             Toast.makeText(getBaseContext(),"파일이 존재하지 않습니다",Toast.LENGTH_SHORT).show();
