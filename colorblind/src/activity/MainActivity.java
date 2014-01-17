@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -19,10 +20,10 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		
 		mContext = getBaseContext();
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);		
+		
+		setContentView(R.layout.activity_main);
 		
 		/* launch activity accordingly */
 		Button buttonTest = (Button)findViewById(R.id.main_button_test);
@@ -35,7 +36,7 @@ public class MainActivity extends Activity {
 		});
 		
 		Button buttonDemo = (Button)findViewById(R.id.main_button_demo);
-		buttonTest.setOnClickListener(new View.OnClickListener() {
+		buttonDemo.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 //				Intent intent = new Intent(mContext, );
@@ -44,9 +45,10 @@ public class MainActivity extends Activity {
 		});
 		
 		Button buttonImage = (Button)findViewById(R.id.main_button_image);
-		buttonTest.setOnClickListener(new View.OnClickListener() {
+		buttonImage.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Log.i("GALLERY", "launch gallery for image selection");
 				Intent intent = new Intent(Intent.ACTION_PICK);
 				intent.setType("image/*");
 				startActivityForResult(intent, SELECT_IMAGE);
@@ -54,7 +56,7 @@ public class MainActivity extends Activity {
 		});
 		
 		Button buttonCamera = (Button)findViewById(R.id.main_button_camera);
-		buttonTest.setOnClickListener(new View.OnClickListener() {
+		buttonCamera.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 //				Intent intent = new Intent(mContext, );
@@ -63,7 +65,7 @@ public class MainActivity extends Activity {
 		});
 		
 		Button buttonMovie = (Button)findViewById(R.id.main_button_movie);
-		buttonTest.setOnClickListener(new View.OnClickListener() {
+		buttonMovie.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 //				Intent intent = new Intent(mContext, );
@@ -72,7 +74,7 @@ public class MainActivity extends Activity {
 		});
 		
 		Button buttonSetting = (Button)findViewById(R.id.main_button_setting);
-		buttonTest.setOnClickListener(new View.OnClickListener() {
+		buttonSetting.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 //				Intent intent = new Intent(mContext, );
