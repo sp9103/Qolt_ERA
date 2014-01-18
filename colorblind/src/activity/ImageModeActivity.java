@@ -10,6 +10,7 @@ public class ImageModeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		Uri selectedImage = getIntent().getData();
+		finish();
 	}
 
 }

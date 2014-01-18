@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		mContext = getBaseContext();
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);		
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.activity_main);
 		
@@ -87,7 +87,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
 		super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-		
+		Log.i("IMAGESELECT", "returned from gallery");
 		switch (requestCode) {
 		case SELECT_IMAGE:
 			if (resultCode == RESULT_OK) { // proper image should be selected
