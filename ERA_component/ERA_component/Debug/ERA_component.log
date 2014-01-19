@@ -1,0 +1,21 @@
+﻿빌드 시작: 2014-01-17 오후 9:18:03
+     1>2 노드의 "C:\Users\sp\documents\visual studio 2012\Projects\ERA_component\ERA_component\ERA_component.vcxproj" 프로젝트(Build 대상)입니다.
+     1>ClCompile:
+         E:\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IE:\opencv\build\include /IE:\opencv\build\include\opencv /IE:\opencv\build\include\opencv2 /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\sp\documents\visual studio 2012\projects\era_component\era_component\definition.h(10): warning C4005: 'MAX' : 매크로 재정의
+                 e:\opencv\build\include\opencv2\core\types_c.h(288) : 'MAX'의 이전 정의를 참조하십시오.
+     1>c:\users\sp\documents\visual studio 2012\projects\era_component\era_component\definition.h(11): warning C4005: 'MIN' : 매크로 재정의
+                 e:\opencv\build\include\opencv2\core\types_c.h(284) : 'MIN'의 이전 정의를 참조하십시오.
+     1>c:\users\sp\documents\visual studio 2012\projects\era_component\era_component\main.cpp(18): warning C4305: '인수' : 'double'에서 'float'(으)로 잘립니다.
+     1>c:\users\sp\documents\visual studio 2012\projects\era_component\era_component\main.cpp(28): warning C4305: '인수' : 'double'에서 'float'(으)로 잘립니다.
+       Link:
+         E:\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\sp\documents\visual studio 2012\Projects\ERA_component\Debug\ERA_component.exe" /INCREMENTAL /NOLOGO /LIBPATH:E:\opencv\build\x86\vc11\lib opencv_stitching246d.lib opencv_core246d.lib opencv_legacy246d.lib opencv_gpu246d.lib opencv_ts246d.lib opencv_videostab246d.lib opencv_ocl246d.lib opencv_contrib246d.lib opencv_features2d246d.lib opencv_superres246d.lib opencv_nonfree246d.lib opencv_imgproc246d.lib opencv_objdetect246d.lib opencv_ml246d.lib opencv_calib3d246d.lib opencv_video246d.lib opencv_highgui246d.lib opencv_photo246d.lib opencv_flann246d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\sp\documents\visual studio 2012\Projects\ERA_component\Debug\ERA_component.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\sp\documents\visual studio 2012\Projects\ERA_component\Debug\ERA_component.lib" /MACHINE:X86 Debug\ColorConv.obj
+         Debug\Eye_Recovery.obj
+         Debug\main.obj
+         ERA_component.vcxproj -> C:\Users\sp\documents\visual studio 2012\Projects\ERA_component\Debug\ERA_component.exe
+     1>"C:\Users\sp\documents\visual studio 2012\Projects\ERA_component\ERA_component\ERA_component.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:01.46
