@@ -7,6 +7,7 @@
 
 int main(){
 	Eye_Recovery ERA;
+	char buf[256];
 
 	//cv::Mat load_iamge = cv::imread("Tulips.jpg");
 	//cv::Mat load_image2 = cv::imread("Tulips.jpg");
@@ -41,7 +42,9 @@ int main(){
 	//load_image2.release();
 	//load_iamge.release();
 
-	cv::VideoCapture testAVI("Wildlife.wmv");
+	printf("Enter the Video path : ");
+	scanf("%s", buf);
+	cv::VideoCapture testAVI(buf);
 
 	while(1){
 		cv::Mat frame;

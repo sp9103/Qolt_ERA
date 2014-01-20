@@ -1,4 +1,4 @@
-﻿빌드 시작: 2014-01-20 오후 4:12:51
+﻿빌드 시작: 2014-01-20 오후 5:07:55
      1>2 노드의 "C:\Users\sp\Desktop\Qolt_Era\ERA_component\ERA_component\ERA_component.vcxproj" 프로젝트(Build 대상)입니다.
      1>ClCompile:
          E:\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IE:\opencv\build\include /IE:\opencv\build\include\opencv /IE:\opencv\build\include\opencv2 /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
@@ -7,7 +7,9 @@
                  E:\opencv\build\include\opencv2/core/types_c.h(288) : 'MAX'의 이전 정의를 참조하십시오.
      1>c:\users\sp\desktop\qolt_era\era_component\era_component\Definition.h(11): warning C4005: 'MIN' : 매크로 재정의
                  E:\opencv\build\include\opencv2/core/types_c.h(284) : 'MIN'의 이전 정의를 참조하십시오.
-     1>main.cpp(23): warning C4305: '인수' : 'double'에서 'float'(으)로 잘립니다.
+     1>main.cpp(24): warning C4305: '인수' : 'double'에서 'float'(으)로 잘립니다.
+     1>main.cpp(46): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 E:\Microsoft Visual Studio 11.0\VC\include\stdio.h(290) : 'scanf' 선언을 참조하십시오.
        Link:
          E:\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\sp\Desktop\Qolt_Era\ERA_component\Release\ERA_component.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:E:\opencv\build\x86\vc11\lib opencv_stitching246.lib opencv_core246.lib opencv_legacy246.lib opencv_gpu246.lib opencv_ts246.lib opencv_videostab246.lib opencv_ocl246.lib opencv_contrib246.lib opencv_features2d246.lib opencv_superres246.lib opencv_nonfree246.lib opencv_imgproc246.lib opencv_ml246.lib opencv_calib3d246.lib opencv_video246.lib opencv_highgui246.lib opencv_photo246.lib opencv_flann246.lib opencv_flann246d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\sp\Desktop\Qolt_Era\ERA_component\Release\ERA_component.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\sp\Desktop\Qolt_Era\ERA_component\Release\ERA_component.lib" /MACHINE:X86 /SAFESEH Release\ColorConv.obj
          Release\Eye_Recovery.obj
@@ -19,4 +21,4 @@
 
 빌드했습니다.
 
-경과 시간: 00:00:01.17
+경과 시간: 00:00:01.64
