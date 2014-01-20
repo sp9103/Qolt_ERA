@@ -8,20 +8,15 @@
 int main(){
 	Eye_Recovery ERA;
 
-	cv::Mat load_iamge = cv::imread("Tulips.jpg");
-	cv::Mat load_image2 = cv::imread("Tulips.jpg");
-	cv::Mat no_image = cv::imread("no_image.jpg");
-	cv::imshow("Origin2", no_image);
-	cv::imshow("Origin", load_iamge);
+	//cv::Mat load_iamge = cv::imread("Tulips.jpg");
+	//cv::Mat load_image2 = cv::imread("Tulips.jpg");
+	//cv::imshow("Origin", load_iamge);
 
 	DWORD time = timeGetTime();
-	ERA.RefineImage(load_iamge, load_iamge, 0.4);
-	time = timeGetTime() - time;
-	printf("픽셀별 보정시간 : %dms\n", time);
-	ERA.InverseImage(no_image, no_image, 0.0);
-
-	cv::imshow("Inverse Image", no_image);
-	cv::imshow("TEST", load_iamge);
+	//ERA.RefineImage(load_iamge, load_iamge, 0.4);
+	//time = timeGetTime() - time;
+	//printf("픽셀별 보정시간 : %dms\n", time);
+	//cv::imshow("TEST", load_iamge);
 
 	printf("Make Tree...\n");
 	time = timeGetTime();
@@ -34,17 +29,27 @@ int main(){
 	printf("Open & Create Tree time : %dms\n", time);
 	printf("Make Tree complete!\n");
 
-	time = timeGetTime();
+	/*time = timeGetTime();
 	ERA.MakeImage_to_Data(load_image2, load_iamge);
-	time = timeGetTime() - time;
-	printf("Make Image to Data time : %dms\n", time);
-	cv::imshow("Real Time Test", load_iamge);
-	cv::waitKey(0);
+	time = timeGetTime() - time;*/
+	//printf("Make Image to Data time : %dms\n", time);
+	//cv::imshow("Real Time Test", load_iamge);
+	//cv::waitKey(0);
 
-	ERA.DeleteDataBuffer();
+	//ERA.DeleteDataBuffer();
 
-	load_image2.release();
-	load_iamge.release();
+	//load_image2.release();
+	//load_iamge.release();
+
+	cv::VideoCapture testAVI("Wildlife.wmv");
+
+	while(1){
+		cv::Mat frame;
+		testAVI >> frame;
+		ERA.MakeImage_to_Data(frame, frame);
+		imshow("AVI", frame);
+		if(cv::waitKey(30) == 27)		break;
+	}
 
 	return 0;
 }
