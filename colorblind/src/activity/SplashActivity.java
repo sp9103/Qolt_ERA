@@ -24,7 +24,8 @@ public class SplashActivity extends Activity {
 				Intent intent;
 				intent = new Intent(SplashActivity.this, MainActivity.class);
 
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+				// we don't need to revisit splash screen	
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 				startActivity(intent);
 				finish();
 
