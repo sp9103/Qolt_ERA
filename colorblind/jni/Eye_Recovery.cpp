@@ -53,10 +53,10 @@ void Eye_Recovery::Dyschromatopsa( float *h, float *s, float *l, float modificat
 	}
 }
 
-/*이미지 색약 보정 - Static Image
+/*image color weakness correction - Static Image
 	src : input Image
 	dst : output Image
-	factor : 보정 계수*/
+	factor : correction factor*/
 void Eye_Recovery::RefineImage( cv::Mat src, cv::Mat dst, float factor )
 {
 	for(register int i = 0; i < src.rows; i++){
@@ -67,7 +67,7 @@ void Eye_Recovery::RefineImage( cv::Mat src, cv::Mat dst, float factor )
 
 			RefinePixel(&R, &G, &B, factor);
 
-			//이미지 넣기
+			//image insert
 			dst.at<cv::Vec3b>(i,j)[0] = (unsigned char)B;
 			dst.at<cv::Vec3b>(i,j)[1] = (unsigned char)G;
 			dst.at<cv::Vec3b>(i,j)[2] = (unsigned char)R;
@@ -75,10 +75,10 @@ void Eye_Recovery::RefineImage( cv::Mat src, cv::Mat dst, float factor )
 	}
 }
 
-/*이미지 색약 보정 - Static Image
+/*image color weakness correction - Static Image
 	src : input Image
 	dst : output Image
-	factor : 보정 계수*/
+	factor : correction factor*/
 void Eye_Recovery::InverseImage( cv::Mat src, cv::Mat dst, float factor )
 {
 	float H, S, I;
@@ -92,7 +92,7 @@ void Eye_Recovery::InverseImage( cv::Mat src, cv::Mat dst, float factor )
 			
 			InversePixel(&R, &G, &B, factor);
 
-			//이미지 넣기
+			//image insert
 			dst.at<cv::Vec3b>(i,j)[0] = (unsigned char)B;
 			dst.at<cv::Vec3b>(i,j)[1] = (unsigned char)G;
 			dst.at<cv::Vec3b>(i,j)[2] = (unsigned char)R;
@@ -100,9 +100,9 @@ void Eye_Recovery::InverseImage( cv::Mat src, cv::Mat dst, float factor )
 	}
 }
 
-/*픽셀 색약 보정
+/*pixel color weakness correction
 	R, G, B : unsigned char pixel value
-	factor : 보정 계수*/
+	factor : correction factor*/
 void Eye_Recovery::RefinePixel( uchar *R, uchar *G, uchar *B ,float factor )
 {
 
@@ -119,9 +119,9 @@ void Eye_Recovery::RefinePixel( uchar *R, uchar *G, uchar *B ,float factor )
 	*R = (uchar)refine_R, *G = (uchar)refine_G, *B = (uchar)refine_B;
 }
 
-/*픽셀 색약 체험
+/*pixel color weakness experience
 	R, G, B : unsigned char pixel value
-	factor : 보정 계수*/
+	factor : correction factor*/
 void Eye_Recovery::InversePixel( uchar *R, uchar *G, uchar *B, float factor )
 {
 	float H, S, I;
@@ -138,7 +138,7 @@ void Eye_Recovery::InversePixel( uchar *R, uchar *G, uchar *B, float factor )
 }
 
 /*Tree file Create
-	interval : 보정 tree를 생성할 사이값. 인터벌
+	interval : makeing correction tree interval
 	FilePath*/
 bool Eye_Recovery::MakeTreeFile( int interval, float factor, char *FilePath, int mode )
 {
@@ -147,22 +147,17 @@ bool Eye_Recovery::MakeTreeFile( int interval, float factor, char *FilePath, int
 	unsigned int t_B, t_G, t_R;
 
 	int counts = 255/interval + 1;
-	//if(255%interval != 0)	counts++;
 
-	//interval을 먼저 씀
+	//read interval
 	fwrite(&interval, sizeof(int), 1, TreeData);
 
-	/*R, G, B 순으로 */
+	/*R, G, B order */
 	for(register int i = 0; i < counts; i++){
 		for(register int j = 0; j < counts; j++){
 			for(register int k = 0; k < counts; k++){
 				t_R = i * interval + interval/2;
 				t_G = j * interval + interval/2;
 				t_B = k * interval + interval/2;
-
-				/*if(R >= 255 || G >= 255 || B >= 255){
-					printf("255 출현!\n");
-				}*/
 
 				if(t_R > 255)	R = 255;
 				else					R = t_R;
@@ -193,9 +188,9 @@ bool Eye_Recovery::MakeTreeFile( int interval, float factor, char *FilePath, int
 }
 
 /*Find Pixel Match in Tree
- R, G, B : 보정될 값
- interval : File pointer로 부터 읽어들인 interval
- p_Data : Data가 저장된 File pointer*/
+ R, G, B : target correction value
+ interval : interval
+ p_Data : saved data File pointer*/
 int Eye_Recovery::MatchTreePixel( uchar *R, uchar *G, uchar *B, int interval )
 {
 	int idx_R, idx_G, idx_B;
@@ -215,7 +210,7 @@ int Eye_Recovery::MatchTreePixel( uchar *R, uchar *G, uchar *B, int interval )
 /*Using Tree, Make Image
  src : input Image
  dst : output Image
- p_Data : Data가 저장된 File pointer*/
+ p_Data : saved data File pointer*/
 int Eye_Recovery::MakeImage_to_Data( cv::Mat src, cv::Mat dst)
 {
 	for(register int i = 0; i < src.rows; i++){
@@ -226,7 +221,7 @@ int Eye_Recovery::MakeImage_to_Data( cv::Mat src, cv::Mat dst)
 
 			MatchTreePixel(&R, &G, &B, t_interval);
 
-			//이미지 넣기
+			//image insert
 			dst.at<cv::Vec3b>(i,j)[0] = (unsigned char)B;
 			dst.at<cv::Vec3b>(i,j)[1] = (unsigned char)G;
 			dst.at<cv::Vec3b>(i,j)[2] = (unsigned char)R;
@@ -245,7 +240,7 @@ int Eye_Recovery::OpenDataFile(char *FilePath )
 
 	int counts = 255/t_interval + 1;
 
-	//동적할당
+	//Dynamic allocation
 	Data_Matrix = (UcharRGB ***)malloc(sizeof(UcharRGB**) * counts);
 	for(int i = 0; i < counts; i++){
 		Data_Matrix[i] = (UcharRGB **)malloc(sizeof(UcharRGB*) * counts);
@@ -256,7 +251,7 @@ int Eye_Recovery::OpenDataFile(char *FilePath )
 		}
 	}
 
-	/*R, G, B 순으로 */
+	/*R, G, B order */
 	for(register int i = 0; i < counts; i++){
 		for(register int j = 0; j < counts; j++){
 			for(register int k = 0; k < counts; k++){
