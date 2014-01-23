@@ -29,10 +29,10 @@ void CColorConv::RGB_To_Gray(float r, float g, float b, float *gray)
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-// Gray_To_RGB - Gray 값을 RGB로 바꾼다. 
-//               이과정은 promotion에 해당하는 과정으로 사실상 별의미가 없다.
-// Gray 는 각각 [0,1]사이 값을 갖는다.
-// R,G,B는 각각 [0,1]사이 값을 갖는다.
+// Gray_To_RGB - Gray value to RGB convert 
+//            
+// Gray  [0,1] 
+// R,G,B [0,1]
 
 void CColorConv::Gray_To_RGB(float gray, float *r, float *g, float *b)
 {
@@ -41,10 +41,10 @@ void CColorConv::Gray_To_RGB(float gray, float *r, float *g, float *b)
 
 
 //////////////////////////////////////////////////////////////////////////////////
-// CMY_To_RGB - CMY값을 RGB로 바꾼다.
+// CMY_To_RGB - CMY value RGB convert.
 //
-// R,G,B는 각각 [0,1]사이 값을 갖는다.
-// C,M,Y는 각각 [0,1]사이 값을 갖는다.
+// R,G,B [0,1]
+// C,M,Y [0,1]
 
 void CColorConv::RGB_To_CMY(float r, float g, float b, float *c, float *m, float *y)
 {
@@ -55,10 +55,10 @@ void CColorConv::RGB_To_CMY(float r, float g, float b, float *c, float *m, float
 
 
 //////////////////////////////////////////////////////////////////////////////////
-// CMY_To_RGB - CMY값을 RGB로 바꾼다.
+// CMY_To_RGB - CMY to RGB convert.
 //
-// R,G,B는 각각 [0,1]사이 값을 갖는다.
-// C,M,Y는 각각 [0,1]사이 값을 갖는다.
+// R,G,B [0,1]
+// C,M,Y [0,1]
 
 void CColorConv::CMY_To_RGB(float c, float m, float y, float *r, float *g, float *b)
 {
@@ -69,10 +69,10 @@ void CColorConv::CMY_To_RGB(float c, float m, float y, float *r, float *g, float
 
 
 //////////////////////////////////////////////////////////////////////////////////
-// RGB_To_HSV - RGB값을 HSV로 바꾼다.
+// RGB_To_HSV - RGBto HSV로 convert.
 //
-// R,G,B는 각각 [0,1]사이 값을 갖는다.
-// H는 [0,360) 범위, S,V값은 각각 [0,1]범위를 갖는다.
+// R,G,B [0,1]
+// H [0,360) , S,V [0,1]
 
 void CColorConv::RGB_To_HSV(float r, float g, float b, float *h, float *s, float *v)
 {
@@ -84,29 +84,29 @@ void CColorConv::RGB_To_HSV(float r, float g, float b, float *h, float *s, float
 	min = MIN(r,g);
 	min = MIN(min,b);
 
-	*v = max;                                   // 명도(V) = max(r,g,b)
-	*s = (max != 0.0F) ? (max-min)/max : 0.0F;    // 채도(S)을 계산, S=0이면 R=G=B=0
+	*v = max;                                   //V = max(r,g,b)
+	*s = (max != 0.0F) ? (max-min)/max : 0.0F;    // (S), S=0 => R=G=B=0
 	
 	if(*s == 0.0F)	*h = UNDEFINED;
-	else                                       // 채도(S)는 != 0
+	else                                       // S != 0
 	{
-		float delta = max - min;                 // 색상(H)를 구한다.
-		if(r == max) *h = (g - b) / delta;     // 색상이 Yello와 Magenta사이 
-		else if( g == max) *h = 2.0F + (b - r) / delta; // 색상이 Cyan와 Yello사이 
-		else if( b == max) *h = 4.0F + (r - g) / delta; // 색상이 Magenta와 Cyan사이
+		float delta = max - min;                 // find color.
+		if(r == max) *h = (g - b) / delta;     // Yello ~ Magenta 
+		else if( g == max) *h = 2.0F + (b - r) / delta; // Cyan ~ Yello 
+		else if( b == max) *h = 4.0F + (r - g) / delta; // Magenta ! Cyan
 		
 		*h *= 60.0F;
 		
-		if(*h < 0.0F) *h += 360.0F;           // 색상값을 각도로 바꾼다.
+		if(*h < 0.0F) *h += 360.0F;           // color to angle convert.
 	}
 }
 
 
 //////////////////////////////////////////////////////////////////////////////////
-// HSV_To_RGB - HSV값을 RGB로 바꾼다.
+// HSV_To_RGB - HSVto RGB로 convert.
 //
 // H는 [0,360) 범위, S,V값은 각각 [0,1]범위를 갖는다.
-// R,G,B는 각각 [0,1]값을 갖는다.
+// R,G,B는 각각 [0,1]to 갖는다.
 
 void CColorConv::HSV_To_RGB(float h, float s, float v, float *r, float *g, float *b)
 {  
@@ -142,9 +142,9 @@ void CColorConv::HSV_To_RGB(float h, float s, float v, float *r, float *g, float
 
 
 //////////////////////////////////////////////////////////////////////////////////
-// RGB_To_HLS - RGB값을 HLS로 바꾼다.
+// RGB_To_HLS - RGBto HLS로 convert.
 //
-// R,G,B는 각각 [0,1]값을 갖는다.
+// R,G,B는 각각 [0,1]to 갖는다.
 // H는 [0,360) 범위, S,V값은 각각 [0,1]범위를 갖는다.
 
 void CColorConv::RGB_To_HSL(float	r, float g, float b, float *h, float *s, float *l)
@@ -171,10 +171,10 @@ void CColorConv::RGB_To_HSL(float	r, float g, float b, float *h, float *s, float
 
 
 //////////////////////////////////////////////////////////////////////////////////
-// HLS_To_RGB - HLS값을 RGB로 바꾼다.
+// HLS_To_RGB - HLSto RGB로 convert.
 //
 // H는 [0,360) 범위, S,V값은 각각 [0,1]범위를 갖는다.
-// R,G,B는 각각 [0,1]값을 갖는다.
+// R,G,B는 각각 [0,1]to 갖는다.
 
 
 void CColorConv::HSL_To_RGB(float h, float sl, float l, float *r, float *g, float *b)
@@ -220,9 +220,9 @@ void CColorConv::RGB_To_YIQ(float r, float g, float b, float *y, float *i, float
 
 
 //////////////////////////////////////////////////////////////////////////////////
-// RGB_To_HSI - RGB값을 HSI로 바꾼다.
+// RGB_To_HSI - RGB새 HSI로 convert.
 //
-// R,G,B는 각각 [0,1]값을 갖는다.
+// R,G,B는 각각 [0,1]to 갖는다.
 // H는 [0,360) 범위, S,V값은 각각 [0,1]범위를 갖는다.
 void CColorConv::RGB_To_HSI(float r, float g, float b, float *h, float *s, float *i)
 {
@@ -255,10 +255,10 @@ void CColorConv::RGB_To_HSI(float r, float g, float b, float *h, float *s, float
 
 
 //////////////////////////////////////////////////////////////////////////////////
-// HSI_To_RGB - HSI값을 RGB로 바꾼다.
+// HSI_To_RGB - HSIto RGB로 convert.
 //
 // H는 [0,360) 범위, S,V값은 각각 [0,1]범위를 갖는다.
-// R,G,B는 각각 [0,1]값을 갖는다.
+// R,G,B는 각각 [0,1]to 갖는다.
 void CColorConv::HSI_To_RGB(float h, float s, float i, float *r, float *g, float *b)
 {
     float angle1, angle2, scale;   /// temp variables 
