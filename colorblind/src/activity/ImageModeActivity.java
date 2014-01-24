@@ -18,6 +18,9 @@ public class ImageModeActivity extends Activity {
 		Log.i("GALLERY", "recieved image data from gallery");
 		Uri selectedImage = getIntent().getData();
 		
+		mImageView = (ImageView)findViewById(R.id.imageView);
+		setContentView(R.layout.fragment_full_image);
+		
 		/*
 		 * extract bitmap data from URI
 		 * 
@@ -27,10 +30,6 @@ public class ImageModeActivity extends Activity {
 		 * scaledImage = mImageProcHelper.JPEGtoRGB888(scaledImage);
 		 * initialBitmap.recycle();
 		 */
-
-		mImageView = (ImageView)findViewById(R.id.imageView);
-		setContentView(R.layout.fragment_full_image);
-		finish();
 	}
 
 }
