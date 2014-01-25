@@ -7,11 +7,14 @@ import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.Camera.Size;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.View.OnTouchListener;
 
-public class CameraPreviewSurface extends SurfaceView implements SurfaceHolder.Callback{
+public class CameraPreviewSurface extends SurfaceView implements SurfaceHolder.Callback, OnTouchListener{
 	final String TAG = "SURFACEVIEW";
 	
 	public CameraPreviewSurface(Context context) {
@@ -66,7 +69,7 @@ public class CameraPreviewSurface extends SurfaceView implements SurfaceHolder.C
     }
 	
 	/*
-	 * set display orientation
+	 * set display orientation && orientation listener
 	 */
 	public static void setCameraDisplayOrientation(Activity activity, int cameraId, android.hardware.Camera camera) {
 	     android.hardware.Camera.CameraInfo info = new android.hardware.Camera.CameraInfo();
@@ -106,6 +109,15 @@ public class CameraPreviewSurface extends SurfaceView implements SurfaceHolder.C
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		
+	}
+
+	/*
+	 * Preview touch will trigger auto focus
+	 */
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
