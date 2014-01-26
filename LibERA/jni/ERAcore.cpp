@@ -4,8 +4,33 @@
 #define LOG_TAG "JNI"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
+using namespace cv;
+
+extern "C" {
+ // Eye_Recovorery class
+	Eye_Recovery Era;
+
 // Convert YUV420SP to ARGB
 JNIEXPORT void JNICALL Java_libera_EraCore_decodeYUV420SP(JNIEnv* env, jobject obj, jbyteArray yuv420sp, jint width, jint height, jintArray rgbOut);
+
+/*Open Data File, call this func -> real time convert start (one time)
+	  - file open -> copy buffer -> file close*/
+JNIEXPORT jint JNICALL Java_libera_EraCore_OpenDataFile(JNIEnv* env, jobject obj, jstring FilePath);
+
+/*Delete Data_Matrix. call this func => real time convert exit*/
+JNIEXPORT void JNICALL Java_libera_EraCore_DeleteDataBuffer(JNIEnv* env, jobject obj);
+
+/*image color weakness correction - Static Image*/
+JNIEXPORT void JNICALL Java_libera_EraCore_RefineImage(JNIEnv* env, jobject obj, jlong src, jlong dst, jfloat factor);
+
+/*image color weakness experience - Static Image*/
+JNIEXPORT void JNICALL Java_libera_EraCore_InverseImage(JNIEnv* env, jobject obj, jlong src, jlong dst, jfloat factor);
+
+/*Tree file Craete*/
+JNIEXPORT jboolean JNICALL Java_libera_EraCore_MakeTreeFile(JNIEnv* env, jobject obj, jint interval, jfloat factor, jstring FilePath, jint mode);
+
+/*Using Tree, Make Image*/
+JNIEXPORT jint JNICALL Java_libera_EraCore_MakeImgtoData(JNIEnv* env, jobject obj, jlong src, jlong dst);
 
 JNIEXPORT void JNICALL Java_libera_EraCore_decodeYUV420SP(JNIEnv* env, jobject obj, jbyteArray yuv420sp, jint width, jint height, jintArray rgbOut)
 {
@@ -51,4 +76,57 @@ JNIEXPORT void JNICALL Java_libera_EraCore_decodeYUV420SP(JNIEnv* env, jobject o
 
     env->ReleasePrimitiveArrayCritical(rgbOut, rgbData, 0);
     env->ReleasePrimitiveArrayCritical(yuv420sp, yuv, 0);
+}
+
+JNIEXPORT jint JNICALL Java_libera_EraCore_OpenDataFile(JNIEnv* env, jobject obj, jstring FilePath){
+	const char *nativeString = env->GetStringUTFChars(FilePath, 0);
+
+	// use your string
+	int return_value = Era.OpenDataFile(nativeString);
+
+	env->ReleaseStringUTFChars(FilePath, nativeString);
+
+	return return_value;
+}
+
+JNIEXPORT void JNICALL Java_libera_EraCore_DeleteDataBuffer(JNIEnv* env, jobject obj){
+	DeleteDataBuffer();
+}
+
+JNIEXPORT void JNICALL Java_libera_EraCore_RefineImage(JNIEnv* env, jobject obj, jlong src, jlong dst, jfloat factor){|
+	
+	Mat& t_src = *(Mat*)src;
+	Mat& t_dst = *(Mat*)dst;
+
+	Era.RefineImage(t_src, t_dst, factor);
+}
+
+JNIEXPORT void JNICALL Java_libera_EraCore_InverseImage(JNIEnv* env, jobject obj, jlong src, jlong dst, jfloat factor){
+	Mat& t_src = *(Mat*)src;
+	Mat& t_dst = *(Mat*)dst;
+
+	Era.InverseImage(t_src, t_dst, factor);
+}
+
+JNIEXPORT jboolean JNICALL Java_libera_EraCore_MakeTreeFile(JNIEnv* env, jobject obj, jint interval, jfloat factor, jstring FilePath, jint mode){
+	const char *nativeString = env->GetStringUTFChars(FilePath, 0);
+
+	bool return_value;
+	// use your string
+	return_value = Era.MakeTreeFile(interval, factor, nativeString, mode);
+
+	env->ReleaseStringUTFChars(FilePath, nativeString);
+
+	return return_value;
+}
+
+JNIEXPORT jint JNICALL Java_libera_EraCore_MakeImgtoData(JNIEnv* env, jobject obj, jlong src, jlong dst){
+	Mat& t_src = *(Mat*)src;
+	Mat& t_dst = *(Mat*)dst;
+
+	int return_Value = Era.MakeImage_to_Data(t_src, t_dst);
+
+	return return_Value;
+}
+
 }
