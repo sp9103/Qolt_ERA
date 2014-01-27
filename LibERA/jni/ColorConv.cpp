@@ -1,22 +1,16 @@
-// ColorConv.cpp: implementation of the ColorConv class.
-//
-//////////////////////////////////////////////////////////////////////
 #include "ColorConv.h"
-#include "math.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 
-ColorConv::ColorConv()
+ColorConv::ColorConv(void)
 {
 
 }
 
-ColorConv::~ColorConv()
-{
 
+ColorConv::~ColorConv(void)
+{
 }
+
 void ColorConv::RGB_To_Gray(float r, float g, float b, float *gray)
 {
 	*gray = r * 0.30F + g * 0.59F + b * 0.11F;
@@ -71,16 +65,16 @@ void ColorConv::CMY_To_RGB(float c, float m, float y, float *r, float *g, float 
 void ColorConv::RGB_To_HSV(float r, float g, float b, float *h, float *s, float *v)
 {
 	float max, min;
-    
+
 	max = MAX(r,g);
 	max = MAX(max,b);
-	
+
 	min = MIN(r,g);
 	min = MIN(min,b);
 
 	*v = max;                                   //V = max(r,g,b)
 	*s = (max != 0.0F) ? (max-min)/max : 0.0F;    // (S), S=0 => R=G=B=0
-	
+
 	if(*s == 0.0F)	*h = UNDEFINED;
 	else                                       // S != 0
 	{
@@ -88,9 +82,9 @@ void ColorConv::RGB_To_HSV(float r, float g, float b, float *h, float *s, float 
 		if(r == max) *h = (g - b) / delta;     // Yello ~ Magenta 
 		else if( g == max) *h = 2.0F + (b - r) / delta; // Cyan ~ Yello 
 		else if( b == max) *h = 4.0F + (r - g) / delta; // Magenta ! Cyan
-		
+
 		*h *= 60.0F;
-		
+
 		if(*h < 0.0F) *h += 360.0F;           // color to angle convert.
 	}
 }
@@ -113,7 +107,7 @@ void ColorConv::HSV_To_RGB(float h, float s, float v, float *r, float *g, float 
 	{                                           // S != 0 이므로 색상(H)이 있다.
 		float f, p, q, t;
 		int i;
-		
+
 		if(h == 360.0F) h = 0.0F;
 		h /= 60.0F;                             // H 값은 [0,360)사이 값
 		i = (int)h;                             // <=H 인 가장 큰 정수값
@@ -121,15 +115,15 @@ void ColorConv::HSV_To_RGB(float h, float s, float v, float *r, float *g, float 
 		p = v * (1.0F - s);
 		q = v * (1.0F - (s * f));
 		t = v * (1.0F - (s * (1.0F - f)));
-    
+
 		switch(i)
 		{
-			case 0: *r = v; *g = t; *b = p; break;
-			case 1: *r = q; *g = v; *b = p; break;
-			case 2: *r = p; *g = v; *b = t; break;
-			case 3: *r = p; *g = q; *b = v; break;
-			case 4: *r = t; *g = p; *b = v; break;
-			case 5: *r = v; *g = p; *b = q; break;
+		case 0: *r = v; *g = t; *b = p; break;
+		case 1: *r = q; *g = v; *b = p; break;
+		case 2: *r = p; *g = v; *b = t; break;
+		case 3: *r = p; *g = q; *b = v; break;
+		case 4: *r = t; *g = p; *b = v; break;
+		case 5: *r = v; *g = p; *b = q; break;
 		}
 	}
 }
@@ -145,7 +139,7 @@ void ColorConv::RGB_To_HSL(float	r, float g, float b, float *h, float *s, float 
 {
 	float v, m, vm;
 	float r2, g2, b2;
-	
+
 	v = MAX(r,g); 	v = MAX(v,b);
 	m = MIN(r,g);	m = MIN(m,b);
 
@@ -174,14 +168,14 @@ void ColorConv::RGB_To_HSL(float	r, float g, float b, float *h, float *s, float 
 void ColorConv::HSL_To_RGB(float h, float sl, float l, float *r, float *g, float *b)
 {
 	float v;
-	
+
 	v = (l <= 0.5F) ? (l * (1.0F + sl)) : (l + sl - l * sl);
 	if (v <= 0) *r = *g = *b = 0.0F;
 	else 
 	{
 		int sextant;
 		float m, sv, fract, vsf, mid1, mid2;
-		
+
 		m = l + l - v;
 		sv = (v - m ) / v;
 		h /= 60.0F;
@@ -190,15 +184,15 @@ void ColorConv::HSL_To_RGB(float h, float sl, float l, float *r, float *g, float
 		vsf = v * sv * fract;
 		mid1 = m + vsf;
 		mid2 = v - vsf;
-		
+
 		switch (sextant) 
 		{
-			case 0: *r = v;    *g = mid1; *b = m; break;
-			case 1: *r = mid2; *g = v;    *b = m; break;
-			case 2: *r = m;    *g = v;    *b = mid1; break;
-			case 3: *r = m;    *g = mid2; *b = v; break;
-			case 4: *r = mid1; *g = m;    *b = v; break;
-			case 5: *r = v;    *g = m;    *b = mid2; break;
+		case 0: *r = v;    *g = mid1; *b = m; break;
+		case 1: *r = mid2; *g = v;    *b = m; break;
+		case 2: *r = m;    *g = v;    *b = mid1; break;
+		case 3: *r = m;    *g = mid2; *b = v; break;
+		case 4: *r = mid1; *g = m;    *b = v; break;
+		case 5: *r = v;    *g = m;    *b = mid2; break;
 		}
 	}
 }
@@ -220,31 +214,31 @@ void ColorConv::RGB_To_YIQ(float r, float g, float b, float *y, float *i, float 
 // H는 [0,360) 범위, S,V값은 각각 [0,1]범위를 갖는다.
 void ColorConv::RGB_To_HSI(float r, float g, float b, float *h, float *s, float *i)
 {
-    float minc;              /// minimum and maximum RGB values 
-    float angle;             /// temp variable used to compute Hue 
-	
+	float minc;              /// minimum and maximum RGB values 
+	float angle;             /// temp variable used to compute Hue 
+
 	minc = MIN(r,g);
 	minc = MIN(minc,b);
-	
-    /// compute intensity 
-    *i=(r + g + b) / 3.0f;
-	
-    /// compute hue and saturation 
-    if((r==g) && (g==b))  /// gray-scale 
+
+	/// compute intensity 
+	*i=(r + g + b) / 3.0f;
+
+	/// compute hue and saturation 
+	if((r==g) && (g==b))  /// gray-scale 
 	{
 		*s = 0.0f;
 		*h = 0.0f;
 		return;
 	}
-    else
+	else
 	{
 		*s= 1.0f - (3.0f / (r + g + b)) * minc;
 		angle = (r - 0.5f * g - 0.5f * b) / (float)sqrt((r - g) * (r - g)+(r - b) * (g - b));
 		*h = (float)acos(angle);
 		*h *= 57.29577951f;          /// convert to degrees 
 	}
-	
-    if(b>g)	*h = 360.0f - *h;
+
+	if(b>g)	*h = 360.0f - *h;
 }
 
 
@@ -255,30 +249,30 @@ void ColorConv::RGB_To_HSI(float r, float g, float b, float *h, float *s, float 
 // R,G,B는 각각 [0,1]to 갖는다.
 void ColorConv::HSI_To_RGB(float h, float s, float i, float *r, float *g, float *b)
 {
-    float angle1, angle2, scale;   /// temp variables 
-	
-    if(i==0.0)    /// BLACK 
+	float angle1, angle2, scale;   /// temp variables 
+
+	if(i==0.0)    /// BLACK 
 	{
 		*r = 0.0f;
 		*g = 0.0f;
 		*b = 0.0f;
 		return;
 	}
-    if(s==0.0)     /// gray-scale  H is undefined
+	if(s==0.0)     /// gray-scale  H is undefined
 	{
 		*r = i;
 		*g = i;
 		*b = i;
 		return;
 	}
-    if(h<0.0)	h += 360.0f;
+	if(h<0.0)	h += 360.0f;
 
-    scale = 3.0f * i;
-    if(h<=120.0)
+	scale = 3.0f * i;
+	if(h<=120.0)
 	{
 		angle1=h*0.017453293f;    /// convert to radians - mul by pi/180 
 		angle2=(60.0f-h)*0.017453293f;
-		
+
 		*b = (1.0f-s)/3.0f;
 		*r = (float)(1.0f + (s*cos(angle1)/cos(angle2)))/3.0f;
 		*g = 1.0f-*r-*b;
@@ -291,7 +285,7 @@ void ColorConv::HSI_To_RGB(float h, float s, float i, float *r, float *g, float 
 		h -= 120.0f;
 		angle1=h*0.017453293f;    /// convert to radians - mul by pi/180 
 		angle2=(60.0f-h)*0.017453293f;
-		
+
 		*r = (1.0f-s)/3.0f;
 		*g = (float)(1.0f + (s*cos(angle1)/cos(angle2)))/3.0f;
 		*b = 1.0f - *r - *g;
@@ -299,13 +293,13 @@ void ColorConv::HSI_To_RGB(float h, float s, float i, float *r, float *g, float 
 		*g *= scale;
 		*b *= scale;
 	}
-    else
+	else
 	{
 		if(h==0)	h=360.0f;
 		h -= 240.0f;
 		angle1=h*0.017453293f;    /// convert to radians - mul by pi/180 
 		angle2=(60.0f-h)*0.017453293f;
-		
+
 		*g = (1.0f-s)/3.0f;
 		*b = (float)(1.0 + (s*cos(angle1)/cos(angle2)))/3.0f;
 		*r = 1.0f - *g - *b;

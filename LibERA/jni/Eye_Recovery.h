@@ -1,6 +1,6 @@
 #include "Definition.h"
 #include "ColorConv.h"
-#include "ColorConv.cpp"
+//#include "ColorConv.cpp"
 
 typedef struct UcharRGB{
 	uchar R;
@@ -11,7 +11,7 @@ typedef struct UcharRGB{
 class Eye_Recovery
 {
 private:
-	CColorConv *ConvColor;				//color convert clsee
+	//ColorConv ConvertColor;				//color convert clsee
 	
 	UcharRGB ***Data_Matrix;
 	int t_interval;

@@ -1,13 +1,17 @@
-// ColorConv.h: interface for the CColorConv class.
-//
-//////////////////////////////////////////////////////////////////////
+#include "math.h"
 
-class ColorConv  
+//#define MAX(a, b)	(((a)>(b)) ? (a) : (b))
+//#define MIN(a, b)	(((a)<(b)) ? (a) : (b))
+//#define UNDEFINED (0.0F)
+//#define CLIP(mid,low,high)		{if(mid<low)	mid=low;	if(mid>high)	mid=high;}
+
+class ColorConv
 {
-	/*#define MAX(a, b)	(((a)>(b)) ? (a) : (b))
-	#define MIN(a, b)	(((a)<(b)) ? (a) : (b))
-	#define UNDEFINED (0.0F)*/
 public:
+
+	ColorConv(void);
+	~ColorConv(void);
+
 	void HSI_To_RGB(float h,float s,float i,float *r,float *g,float *b);
 	void RGB_To_HSI(float r,float g,float b,float *h,float *s,float *i);
 	void RGB_To_YIQ(float r,float g,float b, float *y,float *i,float *q);
@@ -19,8 +23,5 @@ public:
 	void HSV_To_RGB(float h, float s, float v, float *r, float *g, float *b);
 	void RGB_To_HSL(float r, float g, float b, float *h, float *l, float *s);
 	void HSL_To_RGB(float h, float l, float s, float *r, float *g, float *b);
-	
-	ColorConv();
-	 ~ColorConv();
-
 };
+
