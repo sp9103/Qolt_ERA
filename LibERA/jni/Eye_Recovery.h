@@ -1,5 +1,6 @@
 #include "Definition.h"
 #include "ColorConv.h"
+#include "ColorConv.cpp"
 
 typedef struct UcharRGB{
 	uchar R;

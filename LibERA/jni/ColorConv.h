@@ -2,11 +2,11 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-class CColorConv  
+class ColorConv  
 {
-	#define MAX(a, b)	(((a)>(b)) ? (a) : (b))
+	/*#define MAX(a, b)	(((a)>(b)) ? (a) : (b))
 	#define MIN(a, b)	(((a)<(b)) ? (a) : (b))
-	#define UNDEFINED (0.0F)
+	#define UNDEFINED (0.0F)*/
 public:
 	void HSI_To_RGB(float h,float s,float i,float *r,float *g,float *b);
 	void RGB_To_HSI(float r,float g,float b,float *h,float *s,float *i);
@@ -19,7 +19,8 @@ public:
 	void HSV_To_RGB(float h, float s, float v, float *r, float *g, float *b);
 	void RGB_To_HSL(float r, float g, float b, float *h, float *l, float *s);
 	void HSL_To_RGB(float h, float l, float s, float *r, float *g, float *b);
-	CColorConv();
-	virtual ~CColorConv();
+	
+	ColorConv();
+	 ~ColorConv();
 
 };

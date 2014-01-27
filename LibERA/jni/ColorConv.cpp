@@ -1,4 +1,4 @@
-// ColorConv.cpp: implementation of the CColorConv class.
+// ColorConv.cpp: implementation of the ColorConv class.
 //
 //////////////////////////////////////////////////////////////////////
 #include "ColorConv.h"
@@ -8,16 +8,16 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CColorConv::CColorConv()
+ColorConv::ColorConv()
 {
 
 }
 
-CColorConv::~CColorConv()
+ColorConv::~ColorConv()
 {
 
 }
-void CColorConv::RGB_To_Gray(float r, float g, float b, float *gray)
+void ColorConv::RGB_To_Gray(float r, float g, float b, float *gray)
 {
 	*gray = r * 0.30F + g * 0.59F + b * 0.11F;
 }
@@ -28,7 +28,7 @@ void CColorConv::RGB_To_Gray(float r, float g, float b, float *gray)
 // Gray  [0,1] 
 // R,G,B [0,1]
 
-void CColorConv::Gray_To_RGB(float gray, float *r, float *g, float *b)
+void ColorConv::Gray_To_RGB(float gray, float *r, float *g, float *b)
 {
 	*r = *g = *b = gray;
 }
@@ -40,7 +40,7 @@ void CColorConv::Gray_To_RGB(float gray, float *r, float *g, float *b)
 // R,G,B [0,1]
 // C,M,Y [0,1]
 
-void CColorConv::RGB_To_CMY(float r, float g, float b, float *c, float *m, float *y)
+void ColorConv::RGB_To_CMY(float r, float g, float b, float *c, float *m, float *y)
 {
 	*c = 1.0F - r;
 	*m = 1.0F - g;
@@ -54,7 +54,7 @@ void CColorConv::RGB_To_CMY(float r, float g, float b, float *c, float *m, float
 // R,G,B [0,1]
 // C,M,Y [0,1]
 
-void CColorConv::CMY_To_RGB(float c, float m, float y, float *r, float *g, float *b)
+void ColorConv::CMY_To_RGB(float c, float m, float y, float *r, float *g, float *b)
 {
 	*r = 1.0F - c;
 	*g = 1.0F - m;
@@ -68,7 +68,7 @@ void CColorConv::CMY_To_RGB(float c, float m, float y, float *r, float *g, float
 // R,G,B [0,1]
 // H [0,360) , S,V [0,1]
 
-void CColorConv::RGB_To_HSV(float r, float g, float b, float *h, float *s, float *v)
+void ColorConv::RGB_To_HSV(float r, float g, float b, float *h, float *s, float *v)
 {
 	float max, min;
     
@@ -102,7 +102,7 @@ void CColorConv::RGB_To_HSV(float r, float g, float b, float *h, float *s, float
 // H는 [0,360) 범위, S,V값은 각각 [0,1]범위를 갖는다.
 // R,G,B는 각각 [0,1]to 갖는다.
 
-void CColorConv::HSV_To_RGB(float h, float s, float v, float *r, float *g, float *b)
+void ColorConv::HSV_To_RGB(float h, float s, float v, float *r, float *g, float *b)
 {  
 	if(s == 0.0F)                                // 컬러값은 흑백명암값.
 	{
@@ -141,7 +141,7 @@ void CColorConv::HSV_To_RGB(float h, float s, float v, float *r, float *g, float
 // R,G,B는 각각 [0,1]to 갖는다.
 // H는 [0,360) 범위, S,V값은 각각 [0,1]범위를 갖는다.
 
-void CColorConv::RGB_To_HSL(float	r, float g, float b, float *h, float *s, float *l)
+void ColorConv::RGB_To_HSL(float	r, float g, float b, float *h, float *s, float *l)
 {
 	float v, m, vm;
 	float r2, g2, b2;
@@ -171,7 +171,7 @@ void CColorConv::RGB_To_HSL(float	r, float g, float b, float *h, float *s, float
 // R,G,B는 각각 [0,1]to 갖는다.
 
 
-void CColorConv::HSL_To_RGB(float h, float sl, float l, float *r, float *g, float *b)
+void ColorConv::HSL_To_RGB(float h, float sl, float l, float *r, float *g, float *b)
 {
 	float v;
 	
@@ -205,7 +205,7 @@ void CColorConv::HSL_To_RGB(float h, float sl, float l, float *r, float *g, floa
 
 
 
-void CColorConv::RGB_To_YIQ(float r, float g, float b, float *y, float *i, float *q)
+void ColorConv::RGB_To_YIQ(float r, float g, float b, float *y, float *i, float *q)
 {
 	*y = 0.299f * r + 0.587f * g + 0.114f * b;
 	*i = 0.596f * r - 0.275f * g - 0.321f * b;
@@ -218,7 +218,7 @@ void CColorConv::RGB_To_YIQ(float r, float g, float b, float *y, float *i, float
 //
 // R,G,B는 각각 [0,1]to 갖는다.
 // H는 [0,360) 범위, S,V값은 각각 [0,1]범위를 갖는다.
-void CColorConv::RGB_To_HSI(float r, float g, float b, float *h, float *s, float *i)
+void ColorConv::RGB_To_HSI(float r, float g, float b, float *h, float *s, float *i)
 {
     float minc;              /// minimum and maximum RGB values 
     float angle;             /// temp variable used to compute Hue 
@@ -253,7 +253,7 @@ void CColorConv::RGB_To_HSI(float r, float g, float b, float *h, float *s, float
 //
 // H는 [0,360) 범위, S,V값은 각각 [0,1]범위를 갖는다.
 // R,G,B는 각각 [0,1]to 갖는다.
-void CColorConv::HSI_To_RGB(float h, float s, float i, float *r, float *g, float *b)
+void ColorConv::HSI_To_RGB(float h, float s, float i, float *r, float *g, float *b)
 {
     float angle1, angle2, scale;   /// temp variables 
 	
