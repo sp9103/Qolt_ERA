@@ -109,9 +109,9 @@ void Eye_Recovery::RefinePixel( uchar *R, uchar *G, uchar *B ,float factor )
 	float H, S, I;
 	float refine_R, refine_G, refine_B;
 
-	//ConvertColor.RGB_To_HSI((float)*R/255.f, (float)*G/255.f, (float)*B/255.f, &H, &S, &I);
+	ConvertColor.RGB_To_HSI((float)*R/255.f, (float)*G/255.f, (float)*B/255.f, &H, &S, &I);
 	HSI_Revision(&H, &S, &I, factor);
-	//ConvertColor.HSI_To_RGB(H,S,I, &refine_R, &refine_G, &refine_B);
+	ConvertColor.HSI_To_RGB(H,S,I, &refine_R, &refine_G, &refine_B);
 
 	refine_B *= 255.f, refine_G *= 255.f, refine_R *= 255.f;
 	CLIP(refine_B, 0, 255); CLIP(refine_G, 0, 255); CLIP(refine_R, 0, 255);
@@ -127,9 +127,9 @@ void Eye_Recovery::InversePixel( uchar *R, uchar *G, uchar *B, float factor )
 	float H, S, I;
 	float refine_R, refine_G, refine_B;
 
-	//ConvertColor.RGB_To_HSI((float)*R/255.f, (float)*G/255.f, (float)*B/255.f, &H, &S, &I);
+	ConvertColor.RGB_To_HSI((float)*R/255.f, (float)*G/255.f, (float)*B/255.f, &H, &S, &I);
 	Dyschromatopsa(&H, &S, &I, factor);
-	//ConvertColor.HSI_To_RGB(H,S,I, &refine_R, &refine_G, &refine_B);
+	ConvertColor.HSI_To_RGB(H,S,I, &refine_R, &refine_G, &refine_B);
 
 	refine_B *= 255.f, refine_G *= 255.f, refine_R *= 255.f;
 	CLIP(refine_B, 0, 255); CLIP(refine_G, 0, 255); CLIP(refine_R, 0, 255);
