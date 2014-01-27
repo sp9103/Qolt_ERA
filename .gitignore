@@ -21,3 +21,13 @@ colorblind/bin/jarlist.cache
 colorblind/gen/com/naubull2/colorblind/BuildConfig.java
 colorblind/gen/com/naubull2/colorblind/R.java
 colorblind/gen/com/naubull2/libera/R.java
+LibERA/bin/classes/com/naubull2/libera/BuildConfig.class
+colorblind/bin/classes/com/naubull2/libera/R$string.class
+colorblind/bin/classes/com/naubull2/libera/R.class
+colorblind/bin/dexedLibs/android-support-v4-72c042d715ed9f3a236c719cb97227e9.jar
+colorblind/bin/dexedLibs/libera-401f5fe7e904754db81dbc0f0674da43.jar
+colorblind/bin/classes.dex
+colorblind/bin/colorblind.apk
+colorblind/bin/resources.ap_
+LibERA/lint.xml
+colorblind/lint.xml
