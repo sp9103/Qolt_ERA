@@ -2,17 +2,23 @@ package activity;
 
 import java.io.FileNotFoundException;
 
+import libera.EraCore;
+
+import org.opencv.core.Mat;
+
 import utililty.ImageProcessHelper;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -40,10 +46,27 @@ public class ImageModeActivity extends Activity {
 			switch(msg.what){
 			
 			case SET_IMAGE_FROM_GALLERY:
+				Log.i(TAG, "reading image");
+				ProgressDialog dialog = new ProgressDialog(mContext);
+				dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+				dialog.setIndeterminate(true);
+				dialog.setCancelable(false);
+				dialog.setMessage("Processing");
+				dialog.show();
+				
 				Bitmap initialBitmap;
 				try {
 					initialBitmap = decodeUri(selectedImage);
 					Bitmap preparedBitmap = ImageProcessHelper.JPEGtoRGB888(initialBitmap);
+					initialBitmap.recycle();
+					
+					Mat srcImage = ImageProcessHelper.BitmapToMat(ImageProcessHelper.JPEGtoRGB888(preparedBitmap));
+					Mat destImage = new Mat();
+					
+					EraCore.RefineImage(srcImage.nativeObj, destImage.nativeObj, (float)0.4);
+					srcImage.release();
+					
+					preparedBitmap = ImageProcessHelper.MatToBitmap(destImage);
 					
 					mImageView.setImageBitmap(preparedBitmap);
 					
@@ -51,6 +74,8 @@ public class ImageModeActivity extends Activity {
 					Toast.makeText(mContext, "Image not found!!", Toast.LENGTH_LONG).show();
 					e.printStackTrace();
 				}
+				
+				dialog.dismiss();
 				break;
 				
 			case CLEAR_UPDATE_SCREEN:
@@ -67,15 +92,23 @@ public class ImageModeActivity extends Activity {
 		BitmapFactory.Options imgOption = new BitmapFactory.Options();
 		imgOption.inJustDecodeBounds = true;	// prevents wrong URI bugs
 		
-		DisplayMetrics dm = new DisplayMetrics();
-		this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+		Log.i(TAG, "getting screen dimension");
 		
+		WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int width = size.x;
+		Log.i(TAG, "screen width"+width);
+
 		// Get image size
 		BitmapFactory.decodeStream(getContentResolver().openInputStream(inImage),null,imgOption);
+		Log.i(TAG, "image"+imgOption.outWidth+"*"+imgOption.outHeight);
 		
 		int scale = 1;
-		if (imgOption.outWidth > dm.widthPixels)
-			scale = imgOption.outWidth / dm.widthPixels;
+		if (imgOption.outWidth > width)
+			scale = imgOption.outWidth / width;
+		Log.i(TAG, "scale factor "+scale);
 		
 		BitmapFactory.Options outOption = new BitmapFactory.Options();
 		outOption.inSampleSize = scale;
@@ -86,7 +119,7 @@ public class ImageModeActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		Log.i("GALLERY", "recieved image data from gallery");
+		Log.i(TAG, "recieved image data from gallery");
 		
 		mContext = this;
 		
@@ -94,13 +127,13 @@ public class ImageModeActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		selectedImage = getIntent().getData();
-
 		setContentView(R.layout.activity_image_mode);
 		mImageView = (ImageView)findViewById(R.id.image_view);
 		
+		Log.i(TAG, "retrieving image data uri");
+		selectedImage = getIntent().getData();
+		
 		mMainHandler.sendEmptyMessage(SET_IMAGE_FROM_GALLERY);
-		finish();
 	}
 
 }

@@ -33,3 +33,5 @@ LibERA/lint.xml
 colorblind/lint.xml
 LibERA/obj/local/armeabi-v7a/libopencv_java.so
 LibERA/obj/local/armeabi-v7a/objs/ERA/ERAcore.o.d
+LibERA/libs/armeabi-v7a/libERA.so
+LibERA/obj/local/armeabi-v7a/libERA.so

@@ -65,13 +65,4 @@ public class ImageProcessHelper {
 		org.opencv.android.Utils.matToBitmap(mat, bitmap);
 		return bitmap;
 	}
-	
-	/**
-	 * Returns the address of a Mat object for native codes
-	 * @param mat
-	 * @return pointer value to given Mat object (long)
-	 */
-	public static long MatPointer(Mat mat){
-		return mat.nativeObj;
-	}
 }
