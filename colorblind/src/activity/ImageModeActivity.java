@@ -2,8 +2,13 @@ package activity;
 
 import java.io.FileNotFoundException;
 
+import libera.EraCore;
+
+import org.opencv.core.Mat;
+
 import utililty.ImageProcessHelper;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -42,11 +47,26 @@ public class ImageModeActivity extends Activity {
 			
 			case SET_IMAGE_FROM_GALLERY:
 				Log.i(TAG, "reading image");
+				ProgressDialog dialog = new ProgressDialog(mContext);
+				dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+				dialog.setIndeterminate(true);
+				dialog.setCancelable(false);
+				dialog.setMessage("Processing");
+				dialog.show();
+				
 				Bitmap initialBitmap;
 				try {
 					initialBitmap = decodeUri(selectedImage);
 					Bitmap preparedBitmap = ImageProcessHelper.JPEGtoRGB888(initialBitmap);
 					initialBitmap.recycle();
+					
+					Mat srcImage = ImageProcessHelper.BitmapToMat(ImageProcessHelper.JPEGtoRGB888(preparedBitmap));
+					Mat destImage = new Mat();
+					
+					EraCore.RefineImage(srcImage.nativeObj, destImage.nativeObj, (float)0.4);
+					srcImage.release();
+					
+					preparedBitmap = ImageProcessHelper.MatToBitmap(destImage);
 					
 					mImageView.setImageBitmap(preparedBitmap);
 					
@@ -54,6 +74,8 @@ public class ImageModeActivity extends Activity {
 					Toast.makeText(mContext, "Image not found!!", Toast.LENGTH_LONG).show();
 					e.printStackTrace();
 				}
+				
+				dialog.dismiss();
 				break;
 				
 			case CLEAR_UPDATE_SCREEN:
@@ -112,7 +134,6 @@ public class ImageModeActivity extends Activity {
 		selectedImage = getIntent().getData();
 		
 		mMainHandler.sendEmptyMessage(SET_IMAGE_FROM_GALLERY);
-		finish();
 	}
 
 }
