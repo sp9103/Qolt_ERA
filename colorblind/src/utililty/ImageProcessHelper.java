@@ -14,7 +14,7 @@ public class ImageProcessHelper {
 	 * @param img bitmap image
 	 * @return RGB_888 transformed bitmap image
 	 */
-	public Bitmap JPEGtoRGB888(Bitmap img) {
+	public static Bitmap JPEGtoRGB888(Bitmap img) {
 		int numPixels = img.getWidth() * img.getHeight();
 		int[] pixels = new int[numPixels];
 
@@ -40,7 +40,7 @@ public class ImageProcessHelper {
 	 * @param target img height
 	 * @return returns OpenCV Mat type compatible Bitmap
 	 */
-	public Bitmap CreateCompatibleBitmap(int width, int height){
+	public static Bitmap CreateCompatibleBitmap(int width, int height){
 		return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
 	}
 	
@@ -49,7 +49,7 @@ public class ImageProcessHelper {
 	 * @param bitmap ARGB8888 Bitmap image
 	 * @return Mat object
 	 */
-	public Mat BitmapToMat(Bitmap bitmap){
+	public static Mat BitmapToMat(Bitmap bitmap){
 		Mat mat = new Mat(bitmap.getHeight(), bitmap.getWidth(), CvType.CV_8UC4);
 		org.opencv.android.Utils.bitmapToMat(bitmap, mat);
 		return mat;
@@ -60,7 +60,7 @@ public class ImageProcessHelper {
 	 * @param mat object
 	 * @return ARGB8888 Bitmap image
 	 */
-	public Bitmap MatToBitmap(Mat mat){
+	public static Bitmap MatToBitmap(Mat mat){
 		Bitmap bitmap = Bitmap.createBitmap(mat.width(), mat.height(), Bitmap.Config.ARGB_8888);
 		org.opencv.android.Utils.matToBitmap(mat, bitmap);
 		return bitmap;
@@ -71,7 +71,7 @@ public class ImageProcessHelper {
 	 * @param mat
 	 * @return pointer value to given Mat object (long)
 	 */
-	public long MatPointer(Mat mat){
+	public static long MatPointer(Mat mat){
 		return mat.nativeObj;
 	}
 }
