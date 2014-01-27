@@ -1,16 +1,22 @@
 package activity;
 
+import java.io.FileNotFoundException;
+
 import utililty.ImageProcessHelper;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.naubull2.colorblind.R;
 
@@ -24,6 +30,7 @@ public class ImageModeActivity extends Activity {
 	private ImageProcessHelper mImageProcHelper;
 	private ImageView mImageView;
 	private Uri selectedImage;	
+	private Context mContext;
 	
 	
 	
@@ -31,36 +38,49 @@ public class ImageModeActivity extends Activity {
 	private Handler mMainHandler = new Handler(){
 		public void handleMessage(Message msg){
 			switch(msg.what){
+			
 			case SET_IMAGE_FROM_GALLERY:
-				Bitmap initialBitmap = decodeUri(selectedImage);
-				Bitmap preparedBitmap = ImageProcessHelper.JPEGtoRGB888(initialBitmap);
-				
+				Bitmap initialBitmap;
+				try {
+					initialBitmap = decodeUri(selectedImage);
+					Bitmap preparedBitmap = ImageProcessHelper.JPEGtoRGB888(initialBitmap);
+					
+					mImageView.setImageBitmap(preparedBitmap);
+					
+				} catch (FileNotFoundException e) {
+					Toast.makeText(mContext, "Image not found!!", Toast.LENGTH_LONG).show();
+					e.printStackTrace();
+				}
 				break;
+				
 			case CLEAR_UPDATE_SCREEN:
 				
 			}
 		}
 	};
 	
-	private Bitmap decodeUri(Uri selectedImage) throws FileNotFoundException {
-		final int REQUIRED_WIDTH = IMG_WIDTH;
-		// 이미지 사이즈 디코딩
-		BitmapFactory.Options o = new BitmapFactory.Options();
-		o.inJustDecodeBounds = true;
-		BitmapFactory.decodeStream(
-				getContentResolver().openInputStream(selectedImage), null, o);
-
-		// 이미지가 클경우에는, 스케일 사이즈를 대략 적으로만 계산
+	/*
+	 * Resize image bitmap to fit screen, preventing OOM for loading large images
+	 * Throws File not found exception if URI is null
+	 */
+	private Bitmap decodeUri(Uri inImage) throws FileNotFoundException {	
+		BitmapFactory.Options imgOption = new BitmapFactory.Options();
+		imgOption.inJustDecodeBounds = true;	// prevents wrong URI bugs
+		
+		DisplayMetrics dm = new DisplayMetrics();
+		this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+		
+		// Get image size
+		BitmapFactory.decodeStream(getContentResolver().openInputStream(inImage),null,imgOption);
+		
 		int scale = 1;
-		if (o.outWidth > REQUIRED_WIDTH) {
-			scale = o.outWidth / REQUIRED_WIDTH;
-		}
-		// 샘플 사이즈로 디코딩
-		BitmapFactory.Options o2 = new BitmapFactory.Options();
-		o2.inSampleSize = scale;
-
-		return BitmapFactory.decodeStream(
-				getContentResolver().openInputStream(selectedImage), null, o2);
+		if (imgOption.outWidth > dm.widthPixels)
+			scale = imgOption.outWidth / dm.widthPixels;
+		
+		BitmapFactory.Options outOption = new BitmapFactory.Options();
+		outOption.inSampleSize = scale;
+		
+		return BitmapFactory.decodeStream(getContentResolver().openInputStream(inImage), null, outOption);
 	}
 	
 	@Override
@@ -68,21 +88,13 @@ public class ImageModeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		Log.i("GALLERY", "recieved image data from gallery");
 		
+		mContext = this;
+		
 		// 전체 화면, 타이틀 액션바 제거
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		selectedImage = getIntent().getData();
-		
-		/*
-		 * extract bitmap data from URI
-		 * 
-		 * Bitmap initialBitmap = decodeUri(selectedImage);
-		 * Bitmap scaledImage = Bitmap.createScaledBitmap(
-		 * 								initialBitmap, WIDTH, HEIGHT, true);
-		 * scaledImage = mImageProcHelper.JPEGtoRGB888(scaledImage);
-		 * initialBitmap.recycle();
-		 */
 
 		setContentView(R.layout.activity_image_mode);
 		mImageView = (ImageView)findViewById(R.id.image_view);

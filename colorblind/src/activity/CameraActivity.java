@@ -38,7 +38,7 @@ public class CameraActivity extends Activity{
 	private Context mContext = this;
 	private FrameLayout preview;
 	private Camera mCamera;
-	private CameraPreview mPreview;
+	//private CameraPreview mPreview;
 	private RadioButton mCheck;
 	private Button mTakePhoto, mAlbumButton, mSettingButton;
 
@@ -72,13 +72,14 @@ public class CameraActivity extends Activity{
 			mCamera = getCameraInstance(0);
 			mCamera.setDisplayOrientation(0);	
 			preview = (FrameLayout) findViewById(R.id.camera_preview);
-			mPreview = new CameraPreview(this, startProcessing);
-			mPreview.setCamera(mCamera);
+			//mPreview = new CameraPreview(this, startProcessing);
+			//mPreview.setCamera(mCamera);
 
-			preview.addView(mPreview);
+			//preview.addView(mPreview);
 
 			// 촬영용 버튼 리스너 생성
-			mTakePhoto = (Button) findViewById();
+			//mTakePhoto = (Button) findViewById();
+			/*
 			mTakePhoto.setOnTouchListener(new OnTouchListener() {
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
@@ -87,8 +88,7 @@ public class CameraActivity extends Activity{
 					switch (action) {
 					case MotionEvent.ACTION_DOWN:
 						// 포커싱
-						if (isTraining
-								|| dataManager.getData("imgIndex",
+						if (isTraining || dataManager.getData("imgIndex",
 										Integer.class) != 0) {
 							if (!isFocusing && !isFocused) {
 								isFocusing = true;
@@ -105,7 +105,7 @@ public class CameraActivity extends Activity{
 					return false;
 				}
 			});
-
+*/
 		} else if (CameraInfo.CAMERA_FACING_FRONT > -1) {
 			// 넥서스7 처럼 후면 카메라가 없는 기기 처리
 			try {
@@ -190,6 +190,7 @@ public class CameraActivity extends Activity{
 
 
 	private void releaseCameraAndPreview() {
+		/*
 		if (mPreview != null) {
 			preview.removeAllViews();
 		}
@@ -200,6 +201,7 @@ public class CameraActivity extends Activity{
 			mCamera.release();
 			mCamera = null;
 		}
+		*/
 	}
 
 	/*
@@ -212,7 +214,7 @@ public class CameraActivity extends Activity{
 		// 전체 화면, 타이틀 액션바 제거
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+/*
 		setContentView();
 		mContext = this;
 
@@ -227,6 +229,7 @@ public class CameraActivity extends Activity{
 				mContext.startActivity(i);
 			}
 		};
+		*/
 	}
 	
 	/*
@@ -236,12 +239,13 @@ public class CameraActivity extends Activity{
 	public void onResume() {
 		super.onResume();
 		Log.i(TAG, "on Resume");
-
+/*
 		preview = (FrameLayout) findViewById(R.id.camera_preview);
 		mPreview = new CameraPreview(this, startProcessing);
 		mPreview.setCamera(mCamera);
 
 		preview.addView(mPreview);
+		*/
 		
 	}
 
