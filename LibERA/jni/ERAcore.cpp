@@ -1,5 +1,10 @@
 #include <jni.h>
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/features2d/features2d.hpp>
 #include <android/log.h>
+
+#include "Eye_Recovery.cpp"
 
 #define LOG_TAG "JNI"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
@@ -90,10 +95,10 @@ JNIEXPORT jint JNICALL Java_libera_EraCore_OpenDataFile(JNIEnv* env, jobject obj
 }
 
 JNIEXPORT void JNICALL Java_libera_EraCore_DeleteDataBuffer(JNIEnv* env, jobject obj){
-	DeleteDataBuffer();
+	Era.DeleteDataBuffer();
 }
 
-JNIEXPORT void JNICALL Java_libera_EraCore_RefineImage(JNIEnv* env, jobject obj, jlong src, jlong dst, jfloat factor){|
+JNIEXPORT void JNICALL Java_libera_EraCore_RefineImage(JNIEnv* env, jobject obj, jlong src, jlong dst, jfloat factor){
 	
 	Mat& t_src = *(Mat*)src;
 	Mat& t_dst = *(Mat*)dst;

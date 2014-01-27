@@ -35,12 +35,12 @@ public:
 	/*image color weakness experience - Static Image*/
 	void InverseImage(cv::Mat src, cv::Mat dst, float factor);
 	/*Tree file Craete*/
-	bool MakeTreeFile(int interval, float factor, char *FilePath, int mode);
+	bool MakeTreeFile(int interval, float factor,const char *FilePath, int mode);
 	/*Using Tree, Make Image*/
 	int MakeImage_to_Data(cv::Mat src, cv::Mat dst);
 	/*Open Data File, call this func -> real time convert start (one time)
 	  - file open -> copy buffer -> file close*/
-	int OpenDataFile(char *FilePath);
+	int OpenDataFile(const char *FilePath);
 	/*Delete Data_Matrix. call this func => real time convert exit*/
 	void DeleteDataBuffer();
 };

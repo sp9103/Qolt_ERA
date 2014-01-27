@@ -140,7 +140,7 @@ void Eye_Recovery::InversePixel( uchar *R, uchar *G, uchar *B, float factor )
 /*Tree file Create
 	interval : makeing correction tree interval
 	FilePath*/
-bool Eye_Recovery::MakeTreeFile( int interval, float factor, char *FilePath, int mode )
+bool Eye_Recovery::MakeTreeFile( int interval, float factor, const char *FilePath, int mode )
 {
 	FILE *TreeData = fopen(FilePath, "wb");
 	uchar B,G,R;
@@ -231,7 +231,7 @@ int Eye_Recovery::MakeImage_to_Data( cv::Mat src, cv::Mat dst)
 	return 0;
 }
 
-int Eye_Recovery::OpenDataFile(char *FilePath )
+int Eye_Recovery::OpenDataFile(const char *FilePath )
 {
 	FILE *p_Data = fopen(FilePath, "rb");
 	if(p_Data == NULL)		return -1;

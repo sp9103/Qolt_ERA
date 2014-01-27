@@ -31,3 +31,4 @@ colorblind/bin/colorblind.apk
 colorblind/bin/resources.ap_
 LibERA/lint.xml
 colorblind/lint.xml
+LibERA/obj/local/armeabi-v7a/libopencv_java.so
