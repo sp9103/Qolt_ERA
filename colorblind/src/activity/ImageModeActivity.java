@@ -64,12 +64,12 @@ public class ImageModeActivity extends Activity {
 					initialBitmap.recycle();
 					
 					Mat srcImage = mImageProcHelper.BitmapToMat(mImageProcHelper.JPEGtoRGB888(preparedBitmap));
-					Mat destImage = new Mat();
+					//Mat destImage = new Mat();
 					
-					era.RefineImage(srcImage.nativeObj, destImage.nativeObj, (float)0.4);
-					srcImage.release();
+					era.RefineImage(srcImage.nativeObj, srcImage.nativeObj, (float)0.4);
+					//srcImage.release();
 					
-					preparedBitmap = mImageProcHelper.MatToBitmap(destImage);
+					preparedBitmap = mImageProcHelper.MatToBitmap(srcImage);
 					
 					mImageView.setImageBitmap(preparedBitmap);
 					
