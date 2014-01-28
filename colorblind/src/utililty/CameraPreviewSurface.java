@@ -5,7 +5,9 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Camera;
+import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.Size;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Surface;
@@ -17,14 +19,28 @@ import android.view.View.OnTouchListener;
 public class CameraPreviewSurface extends SurfaceView implements SurfaceHolder.Callback, OnTouchListener{
 	private static final String TAG = "SURFACEVIEW";
 	
-	public CameraPreviewSurface(Context context) {
+	private Handler mainHandler;
+	private SurfaceHolder mHolder;
+	
+	
+	public CameraPreviewSurface(Context context, Handler handler) {
 		super(context);
+		mainHandler = handler;
+		mHolder = getHolder();
+		mHolder.addCallback(this);
+		mHolder.setKeepScreenOn(true);
 	}
 
 
 	/*
 	 * Preview callback (handling frames)
 	 */
+	private Camera.PreviewCallback mPreviewCallback = new PreviewCallback() {
+		@Override
+		public void onPreviewFrame(byte[] _data, Camera _camera) {
+			// try rendering here?
+		}
+	};
 	
 	
 	/*
