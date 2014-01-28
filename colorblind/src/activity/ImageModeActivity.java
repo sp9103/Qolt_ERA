@@ -15,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -40,8 +41,7 @@ public class ImageModeActivity extends Activity {
 	private Uri selectedImage;	
 	private Context mContext;
 	
-	
-	
+	private Bitmap resultImage;
 	
 	
 	private Handler mMainHandler = new Handler(){
@@ -49,36 +49,8 @@ public class ImageModeActivity extends Activity {
 			switch(msg.what){
 			
 			case SET_IMAGE_FROM_GALLERY:
-				Log.i(TAG, "reading image");
-				ProgressDialog dialog = new ProgressDialog(mContext);
-				dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-				dialog.setIndeterminate(true);
-				dialog.setCancelable(false);
-				dialog.setMessage("Processing");
-				dialog.show();
 				
-				Bitmap initialBitmap;
-				try {
-					initialBitmap = decodeUri(selectedImage);
-					Bitmap preparedBitmap = mImageProcHelper.JPEGtoRGB888(initialBitmap);
-					initialBitmap.recycle();
-					
-					Mat srcImage = mImageProcHelper.BitmapToMat(mImageProcHelper.JPEGtoRGB888(preparedBitmap));
-					//Mat destImage = new Mat();
-					
-					era.RefineImage(srcImage.nativeObj, srcImage.nativeObj, (float)0.4);
-					//srcImage.release();
-					
-					preparedBitmap = mImageProcHelper.MatToBitmap(srcImage);
-					
-					mImageView.setImageBitmap(preparedBitmap);
-					
-				} catch (FileNotFoundException e) {
-					Toast.makeText(mContext, "Image not found!!", Toast.LENGTH_LONG).show();
-					e.printStackTrace();
-				}
-				
-				dialog.dismiss();
+				new ImageRefineTask().execute();
 				break;
 				
 			case CLEAR_UPDATE_SCREEN:
@@ -119,6 +91,57 @@ public class ImageModeActivity extends Activity {
 		return BitmapFactory.decodeStream(getContentResolver().openInputStream(inImage), null, outOption);
 	}
 	
+	class ImageRefineTask extends AsyncTask<Void, Void, Boolean> {
+		ProgressDialog pDialog;
+
+		@Override
+		protected void onPreExecute() {
+			// Opens dialog on loading data file to external storage
+			super.onPreExecute();
+			pDialog = new ProgressDialog(mContext);
+			pDialog.setMessage("Processing");
+			pDialog.setIndeterminate(true);
+			pDialog.setCancelable(false);
+			pDialog.show();
+		}
+		@Override
+		protected Boolean doInBackground(Void... arg) {
+			Log.i(TAG, "reading image");
+			
+			
+			Bitmap initialBitmap;
+			try {
+				initialBitmap = decodeUri(selectedImage);
+				resultImage = mImageProcHelper.JPEGtoRGB888(initialBitmap);
+				initialBitmap.recycle();
+				
+				Mat srcImage = mImageProcHelper.BitmapToMat(mImageProcHelper.JPEGtoRGB888(resultImage));
+				//Mat destImage = new Mat();
+				
+				era.RefineImage(srcImage.nativeObj, srcImage.nativeObj, (float)0.4);
+				//srcImage.release();
+				
+				resultImage = mImageProcHelper.MatToBitmap(srcImage);
+				
+				return true;
+			} catch (FileNotFoundException e) {
+				Toast.makeText(mContext, "Image not found!!", Toast.LENGTH_LONG).show();
+				e.printStackTrace();
+				return false;
+			}
+			
+		}
+		@Override
+		protected void onPostExecute(Boolean isDone) {
+			pDialog.dismiss();
+			mImageView.setImageBitmap(resultImage);
+			if(!isDone){
+				Toast.makeText(mContext, "Process error!", Toast.LENGTH_SHORT).show();
+				finish();
+			}
+		}
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -135,12 +158,29 @@ public class ImageModeActivity extends Activity {
 		
 		Log.i(TAG, "retrieving image data uri");
 		selectedImage = getIntent().getData();
-		
-		if(!OpenCVLoader.initDebug()){
-	    	Log.d("CVerror","OpenCV library Init failure");
+	
+		if(savedInstanceState != null){
+			Log.i(TAG, "loaded saved Image");
+			resultImage = savedInstanceState.getParcelable("bitmap");
+			mImageView.setImageBitmap(resultImage);
 		}else{
-			mMainHandler.sendEmptyMessage(SET_IMAGE_FROM_GALLERY);
+			resultImage = null;
+		}
+		
+		if(resultImage == null){
+			if(!OpenCVLoader.initDebug()){
+				Log.d("CVerror","OpenCV library Init failure");
+			}else{
+				Log.i(TAG, "start processing");
+				mMainHandler.sendEmptyMessage(SET_IMAGE_FROM_GALLERY);
+			}
 		}
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putParcelable("bitmap", resultImage);
+	}
+	
 }
