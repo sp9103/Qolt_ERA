@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 
 public class CameraPreviewSurface extends SurfaceView implements SurfaceHolder.Callback, OnTouchListener{
-	final String TAG = "SURFACEVIEW";
+	private static final String TAG = "SURFACEVIEW";
 	
 	public CameraPreviewSurface(Context context) {
 		super(context);

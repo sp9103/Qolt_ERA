@@ -33,7 +33,7 @@ public class CameraActivity extends Activity{
 	 * bunch of member objects
 	 * 
 	 */
-	static final String TAG = "CAMERA"; // Logcat TAG
+	private static final String TAG = "CAMERA"; // Logcat TAG
 
 	private Context mContext = this;
 	private FrameLayout preview;
