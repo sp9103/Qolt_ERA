@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
 		buttonCamera.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(mContext, CvCameraActivity.class);
+				Intent intent = new Intent(mContext, CameraActivity.class);
 				startActivity(intent);
 			}
 		});
