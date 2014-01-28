@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 
 import libera.EraCore;
 
+import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 
 import utililty.ImageProcessHelper;
@@ -33,10 +34,12 @@ public class ImageModeActivity extends Activity {
 	private static final int SET_IMAGE_FROM_GALLERY = 1;
 	private static final int CLEAR_UPDATE_SCREEN = 2;
 	
-	private ImageProcessHelper mImageProcHelper;
+	private ImageProcessHelper mImageProcHelper = new ImageProcessHelper();
+	private EraCore era = new EraCore();
 	private ImageView mImageView;
 	private Uri selectedImage;	
 	private Context mContext;
+	
 	
 	
 	
@@ -57,16 +60,16 @@ public class ImageModeActivity extends Activity {
 				Bitmap initialBitmap;
 				try {
 					initialBitmap = decodeUri(selectedImage);
-					Bitmap preparedBitmap = ImageProcessHelper.JPEGtoRGB888(initialBitmap);
+					Bitmap preparedBitmap = mImageProcHelper.JPEGtoRGB888(initialBitmap);
 					initialBitmap.recycle();
 					
-					Mat srcImage = ImageProcessHelper.BitmapToMat(ImageProcessHelper.JPEGtoRGB888(preparedBitmap));
+					Mat srcImage = mImageProcHelper.BitmapToMat(mImageProcHelper.JPEGtoRGB888(preparedBitmap));
 					Mat destImage = new Mat();
 					
-					EraCore.RefineImage(srcImage.nativeObj, destImage.nativeObj, (float)0.4);
+					era.RefineImage(srcImage.nativeObj, destImage.nativeObj, (float)0.4);
 					srcImage.release();
 					
-					preparedBitmap = ImageProcessHelper.MatToBitmap(destImage);
+					preparedBitmap = mImageProcHelper.MatToBitmap(destImage);
 					
 					mImageView.setImageBitmap(preparedBitmap);
 					
@@ -133,7 +136,11 @@ public class ImageModeActivity extends Activity {
 		Log.i(TAG, "retrieving image data uri");
 		selectedImage = getIntent().getData();
 		
-		mMainHandler.sendEmptyMessage(SET_IMAGE_FROM_GALLERY);
+		if(!OpenCVLoader.initDebug()){
+	    	Log.d("CVerror","OpenCV library Init failure");
+		}else{
+			mMainHandler.sendEmptyMessage(SET_IMAGE_FROM_GALLERY);
+		}
 	}
 
 }
