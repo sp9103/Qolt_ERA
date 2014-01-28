@@ -21,6 +21,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.Display;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -41,6 +43,7 @@ public class ImageModeActivity extends Activity {
 	private Uri selectedImage;	
 	private Context mContext;
 	
+	private Bitmap initialImage;
 	private Bitmap resultImage;
 	
 	
@@ -109,13 +112,12 @@ public class ImageModeActivity extends Activity {
 			Log.i(TAG, "reading image");
 			
 			
-			Bitmap initialBitmap;
+			
 			try {
-				initialBitmap = decodeUri(selectedImage);
-				resultImage = mImageProcHelper.JPEGtoRGB888(initialBitmap);
-				initialBitmap.recycle();
+				initialImage = decodeUri(selectedImage);
+				resultImage = mImageProcHelper.JPEGtoRGB888(initialImage);
 				
-				Mat srcImage = mImageProcHelper.BitmapToMat(mImageProcHelper.JPEGtoRGB888(resultImage));
+				Mat srcImage = mImageProcHelper.BitmapToMat(resultImage);
 				//Mat destImage = new Mat();
 				
 				era.RefineImage(srcImage.nativeObj, srcImage.nativeObj, (float)0.4);
@@ -138,6 +140,8 @@ public class ImageModeActivity extends Activity {
 			if(!isDone){
 				Toast.makeText(mContext, "Process error!", Toast.LENGTH_SHORT).show();
 				finish();
+			}else{
+				Toast.makeText(mContext, "Press to compare", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
@@ -162,6 +166,7 @@ public class ImageModeActivity extends Activity {
 		if(savedInstanceState != null){
 			Log.i(TAG, "loaded saved Image");
 			resultImage = savedInstanceState.getParcelable("bitmap");
+			initialImage = savedInstanceState.getParcelable("origin");
 			mImageView.setImageBitmap(resultImage);
 		}else{
 			resultImage = null;
@@ -175,12 +180,30 @@ public class ImageModeActivity extends Activity {
 				mMainHandler.sendEmptyMessage(SET_IMAGE_FROM_GALLERY);
 			}
 		}
+		mImageView.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch(event.getAction()){
+				
+				case MotionEvent.ACTION_DOWN:
+					mImageView.setImageBitmap(initialImage);
+					break;
+					
+				case MotionEvent.ACTION_UP:
+					mImageView.setImageBitmap(resultImage);
+					break;
+				}
+				return true;
+			}
+		});
 	}
-
+	
+	/* Save bitmaps to prevent releading and reprocessing */
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putParcelable("bitmap", resultImage);
+		outState.putParcelable("origin", initialImage);
 	}
 	
 }
