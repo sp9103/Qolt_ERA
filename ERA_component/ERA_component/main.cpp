@@ -9,9 +9,11 @@ int main(){
 	Eye_Recovery ERA;
 	char buf[256];
 
-	cv::Mat load_iamge = cv::imread("Tulips.jpg");
-	cv::Mat load_image2 = cv::imread("Tulips.jpg");
+	cv::Mat load_iamge = cv::imread("test_img.jpg");
+	cv::Mat load_image2 = cv::imread("test_img.jpg");
 	cv::imshow("Origin", load_iamge);
+
+	printf("%d\n", load_image2.depth());
 
 	ERA.RefineImage(load_iamge, load_iamge, 0.4);
 	//time = timeGetTime() - time;

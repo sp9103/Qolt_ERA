@@ -56,3 +56,7 @@ colorblind/.classpath
 colorblind/project.properties
 ERA_component/ERA_component.sdf
 ERA_component/ERA_component.v11.suo
+LibERA/bin/R.txt
+ERA_component/ERA_component/png_test.png
+ERA_component/ERA_component/test_img2.jpg
+colorblind/libs/opencv library - 2.4.8.jar

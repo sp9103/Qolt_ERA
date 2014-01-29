@@ -153,7 +153,7 @@ public class ImageModeActivity extends Activity {
 		
 		mContext = this;
 		
-		// 전체 화면, 타이틀 액션바 제거
+		// �꾩껜 �붾㈃, ��씠���≪뀡諛��쒓굅
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
