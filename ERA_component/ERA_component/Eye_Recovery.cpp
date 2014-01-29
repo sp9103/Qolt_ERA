@@ -13,18 +13,30 @@ Eye_Recovery::~Eye_Recovery(void)
 
 void Eye_Recovery::HSI_Revision( float *h, float *s, float *l, float modification_factor )
 {
-	if(60.0f - 90.0f * modification_factor < 0.0f)
-	{
-		if(*h >= 60.0f * (1 - modification_factor) && *h <= 60.0f + 90.0f * modification_factor)          *h = (*h - 60.0f) / modification_factor + 60.0f;
-		else if(*h >= 240.0f - 90.0f * modification_factor && *h <= 240.0f + 90.0f * modification_factor)  *h = (*h - 240.0f) / modification_factor + 240.0f;
-		else if(*h > 420.0f - 90 * modification_factor)                               *h = (*h - 420.0f) / modification_factor + 420.0f;
-		else if(*h >= 0.0f && *h < 60.0f - 60.0f * modification_factor)	             *h = (*h - 60.0f) / modification_factor + 420.0f;
-	}
-	else
-	{
-		if(*h >= 60.0f * (1 - modification_factor) && *h <= 60.0f + 90.0f * modification_factor)          *h = (*h - 60.0f) / modification_factor + 60.0f;
-		else if(*h >= 240.0f - 90.0f * modification_factor && *h <= 240.0f + 90.0f * modification_factor)  *h = (*h - 240.0f) / modification_factor + 240.0f;
-		else if(*h >= 60.0f - 90.0f * modification_factor && *h < 60.0f - 60.0f * modification_factor)     *h = (*h - 60.0f) / modification_factor + 420.0f;
+	if(modification_factor < 0.4){
+		if(330.0f < *h && *h < 360.0f){
+			*h = *h - 330.0f;
+		}else if(0.0f < *h && *h < 60 * (1 * modification_factor)){
+			*h = 300 - *h;
+		}else if(120.0f - 60.0f < *h && *h < 120.0f){
+			*h = 300 - *h;
+		}else if(120.0f < *h && *h < 180.0f){
+			*h = 150 - *h;
+		}
+	}else{
+		if(60.0f - 90.0f * modification_factor < 0.0f)
+		{
+			if(*h >= 60.0f * (1 - modification_factor) && *h <= 60.0f + 90.0f * modification_factor)          *h = (*h - 60.0f) / modification_factor + 60.0f;
+			else if(*h >= 240.0f - 90.0f * modification_factor && *h <= 240.0f + 90.0f * modification_factor)  *h = (*h - 240.0f) / modification_factor + 240.0f;
+			else if(*h > 420.0f - 90 * modification_factor)                               *h = (*h - 420.0f) / modification_factor + 420.0f;
+			else if(*h >= 0.0f && *h < 60.0f - 60.0f * modification_factor)	             *h = (*h - 60.0f) / modification_factor + 420.0f;
+		}
+		else
+		{
+			if(*h >= 60.0f * (1 - modification_factor) && *h <= 60.0f + 90.0f * modification_factor)          *h = (*h - 60.0f) / modification_factor + 60.0f;
+			else if(*h >= 240.0f - 90.0f * modification_factor && *h <= 240.0f + 90.0f * modification_factor)  *h = (*h - 240.0f) / modification_factor + 240.0f;
+			else if(*h >= 60.0f - 90.0f * modification_factor && *h < 60.0f - 60.0f * modification_factor)     *h = (*h - 60.0f) / modification_factor + 420.0f;
+		}
 	}
 }
 

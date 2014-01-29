@@ -9,50 +9,56 @@ int main(){
 	Eye_Recovery ERA;
 	char buf[256];
 
-	//cv::Mat load_iamge = cv::imread("Tulips.jpg");
-	//cv::Mat load_image2 = cv::imread("Tulips.jpg");
-	//cv::imshow("Origin", load_iamge);
+	cv::Mat load_iamge = cv::imread("Tulips.jpg");
+	cv::Mat load_image2 = cv::imread("Tulips.jpg");
+	cv::imshow("Origin", load_iamge);
 
-	DWORD time = timeGetTime();
-	//ERA.RefineImage(load_iamge, load_iamge, 0.4);
+	ERA.RefineImage(load_iamge, load_iamge, 0.4);
 	//time = timeGetTime() - time;
 	//printf("픽셀별 보정시간 : %dms\n", time);
-	//cv::imshow("TEST", load_iamge);
+	cv::imshow("TEST", load_iamge);
+	cv::waitKey(0);
 
-	printf("Make Tree...\n");
-	time = timeGetTime();
-	ERA.MakeTreeFile(2, 0.4, "DATA.bin", MODE_CORRECTION);
-	time = timeGetTime() - time;
-	printf("Make Tree time : %dms\n", time);
-	time = timeGetTime();
-	ERA.OpenDataFile("DATA.bin");
-	time = timeGetTime() - time;
-	printf("Open & Create Tree time : %dms\n", time);
-	printf("Make Tree complete!\n");
+	//DWORD time = timeGetTime();
+	////ERA.RefineImage(load_iamge, load_iamge, 0.4);
+	////time = timeGetTime() - time;
+	////printf("픽셀별 보정시간 : %dms\n", time);
+	////cv::imshow("TEST", load_iamge);
 
-	/*time = timeGetTime();
-	ERA.MakeImage_to_Data(load_image2, load_iamge);
-	time = timeGetTime() - time;*/
-	//printf("Make Image to Data time : %dms\n", time);
-	//cv::imshow("Real Time Test", load_iamge);
-	//cv::waitKey(0);
+	//printf("Make Tree...\n");
+	//time = timeGetTime();
+	//ERA.MakeTreeFile(2, 0.4, "DATA.bin", MODE_CORRECTION);
+	//time = timeGetTime() - time;
+	//printf("Make Tree time : %dms\n", time);
+	//time = timeGetTime();
+	//ERA.OpenDataFile("DATA.bin");
+	//time = timeGetTime() - time;
+	//printf("Open & Create Tree time : %dms\n", time);
+	//printf("Make Tree complete!\n");
 
-	//ERA.DeleteDataBuffer();
+	///*time = timeGetTime();
+	//ERA.MakeImage_to_Data(load_image2, load_iamge);
+	//time = timeGetTime() - time;*/
+	////printf("Make Image to Data time : %dms\n", time);
+	////cv::imshow("Real Time Test", load_iamge);
+	////cv::waitKey(0);
 
-	//load_image2.release();
-	//load_iamge.release();
+	////ERA.DeleteDataBuffer();
 
-	printf("Enter the Video path : ");
-	scanf("%s", buf);
-	cv::VideoCapture testAVI(buf);
+	////load_image2.release();
+	////load_iamge.release();
 
-	while(1){
-		cv::Mat frame;
-		testAVI >> frame;
-		ERA.MakeImage_to_Data(frame, frame);
-		imshow("AVI", frame);
-		if(cv::waitKey(30) == 27)		break;
-	}
+	//printf("Enter the Video path : ");
+	//scanf("%s", buf);
+	//cv::VideoCapture testAVI(buf);
+
+	//while(1){
+	//	cv::Mat frame;
+	//	testAVI >> frame;
+	//	ERA.MakeImage_to_Data(frame, frame);
+	//	imshow("AVI", frame);
+	//	if(cv::waitKey(30) == 27)		break;
+	//}
 
 	return 0;
 }

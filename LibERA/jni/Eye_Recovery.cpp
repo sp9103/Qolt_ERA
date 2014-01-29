@@ -13,18 +13,30 @@ Eye_Recovery::~Eye_Recovery(void)
 
 void Eye_Recovery::HSI_Revision( float *h, float *s, float *l, float modification_factor )
 {
-	if(60.0f - 90.0f * modification_factor < 0.0f)
-	{
-		if(*h >= 60.0f * (1 - modification_factor) && *h <= 60.0f + 90.0f * modification_factor)          *h = (*h - 60.0f) / modification_factor + 60.0f;
-		else if(*h >= 240.0f - 90.0f * modification_factor && *h <= 240.0f + 90.0f * modification_factor)  *h = (*h - 240.0f) / modification_factor + 240.0f;
-		else if(*h > 420.0f - 90 * modification_factor)                               *h = (*h - 420.0f) / modification_factor + 420.0f;
-		else if(*h >= 0.0f && *h < 60.0f - 60.0f * modification_factor)	             *h = (*h - 60.0f) / modification_factor + 420.0f;
-	}
-	else
-	{
-		if(*h >= 60.0f * (1 - modification_factor) && *h <= 60.0f + 90.0f * modification_factor)          *h = (*h - 60.0f) / modification_factor + 60.0f;
-		else if(*h >= 240.0f - 90.0f * modification_factor && *h <= 240.0f + 90.0f * modification_factor)  *h = (*h - 240.0f) / modification_factor + 240.0f;
-		else if(*h >= 60.0f - 90.0f * modification_factor && *h < 60.0f - 60.0f * modification_factor)     *h = (*h - 60.0f) / modification_factor + 420.0f;
+	if(modification_factor < 0.4){
+		if(330.0f < *h && *h < 360.0f){
+			*h = *h - 330.0f;
+		}else if(0.0f < *h && *h < 60 * (1 * modification_factor)){
+			*h = 300 - *h;
+		}else if(120.0f - 60.0f < *h && *h < 120.0f){
+			*h = 300 - *h;
+		}else if(120.0f < *h && *h < 180.0f){
+			*h = 150 - *h;
+		}
+	}else{
+		if(60.0f - 90.0f * modification_factor < 0.0f)
+		{
+			if(*h >= 60.0f * (1 - modification_factor) && *h <= 60.0f + 90.0f * modification_factor)          *h = (*h - 60.0f) / modification_factor + 60.0f;
+			else if(*h >= 240.0f - 90.0f * modification_factor && *h <= 240.0f + 90.0f * modification_factor)  *h = (*h - 240.0f) / modification_factor + 240.0f;
+			else if(*h > 420.0f - 90 * modification_factor)                               *h = (*h - 420.0f) / modification_factor + 420.0f;
+			else if(*h >= 0.0f && *h < 60.0f - 60.0f * modification_factor)	             *h = (*h - 60.0f) / modification_factor + 420.0f;
+		}
+		else
+		{
+			if(*h >= 60.0f * (1 - modification_factor) && *h <= 60.0f + 90.0f * modification_factor)          *h = (*h - 60.0f) / modification_factor + 60.0f;
+			else if(*h >= 240.0f - 90.0f * modification_factor && *h <= 240.0f + 90.0f * modification_factor)  *h = (*h - 240.0f) / modification_factor + 240.0f;
+			else if(*h >= 60.0f - 90.0f * modification_factor && *h < 60.0f - 60.0f * modification_factor)     *h = (*h - 60.0f) / modification_factor + 420.0f;
+		}
 	}
 }
 
@@ -86,16 +98,16 @@ void Eye_Recovery::InverseImage( cv::Mat src, cv::Mat dst, float factor )
 
 	for(register int i = 0; i < src.rows; i++){
 		for(register int j = 0; j < src.cols; j++){
-			unsigned char B = src.at<cv::Vec3b>(i,j)[0];
-			unsigned char G = src.at<cv::Vec3b>(i,j)[1];
-			unsigned char R = src.at<cv::Vec3b>(i,j)[2];
+			unsigned char B = src.at<cv::Vec4b>(i,j)[0];
+			unsigned char G = src.at<cv::Vec4b>(i,j)[1];
+			unsigned char R = src.at<cv::Vec4b>(i,j)[2];
 			
 			InversePixel(&R, &G, &B, factor);
 
 			//image insert
-			dst.at<cv::Vec3b>(i,j)[0] = (unsigned char)B;
-			dst.at<cv::Vec3b>(i,j)[1] = (unsigned char)G;
-			dst.at<cv::Vec3b>(i,j)[2] = (unsigned char)R;
+			dst.at<cv::Vec4b>(i,j)[0] = (unsigned char)B;
+			dst.at<cv::Vec4b>(i,j)[1] = (unsigned char)G;
+			dst.at<cv::Vec4b>(i,j)[2] = (unsigned char)R;
 		}
 	}
 }
