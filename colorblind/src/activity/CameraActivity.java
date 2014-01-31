@@ -5,7 +5,7 @@ import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 
-import utililty.CameraPreviewSurface;
+import utility.CameraPreviewSurface;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Camera;
@@ -18,13 +18,15 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.naubull2.colorblind.R;
 
-public class CameraActivity extends Activity implements CvCameraViewListener2, OnTouchListener {
+public class CameraActivity extends Activity implements CvCameraViewListener2, OnTouchListener{
 	private static final String TAG = "CAMERA_MODE";
 
 	private CameraPreviewSurface mOpenCvCameraView;
+	private Button mButtonShutter;
 	
 	private Context mContext;
 
@@ -37,7 +39,11 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		mContext = this;
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		hideSystemUI();
+		// Hide softkey for immersive mode on kitkat and above
+		if(android.os.Build.VERSION.SDK_INT >= 19) {
+			hideSystemUI();
+		}
+		
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		if (!OpenCVLoader.initDebug()) {
@@ -46,16 +52,32 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		setContentView(R.layout.activity_camera);
 
 		mOpenCvCameraView = (CameraPreviewSurface) findViewById(R.id.cv_surface_view);
+		mButtonShutter = (Button) findViewById(R.id.button_shutter);
+		mButtonShutter.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				int action = event.getAction();
+				switch(action){
+				case MotionEvent.ACTION_DOWN:
+					mOpenCvCameraView.getCamera().autoFocus(mFocus);
+					break;
+				case MotionEvent.ACTION_OUTSIDE:
+					mOpenCvCameraView.getCamera().cancelAutoFocus();
+					break;
+				case MotionEvent.ACTION_UP:
+					// Take photo
+				}
+				return false;
+			}
+		});
 
 		mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
-
+		
 		mOpenCvCameraView.setCvCameraViewListener(this);
 	}
 
 	private void hideSystemUI() {
-	    // Set the IMMERSIVE flag.
-	    // Set the content to appear under the system bars so that the content
-	    // doesn't resize when the system bars hide and show.
+	    // Set the IMMERSIVE flag
 		getWindow().getDecorView().setSystemUiVisibility(
 	            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 	            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -81,6 +103,9 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		} else {
 			mOpenCvCameraView.enableView();
 			mOpenCvCameraView.setOnTouchListener(CameraActivity.this);
+			
+			// For dev only code
+			mOpenCvCameraView.enableFpsMeter();
 		}
 	}
 
@@ -112,6 +137,12 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		switch(action){
 		case MotionEvent.ACTION_DOWN:
 			mOpenCvCameraView.getCamera().autoFocus(mFocus);
+			break;
+		case MotionEvent.ACTION_OUTSIDE:
+			mOpenCvCameraView.getCamera().cancelAutoFocus();
+			break;
+		case MotionEvent.ACTION_UP:
+			mOpenCvCameraView.getCamera().cancelAutoFocus();
 		}
 		return false;
 	}

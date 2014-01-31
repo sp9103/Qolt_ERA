@@ -1,4 +1,4 @@
-package utililty;
+package utility;
 
 import java.io.FileOutputStream;
 import java.util.List;
@@ -26,6 +26,18 @@ public class CameraPreviewSurface extends JavaCameraView {
     	return mCamera;
     }
     
+	@Override
+	protected boolean initializeCamera(int width, int height) {
+		boolean noError = super.initializeCamera(width, height);
+		
+		Camera.Parameters params;
+		params = mCamera.getParameters();
+		params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+        mCamera.setParameters(params);
+        
+        return noError;
+	}
+
 	public void setEffect(String effect) {
         Camera.Parameters params = mCamera.getParameters();
         params.setColorEffect(effect);
