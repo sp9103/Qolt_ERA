@@ -7,10 +7,11 @@ import libera.EraCore;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 
-import utililty.ImageProcessHelper;
+import utility.ImageProcessHelper;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -42,6 +43,8 @@ public class ImageModeActivity extends Activity {
 	private ImageView mImageView;
 	private Uri selectedImage;	
 	private Context mContext;
+	
+	private SharedPreferences pref;
 	
 	private Bitmap initialImage;
 	private Bitmap resultImage;
@@ -120,7 +123,8 @@ public class ImageModeActivity extends Activity {
 				Mat srcImage = mImageProcHelper.BitmapToMat(resultImage);
 				//Mat destImage = new Mat();
 				
-				era.RefineImage(srcImage.nativeObj, srcImage.nativeObj, (float)0.4);
+				pref = getSharedPreferences("ERA", MODE_PRIVATE);
+				era.RefineImage(srcImage.nativeObj, srcImage.nativeObj, pref.getFloat("era_calib", (float)0.4));
 				//srcImage.release();
 				
 				resultImage = mImageProcHelper.MatToBitmap(srcImage);

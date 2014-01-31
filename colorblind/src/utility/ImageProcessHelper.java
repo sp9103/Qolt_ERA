@@ -1,4 +1,4 @@
-package utililty;
+package utility;
 
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.CvType;
