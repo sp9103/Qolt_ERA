@@ -120,7 +120,7 @@ public class ImageModeActivity extends Activity {
 				Mat srcImage = mImageProcHelper.BitmapToMat(resultImage);
 				//Mat destImage = new Mat();
 				
-				era.RefineImage(srcImage.nativeObj, srcImage.nativeObj, (float)0.4);
+				era.RefineImage(srcImage.nativeObj, srcImage.nativeObj, (float)0.1);
 				//srcImage.release();
 				
 				resultImage = mImageProcHelper.MatToBitmap(srcImage);

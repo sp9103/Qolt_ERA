@@ -22,6 +22,10 @@ public class CameraPreviewSurface extends JavaCameraView {
         super(context, attrs);
     }
 
+    public Camera getCamera(){
+    	return mCamera;
+    }
+    
 	public void setEffect(String effect) {
         Camera.Parameters params = mCamera.getParameters();
         params.setColorEffect(effect);
