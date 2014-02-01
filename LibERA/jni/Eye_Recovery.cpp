@@ -165,9 +165,9 @@ bool Eye_Recovery::MakeTreeFile( int interval, float factor, const char *FilePat
 	int counts = 255/interval + 1;
 
 	if(mode == MODE_CORRECTION)
-		TreeData = fopen("/sdcard/Pictures/ImgCorrectionData.bin", "wb");
+		TreeData = fopen("/sdcard/Pictures/ERA/ImgCorrectionData.bin", "wb");
 	else if(mode == MODE_DYSCHROMATOPSA)
-		TreeData = fopen("/sdcard/Pictures/ImgDYSCHROMATOPSAData.bin", "wb");
+		TreeData = fopen("/sdcard/Pictures/ERA/ImgDYSCHROMATOPSAData.bin", "wb");
 
 	LOGI("after Open file");
 
