@@ -1,0 +1,13 @@
+<resources>
+
+    <string name="app_name">colorblind</string>
+    <string name="preference_category_title_1">기본정보</string>
+    <string name="preference_category_title_2">색약보정 설정</string>
+    <string name="pref_notice">공지사항</string>
+    <string name="pref_version">버젼정보</string>
+    <string name="pref_exp_value">체험 보정 값</string>
+    <string name="pref_era_value">색약 보정 값</string>
+    <string name="pref_about">개발자 정보</string>
+    <string name="pref_help">도움말</string>
+
+</resources>
