@@ -21,6 +21,11 @@ public class TempSetting extends Activity{
 	private EditText mTextbox;
 	private Context mContext;
 	
+	/////////////////////////////////////////////////////////////////////////////
+	// NO IDEA WHY BUT THIS IS NEEDED. OTHERWISE ERA LIBRARY WILL CRASH ON INIT
+	private ImageProcessHelper mImageProcHelper = new ImageProcessHelper();
+	/////////////////////////////////////////////////////////////////////////////
+	
 	// call native methods through era object here
 	private EraCore era = new EraCore();
 	
