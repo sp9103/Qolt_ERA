@@ -85,6 +85,14 @@ public class TempSetting extends Activity{
 			 * 
 			 * 
 			 */
+			
+			// Make binary Data file example - Image Correction example
+			// if u want make DYSCHROMATOPSA Data file, insert factor & mode = 1
+			// mode 0 : Image Correction
+			// mode 1 : Image DYSCHROMATOPSA
+			float native_factor = pref.getFloat("era_calib", (float) 0.4);
+			era.MakeTreeFile(10, native_factor, "/sdcard/Pictures/ERA/ImageCorrectionData.bin", 0);
+			
 			return true;
 		}
 		@Override
