@@ -52,9 +52,6 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 			Log.i("OPENCV", "open CV static load error");
 		}
 		setContentView(R.layout.activity_camera);
-
-		//mFocusImage = (ImageView)findViewById(R.id.focus_ui);
-		//mFocusImage.setBackgroundResource(R.drawable.focus_default);
 		
 		mOpenCvCameraView = (CameraPreviewSurface) findViewById(R.id.cv_surface_view);
 		mButtonShutter = (Button) findViewById(R.id.button_shutter);
@@ -65,11 +62,11 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 				switch(action){
 				case MotionEvent.ACTION_DOWN:
 					mOpenCvCameraView.getCamera().autoFocus(mFocus);
-					//mFocusImage.setBackgroundResource(R.drawable.focus_default);
+					mFocusImage.setBackgroundResource(R.drawable.focus_default);
 					break;
 				case MotionEvent.ACTION_OUTSIDE:
 					mOpenCvCameraView.getCamera().cancelAutoFocus();
-					//mFocusImage.setBackgroundResource(R.drawable.focus_false);
+					mFocusImage.setBackgroundResource(R.drawable.focus_false);
 					break;
 				case MotionEvent.ACTION_UP:
 					// Take photo
@@ -77,6 +74,8 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 				return false;
 			}
 		});
+		mFocusImage = (ImageView)findViewById(R.id.focus_ui);
+		mFocusImage.setBackgroundResource(R.drawable.focus_default);
 
 		mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
 		
@@ -144,11 +143,11 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		switch(action){
 		case MotionEvent.ACTION_DOWN:
 			mOpenCvCameraView.getCamera().autoFocus(mFocus);
-			//mFocusImage.setBackgroundResource(R.drawable.focus_default);
+			mFocusImage.setBackgroundResource(R.drawable.focus_default);
 			break;
 		case MotionEvent.ACTION_OUTSIDE:
 			mOpenCvCameraView.getCamera().cancelAutoFocus();
-			//mFocusImage.setBackgroundResource(R.drawable.focus_false);
+			mFocusImage.setBackgroundResource(R.drawable.focus_false);
 			break;
 		case MotionEvent.ACTION_UP:
 			mOpenCvCameraView.getCamera().cancelAutoFocus();
@@ -161,7 +160,9 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		@Override
 		public void onAutoFocus(boolean success, Camera camera) {
 			if(success){
-				//mFocusImage.setBackgroundResource(R.drawable.focus_true);
+				mFocusImage.setBackgroundResource(R.drawable.focus_true);
+			}else{
+				mFocusImage.setBackgroundResource(R.drawable.focus_false);
 			}
 		}
 	};

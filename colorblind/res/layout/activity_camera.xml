@@ -10,11 +10,11 @@
       android:layout_height="match_parent"
       android:id="@+id/cv_surface_view"/>
   
-   <!-- <ImageView
+   <ImageView
       android:id="@+id/focus_ui"
       android:layout_width="120dp"
       android:layout_height="120dp"
-      android:layout_centerInParent="true" /> -->
+      android:layout_centerInParent="true" />
 
   <!-- <RadioButton
       android:id="@+id/focus"
