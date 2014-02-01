@@ -3,8 +3,11 @@ package utility;
 import libera.EraCore;
 import activity.MainActivity;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +19,7 @@ public class TempSetting extends Activity{
 	private SharedPreferences pref;
 	private SharedPreferences.Editor editor;
 	private EditText mTextbox;
+	private Context mContext;
 	
 	// call native methods through era object here
 	private EraCore era = new EraCore();
@@ -24,6 +28,8 @@ public class TempSetting extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.temp_activity);
+		
+		mContext = this;
 		
 		Button btn = (Button)findViewById(R.id.button1);
 		mTextbox = (EditText)findViewById(R.id.editText1);
@@ -38,14 +44,7 @@ public class TempSetting extends Activity{
 				String value = mTextbox.getText().toString();
 				editor.putFloat("era_calib", Float.parseFloat(value)).commit();
 				
-				/**
-				 * 
-				 * put binary data creation code here 
-				 * 
-				 * (use EraCore object created at the class initialization)
-				 * 
-				 * 
-				 */
+				new NativeTask().execute();
 				
 				Intent intent = new Intent(TempSetting.this, MainActivity.class);
 				// we don't need to revisit	
@@ -55,6 +54,38 @@ public class TempSetting extends Activity{
 				
 			}
 		});
+	}
+	
+	private class NativeTask extends AsyncTask<Void, Void, Boolean> {
+		ProgressDialog pDialog;
+
+		@Override
+		protected void onPreExecute() {
+			// Opens dialog on loading data file to external storage
+			super.onPreExecute();
+			pDialog = new ProgressDialog(mContext);
+			pDialog.setMessage("Processing");
+			pDialog.setIndeterminate(true);
+			pDialog.setCancelable(false);
+			pDialog.show();
+		}
+		@Override
+		protected Boolean doInBackground(Void... arg) {
+
+			/**
+			 * 
+			 * put binary data creation code here 
+			 * 
+			 * (use EraCore object created at the class initialization)
+			 * 
+			 * 
+			 */
+			return true;
+		}
+		@Override
+		protected void onPostExecute(Boolean isDone) {
+			pDialog.dismiss();
+		}
 	}
 	
 	
