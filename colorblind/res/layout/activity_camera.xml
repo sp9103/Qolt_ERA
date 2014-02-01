@@ -26,6 +26,16 @@
   <!-- 이녀석은 그냥 터치를 입력 받을 투명한 뷰 -->
 
   <Button
+      android:id="@+id/button_mode"
+      android:layout_height="60dp"
+      android:layout_width="60dp"
+      android:layout_alignParentRight="true"
+      android:layout_alignParentTop="true"
+      android:layout_marginRight="20dp"
+      android:scaleType="centerCrop"
+      android:background="@drawable/button_mode_selector" />
+  
+  <Button
       android:id="@+id/button_shutter"
       android:layout_height="100dp"
       android:layout_width="100dp"

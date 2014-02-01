@@ -1,13 +1,9 @@
-#include <jni.h>
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/features2d/features2d.hpp>
 #include <android/log.h>
 
 #include "Eye_Recovery.cpp"
-
-#define LOG_TAG "JNI"
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 using namespace cv;
 
@@ -114,13 +110,15 @@ JNIEXPORT void JNICALL Java_libera_EraCore_InverseImage(JNIEnv* env, jobject obj
 }
 
 JNIEXPORT jboolean JNICALL Java_libera_EraCore_MakeTreeFile(JNIEnv* env, jobject obj, jint interval, jfloat factor, jstring FilePath, jint mode){
-	const char *nativeString = env->GetStringUTFChars(FilePath, 0);
+	//char *nativeString = (char*)env->GetStringUTFChars(FilePath, 0);
 
 	bool return_value;
 	// use your string
-	return_value = Era.MakeTreeFile(interval, factor, nativeString, mode);
+	return_value = Era.MakeTreeFile(interval, factor, "empty_component", mode);
 
-	env->ReleaseStringUTFChars(FilePath, nativeString);
+	LOGI("End Create DataFile");
+
+	//env->ReleaseStringUTFChars(FilePath, nativeString);
 
 	return return_value;
 }

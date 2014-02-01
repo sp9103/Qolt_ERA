@@ -20,18 +20,23 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.naubull2.colorblind.R;
 
 public class CameraActivity extends Activity implements CvCameraViewListener2, OnTouchListener{
 	private static final String TAG = "CAMERA_MODE";
+	private static final int 	MODE_NORMAL_CAM = 1;
+	private static final int	MODE_REFINE_CAM = 2;
+	private static final int 	MODE_EXP_CAM	= 3;
 
 	private CameraPreviewSurface mOpenCvCameraView;
 	private Button mButtonShutter;
+	private Button mButtonMode;
 	private ImageView mFocusImage;
+	private int mCameraMode;
 	
 	private Context mContext;
-
 
 	/** Called when the activity is first created. */
 	@Override
@@ -39,7 +44,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		Log.i(TAG, "called onCreate");
 		super.onCreate(savedInstanceState);
 		mContext = this;
-
+		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// Hide softkey for immersive mode on kitkat and above
 		if(android.os.Build.VERSION.SDK_INT >= 19) {
@@ -52,6 +57,9 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 			Log.i("OPENCV", "open CV static load error");
 		}
 		setContentView(R.layout.activity_camera);
+		
+		// Default mode is normal cam
+		mCameraMode = MODE_NORMAL_CAM;
 		
 		mOpenCvCameraView = (CameraPreviewSurface) findViewById(R.id.cv_surface_view);
 		mButtonShutter = (Button) findViewById(R.id.button_shutter);
@@ -72,6 +80,25 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 					// Take photo
 				}
 				return false;
+			}
+		});
+		mButtonMode = (Button)findViewById(R.id.button_mode);
+		mButtonMode.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String noti = new String();
+				mCameraMode = mCameraMode%3 + 1;
+				switch(mCameraMode){
+				case MODE_NORMAL_CAM:
+					noti = "일반 카메라";
+					break;
+				case MODE_REFINE_CAM:
+					noti = "색약 보정 카메라";
+					break;
+				case MODE_EXP_CAM:
+					noti = "색약 체험 카메라";
+				}
+				Toast.makeText(mContext, noti, Toast.LENGTH_SHORT).show();
 			}
 		});
 		mFocusImage = (ImageView)findViewById(R.id.focus_ui);
