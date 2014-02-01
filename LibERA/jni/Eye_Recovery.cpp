@@ -154,16 +154,20 @@ void Eye_Recovery::InversePixel( uchar *R, uchar *G, uchar *B, float factor )
 	FilePath*/
 bool Eye_Recovery::MakeTreeFile( int interval, float factor, const char *FilePath, int mode )
 {
-	FILE *TreeData;
+	FILE *TreeData, *test;
 	uchar B,G,R;
 	unsigned int t_B, t_G, t_R;
+
+	LOGI("before Open file");
+	test = fopen("/sdcard/Pictures/test.txt", "wb");
+	fclose(test);
 
 	int counts = 255/interval + 1;
 
 	if(mode == MODE_CORRECTION)
-		TreeData = fopen("/sdcard/Pictures/ERA/ImgCorrectionData.bin", "wb");
+		TreeData = fopen("/sdcard/Pictures/ImgCorrectionData.bin", "wb");
 	else if(mode == MODE_DYSCHROMATOPSA)
-		TreeData = fopen("/sdcard/Pictures/ERA/ImgDYSCHROMATOPSAData.bin", "wb");
+		TreeData = fopen("/sdcard/Pictures/ImgDYSCHROMATOPSAData.bin", "wb");
 
 	LOGI("after Open file");
 
