@@ -3,6 +3,10 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/features2d/features2d.hpp>
+#include <jni.h>
+
+#define LOG_TAG "JNI"
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 #define MODE_CORRECTION 0
 #define MODE_DYSCHROMATOPSA 1
