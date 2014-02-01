@@ -19,6 +19,7 @@ import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.naubull2.colorblind.R;
 
@@ -27,6 +28,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 
 	private CameraPreviewSurface mOpenCvCameraView;
 	private Button mButtonShutter;
+	private ImageView mFocusImage;
 	
 	private Context mContext;
 
@@ -51,6 +53,9 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		}
 		setContentView(R.layout.activity_camera);
 
+		//mFocusImage = (ImageView)findViewById(R.id.focus_ui);
+		//mFocusImage.setBackgroundResource(R.drawable.focus_default);
+		
 		mOpenCvCameraView = (CameraPreviewSurface) findViewById(R.id.cv_surface_view);
 		mButtonShutter = (Button) findViewById(R.id.button_shutter);
 		mButtonShutter.setOnTouchListener(new View.OnTouchListener() {
@@ -60,9 +65,11 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 				switch(action){
 				case MotionEvent.ACTION_DOWN:
 					mOpenCvCameraView.getCamera().autoFocus(mFocus);
+					//mFocusImage.setBackgroundResource(R.drawable.focus_default);
 					break;
 				case MotionEvent.ACTION_OUTSIDE:
 					mOpenCvCameraView.getCamera().cancelAutoFocus();
+					//mFocusImage.setBackgroundResource(R.drawable.focus_false);
 					break;
 				case MotionEvent.ACTION_UP:
 					// Take photo
@@ -137,9 +144,11 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		switch(action){
 		case MotionEvent.ACTION_DOWN:
 			mOpenCvCameraView.getCamera().autoFocus(mFocus);
+			//mFocusImage.setBackgroundResource(R.drawable.focus_default);
 			break;
 		case MotionEvent.ACTION_OUTSIDE:
 			mOpenCvCameraView.getCamera().cancelAutoFocus();
+			//mFocusImage.setBackgroundResource(R.drawable.focus_false);
 			break;
 		case MotionEvent.ACTION_UP:
 			mOpenCvCameraView.getCamera().cancelAutoFocus();
@@ -151,7 +160,9 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 	private AutoFocusCallback mFocus = new AutoFocusCallback() {
 		@Override
 		public void onAutoFocus(boolean success, Camera camera) {
-	
+			if(success){
+				//mFocusImage.setBackgroundResource(R.drawable.focus_true);
+			}
 		}
 	};
 }

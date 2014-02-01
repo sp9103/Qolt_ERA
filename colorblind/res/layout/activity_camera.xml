@@ -4,10 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+    
   <utility.CameraPreviewSurface
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:id="@+id/cv_surface_view"/>
+  
+   <!-- <ImageView
+      android:id="@+id/focus_ui"
+      android:layout_width="120dp"
+      android:layout_height="120dp"
+      android:layout_centerInParent="true" /> -->
 
   <!-- <RadioButton
       android:id="@+id/focus"
@@ -20,8 +27,8 @@
 
   <Button
       android:id="@+id/button_shutter"
-      android:layout_height="80dp"
-      android:layout_width="80dp"
+      android:layout_height="100dp"
+      android:layout_width="100dp"
       android:layout_alignParentRight="true"
       android:layout_centerVertical="true"
       android:scaleType="centerCrop"
