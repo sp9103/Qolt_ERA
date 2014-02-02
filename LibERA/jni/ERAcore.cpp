@@ -21,7 +21,7 @@ JNIEXPORT void JNICALL Java_libera_EraCore_decodeYUV420SP(JNIEnv* env, jobject o
 
 /*Open Data File, call this func -> real time convert start (one time)
 	  - file open -> copy buffer -> file close*/
-JNIEXPORT jint JNICALL Java_libera_EraCore_OpenDataFile(JNIEnv* env, jobject obj, jstring FilePath);
+JNIEXPORT jint JNICALL Java_libera_EraCore_OpenDataFile(JNIEnv* env, jobject obj, jstring FilePath, jint mode);
 
 /*Delete Data_Matrix. call this func => real time convert exit*/
 JNIEXPORT void JNICALL Java_libera_EraCore_DeleteDataBuffer(JNIEnv* env, jobject obj);
@@ -84,11 +84,20 @@ JNIEXPORT void JNICALL Java_libera_EraCore_decodeYUV420SP(JNIEnv* env, jobject o
     env->ReleasePrimitiveArrayCritical(yuv420sp, yuv, 0);
 }
 
-JNIEXPORT jint JNICALL Java_libera_EraCore_OpenDataFile(JNIEnv* env, jobject obj, jstring FilePath){
+JNIEXPORT jint JNICALL Java_libera_EraCore_OpenDataFile(JNIEnv* env, jobject obj, jstring FilePath, jint mode){
 	//const char *nativeString = env->GetStringUTFChars(FilePath, 0);
 
 	// use your string
-	int return_value = Era.OpenDataFile("/sdcard/Pictures/ERA/ImgCorrectionData.bin");
+	int return_value;
+
+	switch(mode){
+	case MODE_CORRECTION:
+		return_value = Era.OpenDataFile("/sdcard/Pictures/ERA/ImgCorrectionData.bin");
+		break;
+	case MODE_DYSCHROMATOPSA:
+		return_value = Era.OpenDataFile("/sdcard/Pictures/ERA/ImgDYSCHROMATOPSAData.bin");
+		break;
+	}
 
 	//env->ReleaseStringUTFChars(FilePath, nativeString);
 

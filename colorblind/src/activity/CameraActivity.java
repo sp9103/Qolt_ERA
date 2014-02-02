@@ -248,7 +248,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 			 */
 			// era.
 			// era - open ImageCorrection Mode 
-			era.OpenDataFile("/sdcard/Pictures/ERA/ImgCorrectionData.bin");
+			era.OpenDataFile("/sdcard/Pictures/ERA/ImgCorrectionData.bin", 0);
 			
 			return true;
 		}

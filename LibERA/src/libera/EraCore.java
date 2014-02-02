@@ -22,7 +22,7 @@ public class EraCore {
 	
 	/*Open Data File, call this func -> real time convert start (one time)
 	  - file open -> copy buffer -> file close*/
-	public native void OpenDataFile(String FilePath);
+	public native void OpenDataFile(String FilePath, int mode);
 	/*Delete Data_Matrix. call this func => real time convert exit*/
 	public native int DeleteDataBuffer();
 	/*image color weakness correction - Static Image*/
