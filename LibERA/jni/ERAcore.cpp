@@ -3,6 +3,11 @@
 #include <opencv2/features2d/features2d.hpp>
 #include <android/log.h>
 
+#include <iostream>
+#include <cstdio>
+#include <stdio.h>
+#include <string>
+
 #include "Eye_Recovery.cpp"
 
 using namespace cv;
@@ -114,9 +119,37 @@ JNIEXPORT jboolean JNICALL Java_libera_EraCore_MakeTreeFile(JNIEnv* env, jobject
 
 	bool return_value;
 	// use your string
-	return_value = Era.MakeTreeFile(interval, factor, "empty_component", mode);
 
-	LOGI("End Create DataFile");
+	LOGI("Start File IO test");
+	FILE* file = fopen("/sdcard/hello.txt","w+");
+
+	if (file != NULL)
+	{
+		fputs("HELLO WORLD!\n", file);
+		fflush(file);
+		fclose(file);
+	}else
+	{
+		LOGI("FUCKkkkkkkkkkkkkkkkkkkk");
+	}
+	fclose(file);
+
+	file = fopen("/sdcard/Pictures/test.txt","w+");
+
+	if (file != NULL)
+	{
+		fputs("HELLO WORLD!\n", file);
+		fflush(file);
+		fclose(file);
+	}else
+	{
+		LOGI("FUCKkkkkkkkkkkkkkkkkkkk");
+	}
+	fclose(file);
+
+	/*return_value = Era.MakeTreeFile(interval, factor, "empty_component", mode);
+
+	LOGI("End Create DataFile");*/
 
 	//env->ReleaseStringUTFChars(FilePath, nativeString);
 

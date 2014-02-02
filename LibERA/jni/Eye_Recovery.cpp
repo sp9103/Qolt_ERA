@@ -159,7 +159,7 @@ bool Eye_Recovery::MakeTreeFile( int interval, float factor, const char *FilePat
 	unsigned int t_B, t_G, t_R;
 
 	LOGI("before Open file");
-	test = fopen("/sdcard/Pictures/test.txt", "w");
+	test = fopen("/sdcard/Pictures/test.txt", "w+");
 	fprintf(test, "kkkkkkkkkkkk");
 
 	if(test == NULL)

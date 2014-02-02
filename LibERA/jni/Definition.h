@@ -5,6 +5,11 @@
 #include <opencv2/features2d/features2d.hpp>
 #include <jni.h>
 
+#include <iostream>
+#include <cstdio>
+#include <stdio.h>
+#include <string>
+
 #define LOG_TAG "JNI"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
