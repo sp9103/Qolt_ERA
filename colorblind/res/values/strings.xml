@@ -1,6 +1,8 @@
 <resources>
 
     <string name="app_name">colorblind</string>
+    <string name="app_version">1.0.0</string>
+    
     <string name="preference_category_title_1">기본정보</string>
     <string name="preference_category_title_2">색약보정 설정</string>
     

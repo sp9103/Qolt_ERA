@@ -47,7 +47,8 @@ public class TempSetting extends Activity{
 			public void onClick(View v) {
 				// save current calibration value
 				String value = mTextbox.getText().toString();
-				editor.putFloat("era_calib", Float.parseFloat(value)).commit();
+				if(!value.isEmpty())
+					editor.putFloat("era_calib", Float.parseFloat(value)).commit();
 				
 				new NativeTask().execute();
 				

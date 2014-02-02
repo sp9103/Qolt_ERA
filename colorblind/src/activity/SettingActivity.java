@@ -1,15 +1,17 @@
 package activity;
 
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceActivity;
+import customui.SettingFragment;
+import android.app.Activity;
+import android.os.Bundle;
 
-public class SettingActivity extends PreferenceActivity implements OnPreferenceClickListener{
+public class SettingActivity extends Activity{
 
 	@Override
-	public boolean onPreferenceClick(Preference preference) {
-		// TODO Auto-generated method stub
-		return false;
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		// Display the fragment as the main content.
+        getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingFragment()).commit();
 	}
 
 }
