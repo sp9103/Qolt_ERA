@@ -154,18 +154,11 @@ void Eye_Recovery::InversePixel( uchar *R, uchar *G, uchar *B, float factor )
 	FilePath*/
 bool Eye_Recovery::MakeTreeFile( int interval, float factor, const char *FilePath, int mode )
 {
-	FILE *TreeData = NULL, *test = NULL;
+	FILE *TreeData = NULL;
 	uchar B,G,R;
 	unsigned int t_B, t_G, t_R;
 
 	LOGI("before Open file");
-	test = fopen("/sdcard/Pictures/test.txt", "w+");
-	fprintf(test, "kkkkkkkkkkkk");
-
-	if(test == NULL)
-		LOGI("test file open fail");
-
-	fclose(test);
 
 	int counts = 255/interval + 1;
 

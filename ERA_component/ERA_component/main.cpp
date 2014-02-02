@@ -19,28 +19,29 @@ int main(){
 	printf("픽셀별 보정시간 : %dms\n", time);
 	cv::imshow("TEST", load_iamge);
 
-	//printf("Make Tree...\n");
-	//time = timeGetTime();
-	//ERA.MakeTreeFile(2, 0.4, "DATA.bin", MODE_CORRECTION);
-	//time = timeGetTime() - time;
-	//printf("Make Tree time : %dms\n", time);
-	//time = timeGetTime();
-	//ERA.OpenDataFile("DATA.bin");
-	//time = timeGetTime() - time;
-	//printf("Open & Create Tree time : %dms\n", time);
-	//printf("Make Tree complete!\n");
+	printf("Make Tree...\n");
+	time = timeGetTime();
+	ERA.MakeTreeFile(2, 0.4, "DATA.bin", MODE_CORRECTION);
+	time = timeGetTime() - time;
+	printf("Make Tree time : %dms\n", time);
+	
+	time = timeGetTime();
+	ERA.OpenDataFile("DATA.bin");
+	time = timeGetTime() - time;
+	printf("Open & Create Tree time : %dms\n", time);
+	printf("Make Tree complete!\n");
 
-	///*time = timeGetTime();
-	//ERA.MakeImage_to_Data(load_image2, load_iamge);
-	//time = timeGetTime() - time;*/
-	////printf("Make Image to Data time : %dms\n", time);
-	////cv::imshow("Real Time Test", load_iamge);
-	////cv::waitKey(0);
+	time = timeGetTime();
+	ERA.MakeImage_to_Data(load_image2, load_iamge);
+	time = timeGetTime() - time;
+	printf("Make Image to Data time : %dms\n", time);
+	cv::imshow("Real Time Test", load_iamge);
+	cv::waitKey(0);
 
-	////ERA.DeleteDataBuffer();
+	ERA.DeleteDataBuffer();
 
-	////load_image2.release();
-	////load_iamge.release();
+	load_image2.release();
+	load_iamge.release();
 
 	//printf("Enter the Video path : ");
 	//scanf("%s", buf);
