@@ -8,7 +8,7 @@ import android.preference.PreferenceFragment;
 import com.naubull2.colorblind.R;
 
 public class SettingFragment extends PreferenceFragment implements OnPreferenceClickListener{
-	private Preference mNotice, mVersion, mAbout, mHelp, mExpValue, mEraValue, mReset;
+	private Preference mNotice, mVersion, mAbout, mHelp, mExpValue, mEraValue, mInterval, mReset;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,7 @@ public class SettingFragment extends PreferenceFragment implements OnPreferenceC
         
         mExpValue = (Preference)findPreference("key_exp_value");
         mEraValue = (Preference)findPreference("key_era_value");
+        mInterval = (Preference)findPreference("key_interval");
         mReset = (Preference)findPreference("key_reset");
 
         mNotice.setOnPreferenceClickListener(this);
@@ -33,6 +34,7 @@ public class SettingFragment extends PreferenceFragment implements OnPreferenceC
         
         mExpValue.setOnPreferenceClickListener(this);
         mEraValue.setOnPreferenceClickListener(this);
+        mInterval.setOnPreferenceClickListener(this);
         mReset.setOnPreferenceClickListener(this);
     }
 
