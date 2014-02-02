@@ -296,6 +296,8 @@ int Eye_Recovery::OpenDataFile(const char *FilePath )
 
 void Eye_Recovery::DeleteDataBuffer()
 {
-	free(Data_Matrix);
+	if(Data_Matrix != NULL)
+		free(Data_Matrix);
+
 	Data_Matrix = NULL;
 }

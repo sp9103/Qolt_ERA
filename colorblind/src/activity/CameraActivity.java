@@ -157,6 +157,10 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 
 	public void onDestroy() {
 		super.onDestroy();
+		
+		// era Data reset, memory return
+		era.DeleteDataBuffer();
+		
 		if (mOpenCvCameraView != null)
 			mOpenCvCameraView.disableView();
 	}
@@ -165,6 +169,8 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		/**
 		 * execute data loading here
 		 */
+		
+		
 		new InitiateDataTask().execute();
 	}
 
@@ -181,6 +187,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		/**
 		 * Do the image filter here ( no async task needed : probably...)
 		 */
+		era.MakeImgtoData(inputFrame.rgba().nativeObj, preview.nativeObj);
 		
 		return preview;
 	}
@@ -240,6 +247,9 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 			 * 
 			 */
 			// era.
+			// era - open ImageCorrection Mode 
+			era.OpenDataFile("/sdcard/Pictures/ERA/ImgCorrectionData.bin");
+			
 			return true;
 		}
 		@Override

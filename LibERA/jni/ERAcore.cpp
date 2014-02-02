@@ -85,12 +85,12 @@ JNIEXPORT void JNICALL Java_libera_EraCore_decodeYUV420SP(JNIEnv* env, jobject o
 }
 
 JNIEXPORT jint JNICALL Java_libera_EraCore_OpenDataFile(JNIEnv* env, jobject obj, jstring FilePath){
-	const char *nativeString = env->GetStringUTFChars(FilePath, 0);
+	//const char *nativeString = env->GetStringUTFChars(FilePath, 0);
 
 	// use your string
-	int return_value = Era.OpenDataFile(nativeString);
+	int return_value = Era.OpenDataFile("/sdcard/Pictures/ERA/ImgCorrectionData.bin");
 
-	env->ReleaseStringUTFChars(FilePath, nativeString);
+	//env->ReleaseStringUTFChars(FilePath, nativeString);
 
 	return return_value;
 }
