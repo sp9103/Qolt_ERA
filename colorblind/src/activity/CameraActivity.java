@@ -90,13 +90,13 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 				mCameraMode = mCameraMode%3 + 1;
 				switch(mCameraMode){
 				case MODE_NORMAL_CAM:
-					noti = "일반 카메라";
+					noti = "MODE_NORMAL_CAM";
 					break;
 				case MODE_REFINE_CAM:
-					noti = "색약 보정 카메라";
+					noti = "MODE_REFINE_CAM";
 					break;
 				case MODE_EXP_CAM:
-					noti = "색약 체험 카메라";
+					noti = "MODE_EXP_CAM";
 				}
 				Toast.makeText(mContext, noti, Toast.LENGTH_SHORT).show();
 			}
