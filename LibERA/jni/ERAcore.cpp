@@ -115,43 +115,15 @@ JNIEXPORT void JNICALL Java_libera_EraCore_InverseImage(JNIEnv* env, jobject obj
 }
 
 JNIEXPORT jboolean JNICALL Java_libera_EraCore_MakeTreeFile(JNIEnv* env, jobject obj, jint interval, jfloat factor, jstring FilePath, jint mode){
-	//char *nativeString = (char*)env->GetStringUTFChars(FilePath, 0);
 
 	bool return_value;
 	// use your string
 
 	LOGI("Start File IO test");
-	FILE* file = fopen("/sdcard/hello.txt","w+");
 
-	if (file != NULL)
-	{
-		fputs("HELLO WORLD!\n", file);
-		fflush(file);
-		fclose(file);
-	}else
-	{
-		LOGI("FUCKkkkkkkkkkkkkkkkkkkk");
-	}
-	fclose(file);
+	return_value = Era.MakeTreeFile(interval, factor, "empty_component", mode);
 
-	file = fopen("/sdcard/Pictures/test.txt","w+");
-
-	if (file != NULL)
-	{
-		fputs("HELLO WORLD!\n", file);
-		fflush(file);
-		fclose(file);
-	}else
-	{
-		LOGI("FUCKkkkkkkkkkkkkkkkkkkk");
-	}
-	fclose(file);
-
-	/*return_value = Era.MakeTreeFile(interval, factor, "empty_component", mode);
-
-	LOGI("End Create DataFile");*/
-
-	//env->ReleaseStringUTFChars(FilePath, nativeString);
+	LOGI("End Create DataFile");
 
 	return return_value;
 }

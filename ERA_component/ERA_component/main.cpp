@@ -13,19 +13,11 @@ int main(){
 	cv::Mat load_image2 = cv::imread("test_img.jpg");
 	cv::imshow("Origin", load_iamge);
 
-	printf("%d\n", load_image2.depth());
-
+	DWORD time = timeGetTime();
 	ERA.RefineImage(load_iamge, load_iamge, 0.4);
-	//time = timeGetTime() - time;
-	//printf("픽셀별 보정시간 : %dms\n", time);
+	time = timeGetTime() - time;
+	printf("픽셀별 보정시간 : %dms\n", time);
 	cv::imshow("TEST", load_iamge);
-	cv::waitKey(0);
-
-	//DWORD time = timeGetTime();
-	////ERA.RefineImage(load_iamge, load_iamge, 0.4);
-	////time = timeGetTime() - time;
-	////printf("픽셀별 보정시간 : %dms\n", time);
-	////cv::imshow("TEST", load_iamge);
 
 	//printf("Make Tree...\n");
 	//time = timeGetTime();
