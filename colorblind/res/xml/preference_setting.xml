@@ -10,18 +10,36 @@
             android:key="key_notice" 
             android:title="@string/pref_notice" />
         
-        <!-- Refine values -->
+        <Preference 
+            android:key="key_version" 
+            android:title="@string/pref_version" />
         
-      <!--    <CheckBoxPreference
-            android:key="key_enable_debug"
-            android:title="@string/pref_enable_debug"
-            android:summary="@string/pref_enable_debug_summary"
-            android:disableDependentsState="false"/>
-       -->  
+        <Preference 
+            android:key="key_about"
+            android:title="@string/pref_about" />
         
-      
-            
+        <Preference 
+            android:key="key_help"
+            android:title="@string/pref_help"/>
 
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
+        android:title="@string/preference_category_title_2">
+        
+        <!--  Refine values -->
+        <Preference 
+            android:key="key_exp_value"
+            android:title="@string/pref_exp_value" />
+        
+        <Preference
+            android:key="key_era_value"
+            android:title="@string/pref_era_value"/>
+        
+        <Preference
+            android:key="key_reset"
+            android:title="@string/pref_reset" />
+        
     </PreferenceCategory>
 
 </PreferenceScreen>
