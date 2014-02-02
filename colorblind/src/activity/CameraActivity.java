@@ -1,15 +1,23 @@
 package activity;
 
+import java.io.FileNotFoundException;
+
+import libera.EraCore;
+
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
 import utility.CameraPreviewSurface;
+import utility.ImageProcessHelper;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.Camera.AutoFocusCallback;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -35,6 +43,11 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 	private Button mButtonMode;
 	private ImageView mFocusImage;
 	private int mCameraMode;
+	
+	// call native methods through era object here
+	private ImageProcessHelper mImageProcHelper = new ImageProcessHelper();
+	private EraCore era = new EraCore();
+
 	
 	private Context mContext;
 
@@ -149,6 +162,10 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 	}
 
 	public void onCameraViewStarted(int width, int height) {
+		/**
+		 * execute data loading here
+		 */
+		new InitiateDataTask().execute();
 	}
 
 	public void onCameraViewStopped() {
@@ -159,7 +176,13 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 	 */
 	public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
 		Log.d(TAG, "rows "+inputFrame.rgba().rows() + ",col "+inputFrame.rgba().cols());
-		return inputFrame.rgba();
+		Mat preview = new Mat(inputFrame.rgba().rows(), inputFrame.rgba().cols(), CvType.CV_8UC4); 
+		
+		/**
+		 * Do the image filter here ( no async task needed : probably...)
+		 */
+		
+		return preview;
 	}
 	
 	@Override
@@ -193,4 +216,35 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 			}
 		}
 	};
+	
+	class InitiateDataTask extends AsyncTask<Void, Void, Boolean> {
+		ProgressDialog pDialog;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			pDialog = new ProgressDialog(mContext);
+			pDialog.setMessage("Initiating...");
+			pDialog.setIndeterminate(true);
+			pDialog.setCancelable(false);
+			pDialog.show();
+		}
+		@Override
+		protected Boolean doInBackground(Void... arg) {
+			Log.i(TAG, "reading image");
+
+			/**
+			 * initiate native data here 
+			 * 
+			 * (use EraCore object created at the class initialization)
+			 * 
+			 */
+			// era.
+			return true;
+		}
+		@Override
+		protected void onPostExecute(Boolean isDone) {
+			pDialog.dismiss();
+		}
+	}	
 }
