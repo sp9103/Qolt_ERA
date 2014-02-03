@@ -97,6 +97,7 @@ public class CalibrationActivity extends Activity{
 					mCurrentImage = BitmapFactory.decodeResource(getResources(), mTestImageArray.get(cntTest));
 					mCurrentImage = mImageProcHelper.JPEGtoRGB888(mCurrentImage);
 					mTestImage.setImageBitmap(mCurrentImage);
+					new ImageRefineTask().execute();
 
 					mExplanation.setText(getResources().getString(mImageExplanation.get(cntTest)));
 				}else{
