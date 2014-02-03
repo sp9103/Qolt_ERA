@@ -15,6 +15,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.Camera.AutoFocusCallback;
+import android.hardware.Camera.Size;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -167,8 +168,8 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		/**
 		 * execute data loading here
 		 */
-		//Size resolution = mOpenCvCameraView.getResolution();
-		//mOpenCvCameraView.reduceResolution(resolution);
+		Size resolution = mOpenCvCameraView.getResolution();
+		mOpenCvCameraView.reduceResolution(resolution);
 		new InitiateDataTask().execute();
 	}
 
@@ -180,6 +181,9 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 	 */
 	public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
 		Log.d(TAG, "rows "+inputFrame.rgba().rows() + ",col "+inputFrame.rgba().cols());
+		
+		int temp = inputFrame.rgba().channels();
+		
 		Mat preview = new Mat(inputFrame.rgba().rows(), inputFrame.rgba().cols(), CvType.CV_8UC4); 
 		
 		/**

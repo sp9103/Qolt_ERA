@@ -240,18 +240,22 @@ int Eye_Recovery::MatchTreePixel( uchar *R, uchar *G, uchar *B, int interval )
  p_Data : saved data File pointer*/
 int Eye_Recovery::MakeImage_to_Data( cv::Mat src, cv::Mat dst)
 {
+	int B_idx = 2;
+	int G_idx = 1;
+	int R_idx = 0;
+
 	for(register int i = 0; i < src.rows; i++){
 		for(register int j = 0; j < src.cols; j++){
-			unsigned char B = src.at<cv::Vec4b>(i,j)[2];
-			unsigned char G = src.at<cv::Vec4b>(i,j)[1];
-			unsigned char R = src.at<cv::Vec4b>(i,j)[0];
+			unsigned char B = src.at<cv::Vec4b>(i,j)[B_idx];
+			unsigned char G = src.at<cv::Vec4b>(i,j)[G_idx];
+			unsigned char R = src.at<cv::Vec4b>(i,j)[R_idx];
 
 			MatchTreePixel(&R, &G, &B, t_interval);
 
 			//image insert
-			dst.at<cv::Vec4b>(i,j)[2] = (unsigned char)B;
-			dst.at<cv::Vec4b>(i,j)[1] = (unsigned char)G;
-			dst.at<cv::Vec4b>(i,j)[0] = (unsigned char)R;
+			dst.at<cv::Vec4b>(i,j)[B_idx] = (unsigned char)B;
+			dst.at<cv::Vec4b>(i,j)[G_idx] = (unsigned char)G;
+			dst.at<cv::Vec4b>(i,j)[R_idx] = (unsigned char)R;
 		}
 	}
 

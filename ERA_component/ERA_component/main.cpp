@@ -21,12 +21,12 @@ int main(){
 
 	printf("Make Tree...\n");
 	time = timeGetTime();
-	ERA.MakeTreeFile(2, 0.4, "DATA.bin", MODE_CORRECTION);
+	ERA.MakeTreeFile(10, 0.4, "DATA.bin", MODE_DYSCHROMATOPSA);
 	time = timeGetTime() - time;
 	printf("Make Tree time : %dms\n", time);
 	
 	time = timeGetTime();
-	ERA.OpenDataFile("DATA.bin");
+	ERA.OpenDataFile("ImgCorrectionData.bin");
 	time = timeGetTime() - time;
 	printf("Open & Create Tree time : %dms\n", time);
 	printf("Make Tree complete!\n");
@@ -38,22 +38,30 @@ int main(){
 	cv::imshow("Real Time Test", load_iamge);
 	cv::waitKey(0);
 
+
+	//cv::Mat ressize_input/* = load_iamge.clone()*/;
+	//cv::resize(load_iamge, load_iamge, cv::Size(0,0), 0.5, 0.5);
+
+	//cv::imshow("resize test", load_iamge);
+
+	//cv::waitKey(0);
+
+	printf("Enter the Video path : ");
+	scanf("%s", buf);
+	cv::VideoCapture testAVI(buf);
+
+	while(1){
+		cv::Mat frame;
+		testAVI >> frame;
+		ERA.MakeImage_to_Data(frame, frame);
+		imshow("AVI", frame);
+		if(cv::waitKey(30) == 27)		break;
+	}
+
 	ERA.DeleteDataBuffer();
 
 	load_image2.release();
 	load_iamge.release();
-
-	//printf("Enter the Video path : ");
-	//scanf("%s", buf);
-	//cv::VideoCapture testAVI(buf);
-
-	//while(1){
-	//	cv::Mat frame;
-	//	testAVI >> frame;
-	//	ERA.MakeImage_to_Data(frame, frame);
-	//	imshow("AVI", frame);
-	//	if(cv::waitKey(30) == 27)		break;
-	//}
 
 	return 0;
 }
