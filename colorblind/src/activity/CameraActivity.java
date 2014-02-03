@@ -101,13 +101,13 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 				mCameraMode = mCameraMode%3 + 1;
 				switch(mCameraMode){
 				case MODE_NORMAL_CAM:
-					noti = getString(R.string.app_name);
+					noti = getString(R.string.cam_mode_normal);
 					break;
 				case MODE_REFINE_CAM:
-					noti = "MODE_REFINE_CAM";
+					noti = getString(R.string.cam_mode_era);
 					break;
 				case MODE_EXP_CAM:
-					noti = "MODE_EXP_CAM";
+					noti = getString(R.string.cam_mode_trial);
 				}
 				Toast.makeText(mContext, noti, Toast.LENGTH_SHORT).show();
 			}
