@@ -101,7 +101,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 				mCameraMode = mCameraMode%3 + 1;
 				switch(mCameraMode){
 				case MODE_NORMAL_CAM:
-					noti = "MODE_NORMAL_CAM";
+					noti = getString(R.string.app_name);
 					break;
 				case MODE_REFINE_CAM:
 					noti = "MODE_REFINE_CAM";
