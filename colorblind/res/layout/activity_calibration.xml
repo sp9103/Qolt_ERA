@@ -3,26 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     
-    <TextView
-        android:id="@+id/text_value"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/progress_dot"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:textColor="#c8c8c8"
-        android:textSize="20sp"
-        android:text="0.4" />
-    
-    <ImageView
-        android:id="@+id/test_image"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:scaleType="centerCrop"
-        android:layout_marginTop="60dp"
-        android:src="@drawable/test_2" />
+        android:src="@drawable/prog1" />
 
     <SeekBar
         android:id="@+id/calibration_seekbar"
@@ -53,5 +40,25 @@
         android:textColor="#c8c8c8"
         android:textSize="15sp"
         android:text="@string/explanation_1" />
+
+    <TextView
+        android:id="@+id/text_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progress_dot"
+        android:layout_centerHorizontal="true"
+        android:text="0.4"
+        android:textColor="#c8c8c8"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/test_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignLeft="@+id/progress_dot"
+        android:layout_below="@+id/text_value"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/test_2" />
     
 </RelativeLayout>    

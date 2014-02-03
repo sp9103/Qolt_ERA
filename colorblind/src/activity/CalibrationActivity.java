@@ -1,11 +1,11 @@
 package activity;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
+
+import libera.EraCore;
 
 import org.opencv.core.Mat;
 
-import libera.EraCore;
 import utility.ImageProcessHelper;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,16 +15,11 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -36,13 +31,14 @@ import com.naubull2.colorblind.R;
 
 public class CalibrationActivity extends Activity{
 	
-	private ImageView mTestImage;
+	private ImageView mTestImage, mDots;
 	private SeekBar mSeekbar;
 	private Button mButtonNext;
 	private TextView mExplanation, mValue;
 	
 	private ArrayList<Integer> mTestImageArray = new ArrayList<Integer>();
 	private ArrayList<Integer> mImageExplanation = new ArrayList<Integer>();
+	private ArrayList<Integer> mDotsArray = new ArrayList<Integer>();
 	
 	private Bitmap mCurrentImage;
 	private int cntTest;
@@ -65,6 +61,7 @@ public class CalibrationActivity extends Activity{
 		setContentView(R.layout.activity_calibration);
 		mContext = this;
 		
+		mDots = (ImageView)findViewById(R.id.progress_dot);
 		mValue = (TextView)findViewById(R.id.text_value);
 		mTestImage = (ImageView)findViewById(R.id.test_image);
 		mExplanation = (TextView)findViewById(R.id.text_explanation);
@@ -75,6 +72,7 @@ public class CalibrationActivity extends Activity{
 		
 		// initial image and string
 		cntTest = 0;
+		mDots.setImageResource(mDotsArray.get(cntTest));
 		mCurrentImage = BitmapFactory.decodeResource(getResources(), mTestImageArray.get(cntTest));
 		// prepare for processing
 		mCurrentImage = mImageProcHelper.JPEGtoRGB888(mCurrentImage);
@@ -97,6 +95,8 @@ public class CalibrationActivity extends Activity{
 					mCurrentImage = BitmapFactory.decodeResource(getResources(), mTestImageArray.get(cntTest));
 					mCurrentImage = mImageProcHelper.JPEGtoRGB888(mCurrentImage);
 					mTestImage.setImageBitmap(mCurrentImage);
+					mDots.setImageResource(mDotsArray.get(cntTest));
+					
 					new ImageRefineTask().execute();
 
 					mExplanation.setText(getResources().getString(mImageExplanation.get(cntTest)));
@@ -170,6 +170,15 @@ public class CalibrationActivity extends Activity{
 		explanation.add(R.string.explanation_6);
 		explanation.add(R.string.explanation_7);
 		explanation.add(R.string.explanation_8);
+		
+		mDotsArray.add(R.drawable.prog1);
+		mDotsArray.add(R.drawable.prog2);
+		mDotsArray.add(R.drawable.prog3);
+		mDotsArray.add(R.drawable.prog4);
+		mDotsArray.add(R.drawable.prog5);
+		mDotsArray.add(R.drawable.prog6);
+		mDotsArray.add(R.drawable.prog7);
+		mDotsArray.add(R.drawable.prog8);
 	}
 
 	/*
