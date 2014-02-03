@@ -176,7 +176,7 @@ bool Eye_Recovery::MakeTreeFile( int interval, float factor, const char *FilePat
 	fwrite(&interval, sizeof(int), 1, TreeData);
 
 
-	LOGI("Write Interval");
+	LOGI("Write Interval complete");
 
 	/*R, G, B order */
 	for(register int i = 0; i < counts; i++){
@@ -265,9 +265,15 @@ int Eye_Recovery::MakeImage_to_Data( cv::Mat src, cv::Mat dst)
 int Eye_Recovery::OpenDataFile(const char *FilePath )
 {
 	FILE *p_Data = fopen(FilePath, "rb");
-	if(p_Data == NULL)		return -1;
+	if(p_Data == NULL){
+
+		return -1;
+	}
 
 	fread(&t_interval, sizeof(int), 1, p_Data);
+
+	//if(t_interval != 10)	LOGI("file interval not 10");
+	//else									LOGI("file interval 10");
 
 	int counts = 255/t_interval + 1;
 
