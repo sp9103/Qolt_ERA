@@ -9,8 +9,8 @@ int main(){
 	Eye_Recovery ERA;
 	char buf[256];
 
-	cv::Mat load_iamge = cv::imread("test_img.jpg");
-	cv::Mat load_image2 = cv::imread("test_img.jpg");
+	cv::Mat load_iamge = cv::imread("Tulips.jpg");
+	cv::Mat load_image2 = cv::imread("Tulips.jpg");
 	cv::imshow("Origin", load_iamge);
 
 	DWORD time = timeGetTime();
@@ -26,7 +26,7 @@ int main(){
 	printf("Make Tree time : %dms\n", time);
 	
 	time = timeGetTime();
-	ERA.OpenDataFile("ImgCorrectionData.bin");
+	ERA.OpenDataFile("DATA.bin");
 	time = timeGetTime() - time;
 	printf("Open & Create Tree time : %dms\n", time);
 	printf("Make Tree complete!\n");
