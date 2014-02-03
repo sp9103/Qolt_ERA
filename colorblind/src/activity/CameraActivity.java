@@ -44,8 +44,8 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 	private int mCameraMode;
 	
 	// call native methods through era object here
-	private ImageProcessHelper mImageProcHelper = new ImageProcessHelper();
-	private EraCore era = new EraCore();
+	private ImageProcessHelper mImageProcHelper/* = new ImageProcessHelper()*/;
+	private EraCore era/* = new EraCore()*/;
 
 	
 	private Context mContext;
@@ -69,6 +69,9 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 			Log.i("OPENCV", "open CV static load error");
 		}
 		setContentView(R.layout.activity_camera);
+		
+		mImageProcHelper = new ImageProcessHelper();
+		era = new EraCore();
 		
 		// Default mode is normal cam
 		mCameraMode = MODE_NORMAL_CAM;
@@ -165,9 +168,18 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		/**
 		 * execute data loading here
 		 */
+		Log.i(TAG, "onCameraViewStarted start");
+		
+		// era.
+		// era - open ImageCorrection Mode 
+		Log.i(TAG, "Open DataSet start!");
+		era.OpenDataFile("/sdcard/Pictures/ERA/ImgCorrectionData.bin", 0);
+		
 		Size resolution = mOpenCvCameraView.getResolution();
 		mOpenCvCameraView.reduceResolution(resolution);
-		new InitiateDataTask().execute();
+		
+		
+		//new InitiateDataTask().execute();
 	}
 
 	public void onCameraViewStopped() {
@@ -244,7 +256,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 			 */
 			// era.
 			// era - open ImageCorrection Mode 
-			era.OpenDataFile("/sdcard/Pictures/ERA/ImgCorrectionData.bin", 0);
+			//era.OpenDataFile("/sdcard/Pictures/ERA/ImgCorrectionData.bin", 0);
 			
 			return true;
 		}
