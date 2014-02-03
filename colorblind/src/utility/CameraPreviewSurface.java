@@ -1,7 +1,6 @@
 package utility;
 
 import java.io.FileOutputStream;
-import java.util.List;
 
 import org.opencv.android.JavaCameraView;
 
@@ -44,10 +43,10 @@ public class CameraPreviewSurface extends JavaCameraView {
         mCamera.setParameters(params);
     }
 
-    public void setResolution(Size resolution) {
+    public void reduceResolution(Size resolution) {
         disconnectCamera();
-        mMaxHeight = resolution.height;
-        mMaxWidth = resolution.width;
+        mMaxHeight = resolution.height/2;
+        mMaxWidth = resolution.width/2;
         connectCamera(getWidth(), getHeight());
     }
 

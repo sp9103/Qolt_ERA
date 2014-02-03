@@ -1,7 +1,5 @@
 package activity;
 
-import java.io.FileNotFoundException;
-
 import libera.EraCore;
 
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
@@ -82,8 +80,8 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 				int action = event.getAction();
 				switch(action){
 				case MotionEvent.ACTION_DOWN:
-					mOpenCvCameraView.getCamera().autoFocus(mFocus);
 					mFocusImage.setBackgroundResource(R.drawable.focus_default);
+					mOpenCvCameraView.getCamera().autoFocus(mFocus);
 					break;
 				case MotionEvent.ACTION_OUTSIDE:
 					mOpenCvCameraView.getCamera().cancelAutoFocus();
@@ -130,7 +128,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 	            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 	            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
 	            | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-	            | View.SYSTEM_UI_FLAG_IMMERSIVE);
+	            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 	}
 
 	@Override
@@ -169,8 +167,8 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		/**
 		 * execute data loading here
 		 */
-		
-		
+		//Size resolution = mOpenCvCameraView.getResolution();
+		//mOpenCvCameraView.reduceResolution(resolution);
 		new InitiateDataTask().execute();
 	}
 
@@ -199,15 +197,12 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		int action = event.getAction();
 		switch(action){
 		case MotionEvent.ACTION_DOWN:
-			mOpenCvCameraView.getCamera().autoFocus(mFocus);
 			mFocusImage.setBackgroundResource(R.drawable.focus_default);
-			break;
-		case MotionEvent.ACTION_OUTSIDE:
-			mOpenCvCameraView.getCamera().cancelAutoFocus();
-			mFocusImage.setBackgroundResource(R.drawable.focus_false);
+			mOpenCvCameraView.getCamera().autoFocus(mFocus);
 			break;
 		case MotionEvent.ACTION_UP:
-			mOpenCvCameraView.getCamera().cancelAutoFocus();
+			if(android.os.Build.VERSION.SDK_INT >= 19)
+				hideSystemUI();
 		}
 		return false;
 	}
