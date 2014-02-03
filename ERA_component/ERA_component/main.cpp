@@ -38,6 +38,14 @@ int main(){
 	cv::imshow("Real Time Test", load_iamge);
 	cv::waitKey(0);
 
+
+	cv::Mat ressize_input/* = load_iamge.clone()*/;
+	cv::resize(load_iamge, load_iamge, cv::Size(0,0), 0.5, 0.5);
+
+	cv::imshow("resize test", load_iamge);
+
+	cv::waitKey(0);
+
 	ERA.DeleteDataBuffer();
 
 	load_image2.release();
