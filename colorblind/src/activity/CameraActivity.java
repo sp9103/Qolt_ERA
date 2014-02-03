@@ -157,9 +157,6 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 	public void onDestroy() {
 		super.onDestroy();
 		
-		// era Data reset, memory return
-		era.DeleteDataBuffer();
-		
 		if (mOpenCvCameraView != null)
 			mOpenCvCameraView.disableView();
 	}
@@ -174,6 +171,8 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 	}
 
 	public void onCameraViewStopped() {
+		// era Data reset, memory return
+		era.DeleteDataBuffer();
 	}
 
 	/*

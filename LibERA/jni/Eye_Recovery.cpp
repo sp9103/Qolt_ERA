@@ -266,14 +266,15 @@ int Eye_Recovery::OpenDataFile(const char *FilePath )
 {
 	FILE *p_Data = fopen(FilePath, "rb");
 	if(p_Data == NULL){
+		LOGI("Data file open fail");
 
 		return -1;
 	}
 
 	fread(&t_interval, sizeof(int), 1, p_Data);
 
-	//if(t_interval != 10)	LOGI("file interval not 10");
-	//else									LOGI("file interval 10");
+	if(t_interval != 10)	LOGI("file interval not 10");
+	else									LOGI("file interval 10");
 
 	int counts = 255/t_interval + 1;
 
@@ -306,8 +307,10 @@ int Eye_Recovery::OpenDataFile(const char *FilePath )
 
 void Eye_Recovery::DeleteDataBuffer()
 {
-	if(Data_Matrix != NULL)
+	if(Data_Matrix != NULL){
+		LOGI("DATA Delete Complete");
 		free(Data_Matrix);
+	}
 
 	Data_Matrix = NULL;
 }
