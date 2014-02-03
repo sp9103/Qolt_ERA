@@ -13,6 +13,7 @@
     
     <string name="pref_exp_value">체험 보정 값</string>
     <string name="pref_era_value">색약 보정 값</string>
+    <string name="pref_interval">보정 간격</string>
     <string name="pref_reset">설정 초기화</string>
     
 </resources>

@@ -10,7 +10,11 @@
             android:key="key_notice" 
             android:title="@string/pref_notice" />
         
-        <Preference android:key="key_version" android:title="@string/pref_version" android:layout="@layout/pref_item_version" /><Preference 
+        <Preference android:key="key_version" 
+            android:title="@string/pref_version" 
+            android:layout="@layout/pref_item_version" />
+        
+        <Preference 
             android:key="key_about"
             android:title="@string/pref_about" />
         
@@ -33,8 +37,13 @@
             android:title="@string/pref_era_value"/>
         
         <Preference
+            android:key="key_interval"
+            android:title="@string/pref_interval" />
+        
+        <Preference
             android:key="key_reset"
             android:title="@string/pref_reset" />
+        
         
     </customui.PreferenceTitle>
 
