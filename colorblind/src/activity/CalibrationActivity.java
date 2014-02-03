@@ -1,16 +1,44 @@
 package activity;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.naubull2.colorblind.R;
 
 public class CalibrationActivity extends Activity{
-
+	
+	private ImageView mTestImage;
+	private SeekBar mSeekbar;
+	private Button mButtonNext;
+	private TextView mExplanation, mValue;
+	
+	private ArrayList<Integer> mTestImageArray = new ArrayList<Integer>();
+	private ArrayList<Integer> mImageExplanation = new ArrayList<Integer>();
+	
+	private Bitmap currentImage;
+	private int cntTest;
+	private float totalValue;
+	
+	private Context mContext;
+	private SharedPreferences pref;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -19,6 +47,102 @@ public class CalibrationActivity extends Activity{
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		setContentView(R.layout.activity_calibration);
+		
+		mValue = (TextView)findViewById(R.id.text_value);
+		mTestImage = (ImageView)findViewById(R.id.test_image);
+		mExplanation = (TextView)findViewById(R.id.text_explanation);
+		mSeekbar = (SeekBar)findViewById(R.id.calibration_seekbar);
+		mButtonNext = (Button)findViewById(R.id.btn_confirm);
+		
+		initializeImageArray(mTestImageArray, mImageExplanation);
+		
+		// initial image and string
+		cntTest = 0;
+		currentImage = BitmapFactory.decodeResource(getResources(), mTestImageArray.get(cntTest));
+		mTestImage.setImageBitmap(currentImage);
+		mExplanation.setText(getResources().getString(mImageExplanation.get(cntTest)));
+		
+		mButtonNext.setOnClickListener(new View.OnClickListener() {
+			/**
+			 * counter++
+			 * save current progress value
+			 * show next image and text explanation
+			 */
+			@Override
+			public void onClick(View v) {
+				cntTest++;
+				totalValue += Float.parseFloat(mValue.getText().toString());
+				
+				if(cntTest<8){
+					currentImage = BitmapFactory.decodeResource(getResources(), mTestImageArray.get(cntTest));
+					mTestImage.setImageBitmap(currentImage);
+
+					mExplanation.setText(getResources().getString(mImageExplanation.get(cntTest)));
+				}else{
+					/**
+					 * show Toast to confirm final value,
+					 * save and exit
+					 */
+					finish();
+				}
+			}
+		});
+		
+		mSeekbar.setMax(100);
+		mSeekbar.incrementProgressBy(1);
+		// mSeekbar.setProgress(progress);
+		mSeekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				//if outof bound, set to min or max if(seekBar.getProgress())
+				//else, show current value in floating point type
+				
+				//process image
+			}
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				
+			}
+			
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				// change text accordingly
+			}
+		});
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		
+		float refine = (float)(totalValue/cntTest);
+		
+		Toast.makeText(mContext, "색약 보정값 : "+refine, Toast.LENGTH_SHORT).show();
+		
+		pref = getSharedPreferences("ERA", MODE_PRIVATE);
+		SharedPreferences.Editor editor = pref.edit();
+		editor.putFloat("era_calib", refine).commit();
+	}
+
+	// Bring in to memory all 8 hard coded test images
+	public void initializeImageArray(ArrayList<Integer> bitmapArray, ArrayList<Integer> explanation){
+		bitmapArray.add(R.drawable.test_2);
+		bitmapArray.add(R.drawable.test_5);
+		bitmapArray.add(R.drawable.test_6);
+		bitmapArray.add(R.drawable.test_8_3);
+		bitmapArray.add(R.drawable.test_12);
+		bitmapArray.add(R.drawable.test_17);
+		bitmapArray.add(R.drawable.test_74_21);
+		bitmapArray.add(R.drawable.test_97);
+		
+		explanation.add(R.string.explanation_1);
+		explanation.add(R.string.explanation_2);
+		explanation.add(R.string.explanation_3);
+		explanation.add(R.string.explanation_4);
+		explanation.add(R.string.explanation_5);
+		explanation.add(R.string.explanation_6);
+		explanation.add(R.string.explanation_7);
+		explanation.add(R.string.explanation_8);
 	}
 
 	/*

@@ -32,4 +32,16 @@
     <string name="dlg_yes">예</string>
     <string name="dlg_no">아니오</string>
     
+    <!-- Calibration text -->
+    <string name="explanation_1">2로 보이도록 맞추세요</string>
+    <string name="explanation_2">5로 보이도록 맞추세요</string>
+    <string name="explanation_3">6이 보이도록 맞추세요</string>
+    <string name="explanation_4">8이 보이도록 맞추세요</string>
+    <string name="explanation_5">12가 보이도록 맞추세요</string>
+    <string name="explanation_6">17이 보이도록 맞추세요</string>
+    <string name="explanation_7">74가 보이도록 맞추세요</string>
+    <string name="explanation_8">97이 보이도록 맞추세요</string>
+    
+    <string name="btn_next">다음</string>
+    
 </resources>
