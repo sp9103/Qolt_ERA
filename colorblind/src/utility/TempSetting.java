@@ -52,11 +52,6 @@ public class TempSetting extends Activity{
 				
 				new NativeTask().execute();
 				
-				Intent intent = new Intent(TempSetting.this, MainActivity.class);
-				// we don't need to revisit	
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-				startActivity(intent);
-				finish();
 				
 			}
 		});
@@ -99,6 +94,12 @@ public class TempSetting extends Activity{
 		@Override
 		protected void onPostExecute(Boolean isDone) {
 			pDialog.dismiss();
+			Intent intent = new Intent(TempSetting.this, MainActivity.class);
+			// we don't need to revisit	
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			startActivity(intent);
+			finish();
+			
 		}
 	}
 	

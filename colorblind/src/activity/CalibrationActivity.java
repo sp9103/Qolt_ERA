@@ -1,18 +1,30 @@
 package activity;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import org.opencv.core.Mat;
+
+import libera.EraCore;
+import utility.ImageProcessHelper;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -32,12 +44,16 @@ public class CalibrationActivity extends Activity{
 	private ArrayList<Integer> mTestImageArray = new ArrayList<Integer>();
 	private ArrayList<Integer> mImageExplanation = new ArrayList<Integer>();
 	
-	private Bitmap currentImage;
+	private Bitmap mCurrentImage;
 	private int cntTest;
 	private float totalValue;
 	
 	private Context mContext;
 	private SharedPreferences pref;
+	
+	private ImageProcessHelper mImageProcHelper = new ImageProcessHelper();
+	private EraCore era = new EraCore();
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +63,7 @@ public class CalibrationActivity extends Activity{
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		setContentView(R.layout.activity_calibration);
+		mContext = this;
 		
 		mValue = (TextView)findViewById(R.id.text_value);
 		mTestImage = (ImageView)findViewById(R.id.test_image);
@@ -58,8 +75,11 @@ public class CalibrationActivity extends Activity{
 		
 		// initial image and string
 		cntTest = 0;
-		currentImage = BitmapFactory.decodeResource(getResources(), mTestImageArray.get(cntTest));
-		mTestImage.setImageBitmap(currentImage);
+		mCurrentImage = BitmapFactory.decodeResource(getResources(), mTestImageArray.get(cntTest));
+		// prepare for processing
+		mCurrentImage = mImageProcHelper.JPEGtoRGB888(mCurrentImage);
+		
+		mTestImage.setImageBitmap(mCurrentImage);
 		mExplanation.setText(getResources().getString(mImageExplanation.get(cntTest)));
 		
 		mButtonNext.setOnClickListener(new View.OnClickListener() {
@@ -74,8 +94,9 @@ public class CalibrationActivity extends Activity{
 				totalValue += Float.parseFloat(mValue.getText().toString());
 				
 				if(cntTest<8){
-					currentImage = BitmapFactory.decodeResource(getResources(), mTestImageArray.get(cntTest));
-					mTestImage.setImageBitmap(currentImage);
+					mCurrentImage = BitmapFactory.decodeResource(getResources(), mTestImageArray.get(cntTest));
+					mCurrentImage = mImageProcHelper.JPEGtoRGB888(mCurrentImage);
+					mTestImage.setImageBitmap(mCurrentImage);
 
 					mExplanation.setText(getResources().getString(mImageExplanation.get(cntTest)));
 				}else{
@@ -94,10 +115,14 @@ public class CalibrationActivity extends Activity{
 		mSeekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
-				//if outof bound, set to min or max if(seekBar.getProgress())
-				//else, show current value in floating point type
-				
+				if(seekBar.getProgress()<1){
+					mValue.setText("0");
+					seekBar.setProgress(0);
+				}else
+					mValue.setText(""+((float)seekBar.getProgress()/100));
+								
 				//process image
+				new ImageRefineTask().execute();
 			}
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
@@ -107,6 +132,7 @@ public class CalibrationActivity extends Activity{
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				// change text accordingly
+				mValue.setText(""+((float)seekBar.getProgress()/100));
 			}
 		});
 	}
@@ -193,4 +219,33 @@ public class CalibrationActivity extends Activity{
             return super.onKeyDown(keyCode, event);
         }
     }
+	
+	class ImageRefineTask extends AsyncTask<Void, Void, Boolean> {
+		ProgressDialog pDialog;
+		Bitmap newImage;
+		@Override
+		protected void onPreExecute() {
+			// Opens dialog on loading data file to external storage
+			super.onPreExecute();
+			pDialog = new ProgressDialog(mContext);
+			pDialog.setMessage("Processing");
+			pDialog.setIndeterminate(true);
+			pDialog.setCancelable(false);
+			pDialog.show();
+		}
+		@Override
+		protected Boolean doInBackground(Void... arg) {
+				Mat srcImage = mImageProcHelper.BitmapToMat(mCurrentImage);
+				
+				era.RefineImage(srcImage.nativeObj, srcImage.nativeObj, Float.parseFloat(mValue.getText().toString()));
+				newImage = mImageProcHelper.MatToBitmap(srcImage);
+				
+				return true;
+		}
+		@Override
+		protected void onPostExecute(Boolean isDone) {
+			pDialog.dismiss();
+			mTestImage.setImageBitmap(newImage);
+		}
+	}
 }
