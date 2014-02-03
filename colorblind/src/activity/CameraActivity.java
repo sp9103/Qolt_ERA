@@ -182,8 +182,6 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 	public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
 		Log.d(TAG, "rows "+inputFrame.rgba().rows() + ",col "+inputFrame.rgba().cols());
 		
-		int temp = inputFrame.rgba().channels();
-		
 		Mat preview = new Mat(inputFrame.rgba().rows(), inputFrame.rgba().cols(), CvType.CV_8UC4); 
 		
 		/**
