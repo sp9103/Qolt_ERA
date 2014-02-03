@@ -12,20 +12,18 @@
             android:id="@+id/main_button_test"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/menu1"
             android:padding="5dp"
             android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:textSize="20sp"
-            android:text="색약 검사"/>
+            android:layout_weight="1"/>
         <Button
             android:id="@+id/main_button_demo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/menu2"
             android:padding="5dp"
             android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:textSize="20sp"
-            android:text="색약 체험"/>
+            android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,20 +34,18 @@
             android:id="@+id/main_button_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/menu3"
             android:padding="5dp"
             android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:textSize="20sp"
-            android:text="사진 보정"/>
+            android:layout_weight="1"/>
         <Button
             android:id="@+id/main_button_camera"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/menu4"
             android:padding="5dp"
             android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:textSize="20sp"
-            android:text="카메라"/>
+            android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,20 +56,18 @@
             android:id="@+id/main_button_movie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/menu5"
             android:padding="5dp"
             android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:textSize="20sp"
-            android:text="동영상 보정"/>
+            android:layout_weight="1"/>
         <Button
             android:id="@+id/main_button_setting"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/menu6"
             android:padding="5dp"
             android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:textSize="20sp"
-            android:text="설정"/>
+            android:layout_weight="1"/>
     </LinearLayout>
    
 </LinearLayout>
