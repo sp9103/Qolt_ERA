@@ -144,11 +144,11 @@ JNIEXPORT jint JNICALL Java_libera_EraCore_MakeImgtoData(JNIEnv* env, jobject ob
 	//Mat resize_src = t_src.clone(), resize_dst = t_src.clone();
 
 	//resize(resize_src, resize_src, Size(), 0.5, 0.5);
-	resize(t_src, t_src, Size(), 0.4, 0.4);
+	//resize(t_src, t_src, Size(), 0.4, 0.4);
 
-	int return_Value = Era.MakeImage_to_Data(t_src, t_src);
+	int return_Value = Era.MakeImage_to_Data(t_src, t_dst);
 
-	resize(t_src, t_dst, Size(), 2.5, 2.5);
+	//resize(t_src, t_dst, Size(), 2.5, 2.5);
 
 	//resize(resize_dst, t_dst, Size(), 2, 2);
 
