@@ -40,8 +40,9 @@
         
         <activity android:name="activity.ImageModeActivity" ></activity>
         
-        <activity android:name="activity.SettingActivity">
-        </activity>
+        <activity android:name="activity.SettingActivity"></activity>
+        
+        <activity android:name="activity.CalibrationActivity"></activity>
         
         <activity
             android:name="activity.CameraActivity"

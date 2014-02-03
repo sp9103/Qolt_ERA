@@ -3,6 +3,7 @@
     <string name="app_name">colorblind</string>
     <string name="app_version">1.0.0</string>
     
+    <!-- Setting strings -->
     <string name="preference_category_title_1">기본정보</string>
     <string name="preference_category_title_2">색약보정 설정</string>
     
@@ -16,10 +17,19 @@
     <string name="pref_interval">보정 간격</string>
     <string name="pref_reset">설정 초기화</string>
     
+    <!-- Camera Modes -->
     <string name="cam_mode_normal">일반 카메라</string>
     <string name="cam_mode_era">색약 보정</string>
     <string name="cam_mode_trial">색약 체험</string>
-        
+     
+    <!-- Actionbar titles -->
     <string name="title_setting">환경설정</string>
+    <string name="title_calibration">색약 검정</string>
+    
+    <!-- Dialogs -->
+    <string name="dlg_title_calibration">검사 중단</string>
+    <string name="dlg_content_calibration">검사를 중단하고 돌아가겠습니까?</string>
+    <string name="dlg_yes">예</string>
+    <string name="dlg_no">아니오</string>
     
 </resources>

@@ -30,8 +30,8 @@ public class MainActivity extends Activity {
 		buttonTest.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				Intent intent = new Intent(mContext, );
-//				startActivity(intent);
+				Intent intent = new Intent(mContext, CalibrationActivity.class);
+				startActivity(intent);
 			}
 		});
 		
