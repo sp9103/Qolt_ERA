@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 
 import com.naubull2.colorblind.R;
@@ -89,12 +90,17 @@ public class SplashActivity extends Activity {
 		}
 		@Override
 		protected void onPostExecute(Boolean isDone) {
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+					// we don't need to revisit	
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+					startActivity(intent);
+					finish();
+				}
+			}, 600);
 			
-			Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-			// we don't need to revisit	
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-			startActivity(intent);
-			finish();
 		}
 	}
 }
