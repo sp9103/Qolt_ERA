@@ -174,8 +174,18 @@ public class ImageModeActivity extends Activity {
 		protected Boolean doInBackground(Void... params) {
 			
 			try {
-				String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + 
-						"/ERA";
+				String file_path= Environment.getExternalStorageState();
+		        if( ! file_path.equals(Environment.MEDIA_MOUNTED) ) {
+		        	//SDcard UNMOUNTED
+		        	file_path = "" + Environment.getRootDirectory().getAbsolutePath() + "/ERA"; //internal storage address
+		        } else {
+		        	//SDcard MOUNT
+		        	file_path = "" + Environment.getExternalStorageDirectory().getAbsolutePath() + "/ERA"; //external storage address
+		        }
+				
+				
+				/*String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + 
+						"/ERA";*/
 				File dir = new File(file_path);
 				if(!dir.exists())
 					dir.mkdirs();
