@@ -11,19 +11,19 @@ int main(){
 
 	IplImage test;
 
-	cv::Mat load_iamge = cv::imread("Tulips.jpg");
-	cv::Mat load_image2 = cv::imread("Tulips.jpg");
+	cv::Mat load_iamge = cv::imread("태극도마을.jpg");
+	cv::Mat load_image2 = cv::imread("태극도마을.jpg");
 	cv::imshow("Origin", load_iamge);
 
 	DWORD time = timeGetTime();
-	ERA.RefineImage(load_iamge, load_iamge, 0.1);
+	ERA.RefineImage(load_iamge, load_iamge, 0.4);
 	time = timeGetTime() - time;
 	printf("픽셀별 보정시간 : %dms\n", time);
 	cv::imshow("TEST", load_iamge);
 
 	printf("Make Tree...\n");
 	time = timeGetTime();
-	ERA.MakeTreeFile(10, 0.1, "DATA.bin", MODE_CORRECTION);
+	ERA.MakeTreeFile(10, 0.4, "DATA.bin", MODE_CORRECTION);
 	time = timeGetTime() - time;
 	printf("Make Tree time : %dms\n", time);
 	
