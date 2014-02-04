@@ -40,6 +40,8 @@
             android:screenOrientation="portrait" >
         </activity>
         
+        <activity android:name="activity.CameraResultActivity"></activity>
+        
         <activity android:name="activity.ImageModeActivity" ></activity>
         
         <activity android:name="activity.InverseActivity" ></activity>

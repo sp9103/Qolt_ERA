@@ -1,10 +1,11 @@
 package utility;
 
-import java.io.FileOutputStream;
-
 import org.opencv.android.JavaCameraView;
 
+import activity.CameraResultActivity;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
@@ -14,7 +15,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 public class CameraPreviewSurface extends JavaCameraView {
-
+	static BitmapFrameSingleton singleton = BitmapFrameSingleton.getInstance();
     private static final String TAG = "PREVIEW_SURFACE";
 
     public CameraPreviewSurface(Context context, AttributeSet attrs) {
@@ -54,24 +55,22 @@ public class CameraPreviewSurface extends JavaCameraView {
         return mCamera.getParameters().getPreviewSize();
     }
 
-    public void takePicture(final String fileName) {
+    public void takePicture(final Context parent) {
         Log.i(TAG, "Tacking picture");
         PictureCallback callback = new PictureCallback() {
 
-            private String mPictureFileName = fileName;
-
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
-                Log.i(TAG, "Saving a bitmap to file");
-                Bitmap picture = BitmapFactory.decodeByteArray(data, 0, data.length);
-                try {
-                    FileOutputStream out = new FileOutputStream(mPictureFileName);
-                    picture.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                    picture.recycle();
-                    mCamera.startPreview();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                Log.i(TAG, "Saving a bitmap to singleton");
+                BitmapFactory.Options opt = new BitmapFactory.Options();
+                opt.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                Bitmap picture = BitmapFactory.decodeByteArray(data, 0, data.length, opt);
+                Log.i(TAG, "Bitmap size:"+picture.getWidth()+"*"+picture.getHeight());
+                singleton.setImage(picture);
+                Intent intent = new Intent(parent, CameraResultActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                parent.startActivity(intent);
+                ((Activity)parent).finish();
             }
         };
 

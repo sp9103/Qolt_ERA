@@ -23,7 +23,7 @@ public class ImageProcessHelper {
 	public Bitmap JPEGtoRGB888(Bitmap img) {
 		int numPixels = img.getWidth() * img.getHeight();
 		int[] pixels = new int[numPixels];
-
+		Log.i("TEST", "size of array :"+numPixels);
 		// Get JPEG pixel. single int per pixel
 		img.getPixels(pixels, 0, img.getWidth(), 0, 0, img.getWidth(),
 				img.getHeight());
