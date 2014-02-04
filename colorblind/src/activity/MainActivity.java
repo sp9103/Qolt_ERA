@@ -102,6 +102,7 @@ public class MainActivity extends Activity {
 				Intent intent = new Intent(mContext, ImageModeActivity.class);
 				intent.setData(selectedImage);
 				startActivity(intent);
+				break;
 			}
 		case INVERSE_IMAGE:
 			if (resultCode == RESULT_OK){
