@@ -52,8 +52,6 @@ public class TempSetting extends Activity{
 					editor.putFloat("era_calib", Float.parseFloat(value)).commit();
 				
 				new NativeTask().execute();
-				
-				
 			}
 		});
 	}
@@ -73,7 +71,6 @@ public class TempSetting extends Activity{
 		}
 		@Override
 		protected Boolean doInBackground(Void... arg) {
-
 			/**
 			 * 
 			 * put binary data creation code here 
@@ -82,7 +79,6 @@ public class TempSetting extends Activity{
 			 * 
 			 * 
 			 */
-			
 			// Make binary Data file example - Image Correction example
 			// if u want make DYSCHROMATOPSA Data file, insert factor & mode = 1
 			// mode 0 : Image Correction
@@ -100,10 +96,6 @@ public class TempSetting extends Activity{
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 			startActivity(intent);
 			finish();
-			
 		}
 	}
-	
-	
-
 }
