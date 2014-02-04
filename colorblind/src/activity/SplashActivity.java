@@ -85,6 +85,9 @@ public class SplashActivity extends Activity {
 			// mode 1 : Image DYSCHROMATOPSA
 			float native_factor = pref.getFloat("era_calib", (float) 0.4);
 			era.MakeTreeFile(10, native_factor, "/sdcard/Pictures/ERA/ImageCorrectionData.bin", 0);
+			native_factor = pref.getFloat("inverse_calib", (float) 0.4);
+			era.MakeTreeFile(10, native_factor, "/sdcard/Pictures/ERA/ImageCorrectionData.bin", 1);
+			
 			
 			return true;
 		}

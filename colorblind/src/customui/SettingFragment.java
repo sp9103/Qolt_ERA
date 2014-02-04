@@ -1,11 +1,22 @@
 package customui;
 
+import java.io.File;
+
+import libera.EraCore;
+import utility.ImageProcessHelper;
+import activity.MainActivity;
+import activity.SplashActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -29,6 +40,10 @@ public class SettingFragment extends PreferenceFragment implements OnPreferenceC
 	
 	private SharedPreferences mPref;
 	private SharedPreferences.Editor editor;
+	
+	private ImageProcessHelper mImageProcHelper = new ImageProcessHelper();
+	// call native methods through era object here
+	private EraCore era = new EraCore();
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +69,7 @@ public class SettingFragment extends PreferenceFragment implements OnPreferenceC
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				editor.putFloat("inverse_calib", Float.parseFloat(newValue.toString())).commit();
+				new NativeTask().execute(1);
 				return true;
 			}
 		});
@@ -136,6 +152,7 @@ public class SettingFragment extends PreferenceFragment implements OnPreferenceC
 				public void onClick(View v) {
 					// Save current setting then close
 					editor.putFloat("era_calib", Float.parseFloat(dlgText.getText().toString())).commit();
+					new NativeTask().execute(0);
 					dlgRefine.dismiss();
 				}
 			});
@@ -159,4 +176,39 @@ public class SettingFragment extends PreferenceFragment implements OnPreferenceC
     	}
     	return false;
     }
+private class NativeTask extends AsyncTask<Integer, Void, Boolean> {
+	ProgressDialog pDialog;
+
+	@Override
+	protected void onPreExecute() {
+		// Opens dialog on loading data file to external storage
+		super.onPreExecute();
+		pDialog = new ProgressDialog(getActivity());
+		pDialog.setMessage("Saving");
+		pDialog.setIndeterminate(true);
+		pDialog.setCancelable(false);
+		pDialog.show();
+	}
+		@Override
+		protected Boolean doInBackground(Integer... arg) {
+			int mode = arg[0];
+			// Make binary Data file example - Image Correction example
+			// if u want make DYSCHROMATOPSA Data file, insert factor & mode = 1
+			// mode 0 : Image Correction
+			// mode 1 : Image DYSCHROMATOPSA
+			float native_factor = mPref.getFloat((mode>0? "era_calib" : "inverse_calib"), (float) 0.4);
+			era.MakeTreeFile(10, native_factor, "/sdcard/Pictures/ERA/ImageCorrectionData.bin", mode);
+			
+			return true;
+		}
+		protected void onPostExecute(Boolean isDone) {
+			pDialog.dismiss();
+			
+			if(!isDone){
+				Toast.makeText(getActivity(), "Error!", Toast.LENGTH_SHORT).show();
+			}else{
+				Toast.makeText(getActivity(), "Saved!", Toast.LENGTH_SHORT).show();
+			}
+		}
+	}
 }
