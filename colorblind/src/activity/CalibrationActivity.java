@@ -17,6 +17,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -146,7 +147,7 @@ public class CalibrationActivity extends Activity{
 		
 		Toast.makeText(mContext, "색약 보정값 : "+refine, Toast.LENGTH_SHORT).show();
 		
-		pref = getSharedPreferences("ERA", MODE_PRIVATE);
+		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		SharedPreferences.Editor editor = pref.edit();
 		editor.putFloat("era_calib", refine).commit();
 	}

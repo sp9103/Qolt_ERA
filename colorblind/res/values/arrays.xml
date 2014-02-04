@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="trial_preset">
+        <item name="0.4">0.4</item>
+        <item name="0.5">0.5</item>
+        <item name="0.6">0.6</item>
+        <item name="0.7">0.7</item>
+        <item name="0.8">0.8</item>
+        <item name="0.9">0.9</item>
+    </string-array>
+    
+    <string-array name="trial_values">
+        <item name="0.4">0.4</item>
+        <item name="0.5">0.5</item>
+        <item name="0.6">0.6</item>
+        <item name="0.7">0.7</item>
+        <item name="0.8">0.8</item>
+        <item name="0.9">0.9</item>
+    </string-array>
+    
+</resources>

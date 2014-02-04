@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -123,7 +124,7 @@ public class ImageModeActivity extends Activity {
 				Mat srcImage = mImageProcHelper.BitmapToMat(resultImage);
 				//Mat destImage = new Mat();
 				
-				pref = getSharedPreferences("ERA", MODE_PRIVATE);
+				pref = PreferenceManager.getDefaultSharedPreferences(mContext);
 				era.RefineImage(srcImage.nativeObj, srcImage.nativeObj, pref.getFloat("era_calib", (float)0.4));
 				//srcImage.release();
 				

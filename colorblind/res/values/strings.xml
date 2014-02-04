@@ -14,8 +14,14 @@
     
     <string name="pref_exp_value">체험 보정 값</string>
     <string name="pref_era_value">색약 보정 값</string>
-    <string name="pref_interval">보정 간격</string>
+    <!-- <string name="pref_interval">보정 간격</string> -->
     <string name="pref_reset">설정 초기화</string>
+    
+    <!-- Setting summary strings -->
+    <string name="pref_exp_summary">색약 체험값으로, 낮을수록 심한 색약</string>
+    
+
+    
     
     <!-- Camera Modes -->
     <string name="cam_mode_normal">일반 카메라</string>
@@ -31,6 +37,13 @@
     <string name="dlg_content_calibration">검사를 중단하고 돌아가겠습니까?</string>
     <string name="dlg_yes">예</string>
     <string name="dlg_no">아니오</string>
+    
+    <string name="save">저장</string>
+    
+    <string name="dlg_title_reset">설정을 초기화</string>
+    <string name="dlg_content_reset">정말 초기화 하시겠습니까?</string>
+    
+    <string name="dlg_title_refine">색약 보정값</string>
     
     <!-- Calibration text -->
     <string name="explanation_1">2로 보이도록 맞추세요</string>

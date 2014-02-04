@@ -2,7 +2,7 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <customui.PreferenceTitle
+    <PreferenceCategory
         android:title="@string/preference_category_title_1">
         
        <!-- Basic info -->
@@ -22,29 +22,32 @@
             android:key="key_help"
             android:title="@string/pref_help"/>
 
-    </customui.PreferenceTitle>
+    </PreferenceCategory>
     
-    <customui.PreferenceTitle 
-        android:title="@string/preference_category_title_2">
+    <PreferenceCategory 
+	        android:title="@string/preference_category_title_2">
         
         <!--  Refine values -->
-        <Preference 
-            android:key="key_exp_value"
-            android:title="@string/pref_exp_value" />
         
+        <ListPreference
+            android:entries="@array/trial_preset"
+            android:entryValues="@array/trial_values"
+            android:key="key_exp_value"
+            android:defaultValue="0.4"
+            android:persistent="true"
+            android:summary="@string/pref_exp_summary"
+            android:title="@string/pref_exp_value" />
+
         <Preference
             android:key="key_era_value"
-            android:title="@string/pref_era_value"/>
-        
-        <Preference
-            android:key="key_interval"
-            android:title="@string/pref_interval" />
+            android:title="@string/pref_era_value" />
         
         <Preference
             android:key="key_reset"
             android:title="@string/pref_reset" />
-        
-        
-    </customui.PreferenceTitle>
 
+<!--  <Preference
+            android:key="key_interval"
+            android:title="@string/pref_interval" /> -->
+    </PreferenceCategory>
 </PreferenceScreen>

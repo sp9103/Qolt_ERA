@@ -1,6 +1,7 @@
 package customui;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.preference.PreferenceCategory;
 import android.util.AttributeSet;
@@ -22,12 +23,10 @@ public class PreferenceTitle extends PreferenceCategory {
 		super(context, attrs, defStyle);
 	}
 	@Override
-	protected View onCreateView(ViewGroup parent) {
-		// And it's just a TextView!
-		TextView categoryTitle =  (TextView)super.onCreateView(parent);
-		categoryTitle.setTextColor(Color.GRAY);
-
-		return categoryTitle;
+	protected void onBindView(View view){
+		super.onBindView(view);
+		TextView titleView = (TextView)view.findViewById(android.R.id.title);
+		titleView.setTextColor(0xff33b5e5);
 	}
 }
 
