@@ -10,19 +10,19 @@
         android:gravity="center">
         <Button
             android:id="@+id/main_button_test"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/menu1"
             android:padding="5dp"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"/>
         <Button
             android:id="@+id/main_button_demo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/menu2"
             android:padding="5dp"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
@@ -32,19 +32,19 @@
         android:gravity="center">
         <Button
             android:id="@+id/main_button_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/menu3"
             android:padding="5dp"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"/>
         <Button
             android:id="@+id/main_button_camera"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/menu4"
             android:padding="5dp"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
@@ -54,19 +54,19 @@
         android:gravity="center">
         <Button
             android:id="@+id/main_button_movie"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/menu5"
             android:padding="5dp"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"/>
         <Button
             android:id="@+id/main_button_setting"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/menu6"
             android:padding="5dp"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"/>
     </LinearLayout>
    
