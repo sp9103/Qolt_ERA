@@ -17,6 +17,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -50,6 +51,7 @@ private static final String TAG = "REFINE_FROM_GALLERY";
 	private Bitmap initialImage;
 	private Bitmap resultImage;
 	
+	static BitmapFrameSingleton singleton = BitmapFrameSingleton.getInstance();
 	
 	private Handler mMainHandler = new Handler(){
 		public void handleMessage(Message msg){
@@ -84,9 +86,9 @@ private static final String TAG = "REFINE_FROM_GALLERY";
 		protected Boolean doInBackground(Void... arg) {
 			Log.i(TAG, "reading image");
 
-			resultImage = mImageProcHelper.JPEGtoRGB888(initialImage);
+			//resultImage = mImageProcHelper.JPEGtoRGB888(initialImage);
 
-			Mat srcImage = mImageProcHelper.BitmapToMat(resultImage);
+			Mat srcImage = mImageProcHelper.BitmapToMat(initialImage);
 			//Mat destImage = new Mat();
 
 			pref = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -94,6 +96,8 @@ private static final String TAG = "REFINE_FROM_GALLERY";
 			//srcImage.release();
 
 			resultImage = mImageProcHelper.MatToBitmap(srcImage);
+			initialImage = rotate(initialImage, 90);
+			resultImage = rotate(resultImage,90);
 
 			return true;
 		}
@@ -189,8 +193,8 @@ private static final String TAG = "REFINE_FROM_GALLERY";
 		mImageView = (ImageView)findViewById(R.id.image_view);
 		
 		Log.i(TAG, "retrieving image");
-		initialImage = BitmapFrameSingleton.getInstance().getImage();
-		BitmapFrameSingleton.getInstance().freeImage();
+		initialImage = singleton.getImage();
+		
 		Log.i(TAG, "imagesize: "+initialImage.getByteCount());
 	
 		if(savedInstanceState != null){
@@ -227,7 +231,21 @@ private static final String TAG = "REFINE_FROM_GALLERY";
 			}
 		});
 	}
-	
+	public static Bitmap rotate(Bitmap b, int degrees) {
+        if ( degrees != 0 && b != null ) {
+            Matrix m = new Matrix();
+            m.setRotate( degrees, (float) b.getWidth() / 2, (float) b.getHeight() / 2 );
+            try {
+                Bitmap b2 = Bitmap.createBitmap( b, 0, 0, b.getWidth(), b.getHeight(), m, true );
+                if (b != b2) {
+                    b.recycle();
+                    b = b2;
+                }
+            } catch (OutOfMemoryError ex) {
+            }
+        }
+        return b;
+    }
 	@Override
 	protected void onDestroy(){
 		super.onDestroy();

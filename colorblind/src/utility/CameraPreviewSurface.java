@@ -3,6 +3,7 @@ package utility;
 import org.opencv.android.JavaCameraView;
 
 import activity.CameraResultActivity;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,7 +15,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 public class CameraPreviewSurface extends JavaCameraView {
-
+	static BitmapFrameSingleton singleton = BitmapFrameSingleton.getInstance();
     private static final String TAG = "PREVIEW_SURFACE";
 
     public CameraPreviewSurface(Context context, AttributeSet attrs) {
@@ -61,12 +62,15 @@ public class CameraPreviewSurface extends JavaCameraView {
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
                 Log.i(TAG, "Saving a bitmap to singleton");
-                Bitmap picture = BitmapFactory.decodeByteArray(data, 0, data.length);
-                Log.i(TAG, "Bitmap stream size:"+data.length);
-                BitmapFrameSingleton.getInstance().setImage(picture);
-                picture.recycle();
+                BitmapFactory.Options opt = new BitmapFactory.Options();
+                opt.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                Bitmap picture = BitmapFactory.decodeByteArray(data, 0, data.length, opt);
+                Log.i(TAG, "Bitmap size:"+picture.getWidth()+"*"+picture.getHeight());
+                singleton.setImage(picture);
                 Intent intent = new Intent(parent, CameraResultActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 parent.startActivity(intent);
+                ((Activity)parent).finish();
             }
         };
 
