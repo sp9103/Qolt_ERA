@@ -252,7 +252,7 @@ int Eye_Recovery::MakeImage_to_Data( cv::Mat src, cv::Mat dst)
 			unsigned char R = src.at<cv::Vec4b>(i,j)[R_idx];
 			unsigned char A = src.at<cv::Vec4b>(i,j)[A_idx];
 
-			//MatchTreePixel(&R, &G, &B, t_interval);
+			MatchTreePixel(&R, &G, &B, t_interval);
 
 			//image insert
 			dst.at<cv::Vec4b>(i,j)[B_idx] = (unsigned char)B;
