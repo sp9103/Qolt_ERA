@@ -177,6 +177,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		
 		Size resolution = mOpenCvCameraView.getResolution();
 		mOpenCvCameraView.reduceResolution(resolution);
+		//mOpenCvCameraView.SetCaptureFormat(format)
 		
 		
 		//new InitiateDataTask().execute();
@@ -192,6 +193,11 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 	 */
 	public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
 		Log.d(TAG, "rows "+inputFrame.rgba().rows() + ",col "+inputFrame.rgba().cols());
+		
+		// input frame Depth CV_8U, 4 channel.
+		//int depth = inputFrame.rgba().depth();
+		//int channel = inputFrame.rgba().channels();
+		//inputFrame.rgba().
 		
 		Mat preview = new Mat(inputFrame.rgba().rows(), inputFrame.rgba().cols(), CvType.CV_8UC4); 
 		

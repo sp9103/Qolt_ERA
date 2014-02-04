@@ -243,19 +243,22 @@ int Eye_Recovery::MakeImage_to_Data( cv::Mat src, cv::Mat dst)
 	int B_idx = 2;
 	int G_idx = 1;
 	int R_idx = 0;
+	int A_idx = 3;
 
 	for(register int i = 0; i < src.rows; i++){
 		for(register int j = 0; j < src.cols; j++){
 			unsigned char B = src.at<cv::Vec4b>(i,j)[B_idx];
 			unsigned char G = src.at<cv::Vec4b>(i,j)[G_idx];
 			unsigned char R = src.at<cv::Vec4b>(i,j)[R_idx];
+			unsigned char A = src.at<cv::Vec4b>(i,j)[A_idx];
 
-			MatchTreePixel(&R, &G, &B, t_interval);
+			//MatchTreePixel(&R, &G, &B, t_interval);
 
 			//image insert
 			dst.at<cv::Vec4b>(i,j)[B_idx] = (unsigned char)B;
 			dst.at<cv::Vec4b>(i,j)[G_idx] = (unsigned char)G;
 			dst.at<cv::Vec4b>(i,j)[R_idx] = (unsigned char)R;
+			dst.at<cv::Vec4b>(i,j)[A_idx] = (unsigned char)A;
 		}
 	}
 
