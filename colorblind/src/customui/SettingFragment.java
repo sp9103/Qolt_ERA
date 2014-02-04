@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Toast;
 
 import com.naubull2.colorblind.R;
 
@@ -74,18 +75,22 @@ public class SettingFragment extends PreferenceFragment implements OnPreferenceC
 
     	if(pref == mNotice)
     	{
+    		Toast.makeText(getActivity(), getResources().getString(R.string.toast_notice), Toast.LENGTH_SHORT).show();
     		// notice
     	}
     	else if(pref == mVersion)
     	{
+    		Toast.makeText(getActivity(), getResources().getString(R.string.toast_version), Toast.LENGTH_SHORT).show();
     		// version
     	}
     	else if(pref == mAbout)
     	{
+    		Toast.makeText(getActivity(), getResources().getString(R.string.toast_not_ready), Toast.LENGTH_SHORT).show();
     		// developer information
     	}
     	else if(pref == mHelp)
     	{
+    		Toast.makeText(getActivity(), getResources().getString(R.string.toast_not_ready), Toast.LENGTH_SHORT).show();
     		// help activity
     	}
     	else if(pref == mEraValue)

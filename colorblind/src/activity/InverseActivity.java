@@ -31,14 +31,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.naubull2.colorblind.R;
 
-public class ImageModeActivity extends Activity {
+public class InverseActivity extends Activity {
 	
 	private static final String TAG = "REFINE_FROM_GALLERY";
 	
@@ -63,7 +62,7 @@ public class ImageModeActivity extends Activity {
 			
 			case SET_IMAGE_FROM_GALLERY:
 				
-				new ImageRefineTask().execute();
+				new ImageInverseTask().execute();
 				break;
 				
 			case CLEAR_UPDATE_SCREEN:
@@ -104,7 +103,7 @@ public class ImageModeActivity extends Activity {
 		return BitmapFactory.decodeStream(getContentResolver().openInputStream(inImage), null, outOption);
 	}
 	
-	class ImageRefineTask extends AsyncTask<Void, Void, Boolean> {
+	class ImageInverseTask extends AsyncTask<Void, Void, Boolean> {
 		ProgressDialog pDialog;
 
 		@Override
@@ -131,7 +130,7 @@ public class ImageModeActivity extends Activity {
 				//Mat destImage = new Mat();
 				
 				pref = PreferenceManager.getDefaultSharedPreferences(mContext);
-				era.RefineImage(srcImage.nativeObj, srcImage.nativeObj, pref.getFloat("era_calib", (float)0.4));
+				era.InverseImage(srcImage.nativeObj, srcImage.nativeObj, pref.getFloat("inverse_calib", (float)0.4));
 				//srcImage.release();
 				
 				resultImage = mImageProcHelper.MatToBitmap(srcImage);
@@ -179,7 +178,7 @@ public class ImageModeActivity extends Activity {
 				File dir = new File(file_path);
 				if(!dir.exists())
 					dir.mkdirs();
-				File file = new File(dir, "ERA_refine_" + pref.getInt("refine_index", 0) + ".jpg");
+				File file = new File(dir, "ERA_inverse_" + pref.getInt("inverse_index", 0) + ".jpg");
 				FileOutputStream fOut;
 				
 				fOut = new FileOutputStream(file);
@@ -187,7 +186,7 @@ public class ImageModeActivity extends Activity {
 				fOut.flush();
 				fOut.close();
 				SharedPreferences.Editor edit = pref.edit();
-				edit.putInt("refine_index", pref.getInt("refine_index",0)+1).commit();
+				edit.putInt("inverse_index", pref.getInt("inverse_index",0)+1).commit();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 				return false;
@@ -229,10 +228,10 @@ public class ImageModeActivity extends Activity {
 		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		//getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
-		getActionBar().setTitle(R.string.title_refine);
+		getActionBar().setTitle(R.string.title_trial);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		setContentView(R.layout.activity_image_mode);
+		setContentView(R.layout.activity_inverse_mode);
 		mImageView = (ImageView)findViewById(R.id.image_view);
 		
 		Log.i(TAG, "retrieving image data uri");

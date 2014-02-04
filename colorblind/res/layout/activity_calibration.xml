@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/progress_dot"
         android:layout_centerHorizontal="true"
-        android:text="0.4"
+        android:text="1.0"
         android:textColor="#c8c8c8"
         android:textSize="20sp" />
 

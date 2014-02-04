@@ -9,11 +9,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.naubull2.colorblind.R;
 
 public class MainActivity extends Activity {
-	private final int 		SELECT_IMAGE = 41;
+	private final int 		REFINE_IMAGE = 41;
+	private final int		INVERSE_IMAGE = 43;
 	private static Context 	mContext;			
 	
 	
@@ -39,8 +41,10 @@ public class MainActivity extends Activity {
 		buttonDemo.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				Intent intent = new Intent(mContext, );
-//				startActivity(intent);
+				Log.i("GALLERY", "launch gallery for image selection");
+				Intent intent = new Intent(Intent.ACTION_PICK);
+				intent.setType("image/*");
+				startActivityForResult(intent, INVERSE_IMAGE);
 			}
 		});
 		
@@ -51,7 +55,7 @@ public class MainActivity extends Activity {
 				Log.i("GALLERY", "launch gallery for image selection");
 				Intent intent = new Intent(Intent.ACTION_PICK);
 				intent.setType("image/*");
-				startActivityForResult(intent, SELECT_IMAGE);
+				startActivityForResult(intent, REFINE_IMAGE);
 			}
 		});
 		
@@ -68,6 +72,7 @@ public class MainActivity extends Activity {
 		buttonMovie.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Toast.makeText(mContext, "In development", Toast.LENGTH_SHORT).show();
 //				Intent intent = new Intent(mContext, );
 //				startActivity(intent);
 			}
@@ -89,7 +94,7 @@ public class MainActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 		Log.i("IMAGESELECT", "returned from gallery");
 		switch (requestCode) {
-		case SELECT_IMAGE:
+		case REFINE_IMAGE:
 			if (resultCode == RESULT_OK) { // proper image should be selected
 				Uri selectedImage = imageReturnedIntent.getData();
 				
@@ -98,6 +103,16 @@ public class MainActivity extends Activity {
 				intent.setData(selectedImage);
 				startActivity(intent);
 			}
+		case INVERSE_IMAGE:
+			if (resultCode == RESULT_OK){
+				Uri selectedImage = imageReturnedIntent.getData();
+				
+				// send uri of the selected image to the processing activity
+				Intent intent = new Intent(mContext, InverseActivity.class);
+				intent.setData(selectedImage);
+				startActivity(intent);
+			}
 		}
+	
 	}
 }

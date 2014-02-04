@@ -4,6 +4,10 @@
     <string name="app_version">1.0.0</string>
     
     <!-- Setting strings -->
+    <string name="toast_notice">공지사항이 없습니다</string>
+    <string name="toast_version">최신버젼입니다</string>
+    <string name="toast_not_ready">준비중입니다</string>
+    
     <string name="preference_category_title_1">기본정보</string>
     <string name="preference_category_title_2">색약보정 설정</string>
     
@@ -20,7 +24,8 @@
     <!-- Setting summary strings -->
     <string name="pref_exp_summary">색약 체험값으로, 낮을수록 심한 색약</string>
     
-
+	
+    
     
     
     <!-- Camera Modes -->
@@ -31,6 +36,8 @@
     <!-- Actionbar titles -->
     <string name="title_setting">환경설정</string>
     <string name="title_calibration">색약 검정</string>
+    <string name="title_refine">이미지 보정</string>
+    <string name="title_trial">색약 체험</string>
     
     <!-- Dialogs -->
     <string name="dlg_title_calibration">검사 중단</string>
@@ -56,5 +63,9 @@
     <string name="explanation_8">97이 보이도록 맞추세요</string>
     
     <string name="btn_next">다음</string>
+    
+    
+    <!-- Actionbar -->
+    <string name="action_save">저장</string>
     
 </resources>

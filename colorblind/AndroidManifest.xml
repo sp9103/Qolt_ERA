@@ -42,6 +42,8 @@
         
         <activity android:name="activity.ImageModeActivity" ></activity>
         
+        <activity android:name="activity.InverseActivity" ></activity>
+        
         <activity android:name="activity.SettingActivity"></activity>
         
         <activity android:name="activity.CalibrationActivity"></activity>

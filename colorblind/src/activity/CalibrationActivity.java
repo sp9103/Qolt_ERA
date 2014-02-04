@@ -113,7 +113,7 @@ public class CalibrationActivity extends Activity{
 		
 		mSeekbar.setMax(100);
 		mSeekbar.incrementProgressBy(1);
-		// mSeekbar.setProgress(progress);
+		mSeekbar.setProgress(100);
 		mSeekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
