@@ -8,11 +8,13 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
+import utility.BitmapFrameSingleton;
 import utility.CameraPreviewSurface;
 import utility.ImageProcessHelper;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Camera;
 import android.hardware.Camera.AutoFocusCallback;
 import android.hardware.Camera.Size;
@@ -47,7 +49,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 	private ImageProcessHelper mImageProcHelper/* = new ImageProcessHelper()*/;
 	private EraCore era/* = new EraCore()*/;
 
-	
+	private Mat mCachedFrame;
 	private Context mContext;
 
 	/** Called when the activity is first created. */
@@ -93,6 +95,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 					break;
 				case MotionEvent.ACTION_UP:
 					// Take photo
+				    mOpenCvCameraView.takePicture(mContext);
 				}
 				return false;
 			}
@@ -199,14 +202,14 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 		//int channel = inputFrame.rgba().channels();
 		//inputFrame.rgba().
 		
-		Mat preview = new Mat(inputFrame.rgba().rows(), inputFrame.rgba().cols(), CvType.CV_8UC4); 
+		mCachedFrame = new Mat(inputFrame.rgba().rows(), inputFrame.rgba().cols(), CvType.CV_8UC4); 
 		
 		/**
 		 * Do the image filter here ( no async task needed : probably...)
 		 */
-		era.MakeImgtoData(inputFrame.rgba().nativeObj, preview.nativeObj);
+		era.MakeImgtoData(inputFrame.rgba().nativeObj, mCachedFrame.nativeObj);
 		
-		return preview;
+		return mCachedFrame;
 	}
 	
 	@Override

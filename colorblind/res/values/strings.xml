@@ -38,6 +38,7 @@
     <string name="title_calibration">색약 검정</string>
     <string name="title_refine">이미지 보정</string>
     <string name="title_trial">색약 체험</string>
+    <string name="title_camera">카메라 사진 보정</string>
     
     <!-- Dialogs -->
     <string name="dlg_title_calibration">검사 중단</string>

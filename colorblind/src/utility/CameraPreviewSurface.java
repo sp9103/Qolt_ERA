@@ -1,10 +1,10 @@
 package utility;
 
-import java.io.FileOutputStream;
-
 import org.opencv.android.JavaCameraView;
 
+import activity.CameraResultActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
@@ -54,24 +54,19 @@ public class CameraPreviewSurface extends JavaCameraView {
         return mCamera.getParameters().getPreviewSize();
     }
 
-    public void takePicture(final String fileName) {
+    public void takePicture(final Context parent) {
         Log.i(TAG, "Tacking picture");
         PictureCallback callback = new PictureCallback() {
 
-            private String mPictureFileName = fileName;
-
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
-                Log.i(TAG, "Saving a bitmap to file");
+                Log.i(TAG, "Saving a bitmap to singleton");
                 Bitmap picture = BitmapFactory.decodeByteArray(data, 0, data.length);
-                try {
-                    FileOutputStream out = new FileOutputStream(mPictureFileName);
-                    picture.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                    picture.recycle();
-                    mCamera.startPreview();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                Log.i(TAG, "Bitmap stream size:"+data.length);
+                BitmapFrameSingleton.getInstance().setImage(picture);
+                picture.recycle();
+                Intent intent = new Intent(parent, CameraResultActivity.class);
+                parent.startActivity(intent);
             }
         };
 
