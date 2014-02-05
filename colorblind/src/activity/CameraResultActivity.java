@@ -18,6 +18,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,7 +27,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -116,6 +117,7 @@ private static final String TAG = "REFINE_FROM_GALLERY";
 	
 	class SaveResultBitmapTask extends AsyncTask<Void, Void, Boolean>{
 		ProgressDialog pDialog;
+		File file;
 
 		@Override
 		protected void onPreExecute() {
@@ -136,7 +138,7 @@ private static final String TAG = "REFINE_FROM_GALLERY";
 				File dir = new File(file_path);
 				if(!dir.exists())
 					dir.mkdirs();
-				File file = new File(dir, "ERA_refine_" + pref.getInt("refine_index", 0) + ".jpg");
+				file = new File(dir, "ERA_refine_" + pref.getInt("refine_index", 0) + ".jpg");
 				FileOutputStream fOut;
 				
 				fOut = new FileOutputStream(file);
@@ -162,6 +164,16 @@ private static final String TAG = "REFINE_FROM_GALLERY";
 				Toast.makeText(mContext, "Error!", Toast.LENGTH_SHORT).show();
 				finish();
 			}else{
+				// Tell the media scanner about the new file so that it is
+			    // immediately available to the user.
+			    MediaScannerConnection.scanFile(mContext,
+			            new String[] { file.toString() }, null,
+			            new MediaScannerConnection.OnScanCompletedListener() {
+			        public void onScanCompleted(String path, Uri uri) {
+			            Log.i("ExternalStorage", "Scanned " + path + ":");
+			            Log.i("ExternalStorage", "-> uri=" + uri);
+			        }
+			    });
 				Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show();
 			}
 		}
@@ -189,7 +201,7 @@ private static final String TAG = "REFINE_FROM_GALLERY";
 		getActionBar().setTitle(R.string.title_camera);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		setContentView(R.layout.activity_image_mode);
+		setContentView(R.layout.activity_camera_result);
 		mImageView = (ImageView)findViewById(R.id.image_view);
 		
 		Log.i(TAG, "retrieving image");
@@ -246,6 +258,12 @@ private static final String TAG = "REFINE_FROM_GALLERY";
         }
         return b;
     }
+	
+	public Bitmap fitScreen(Bitmap image){
+		
+		
+		return image;
+	}
 	@Override
 	protected void onDestroy(){
 		super.onDestroy();

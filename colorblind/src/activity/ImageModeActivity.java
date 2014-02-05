@@ -18,6 +18,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -159,6 +160,7 @@ public class ImageModeActivity extends Activity {
 	
 	class SaveResultBitmapTask extends AsyncTask<Void, Void, Boolean>{
 		ProgressDialog pDialog;
+		File file;
 
 		@Override
 		protected void onPreExecute() {
@@ -189,7 +191,7 @@ public class ImageModeActivity extends Activity {
 				File dir = new File(file_path);
 				if(!dir.exists())
 					dir.mkdirs();
-				File file = new File(dir, "ERA_refine_" + pref.getInt("refine_index", 0) + ".jpg");
+				file = new File(dir, "ERA_refine_" + pref.getInt("refine_index", 0) + ".jpg");
 				FileOutputStream fOut;
 				
 				fOut = new FileOutputStream(file);
@@ -212,9 +214,20 @@ public class ImageModeActivity extends Activity {
 			pDialog.dismiss();
 			
 			if(!isDone){
+				
 				Toast.makeText(mContext, "Error!", Toast.LENGTH_SHORT).show();
 				finish();
 			}else{
+				// Tell the media scanner about the new file so that it is
+			    // immediately available to the user.
+			    MediaScannerConnection.scanFile(mContext,
+			            new String[] { file.toString() }, null,
+			            new MediaScannerConnection.OnScanCompletedListener() {
+			        public void onScanCompleted(String path, Uri uri) {
+			            Log.i("ExternalStorage", "Scanned " + path + ":");
+			            Log.i("ExternalStorage", "-> uri=" + uri);
+			        }
+			    });
 				Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show();
 			}
 		}
