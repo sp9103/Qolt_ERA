@@ -12,7 +12,7 @@
             android:id="@+id/main_button_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu1"
+            android:background="@drawable/button_menu1_selector"
             android:padding="5dp"
             android:layout_margin="10dp"
             android:layout_weight="1"/>
@@ -20,7 +20,7 @@
             android:id="@+id/main_button_demo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu2"
+            android:background="@drawable/button_menu2_selector"
             android:padding="5dp"
             android:layout_margin="10dp"
             android:layout_weight="1"/>
@@ -34,7 +34,7 @@
             android:id="@+id/main_button_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu3"
+            android:background="@drawable/button_menu3_selector"
             android:padding="5dp"
             android:layout_margin="10dp"
             android:layout_weight="1"/>
@@ -42,7 +42,7 @@
             android:id="@+id/main_button_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu4"
+            android:background="@drawable/button_menu4_selector"
             android:padding="5dp"
             android:layout_margin="10dp"
             android:layout_weight="1"/>
@@ -56,7 +56,7 @@
             android:id="@+id/main_button_movie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu5"
+            android:background="@drawable/button_menu5_selector"
             android:padding="5dp"
             android:layout_margin="10dp"
             android:layout_weight="1"/>
@@ -64,7 +64,7 @@
             android:id="@+id/main_button_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu6"
+            android:background="@drawable/button_menu6_selector"
             android:padding="5dp"
             android:layout_margin="10dp"
             android:layout_weight="1"/>
